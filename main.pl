@@ -12,3 +12,5 @@
 /* Fakta */
 /* (hour,day,month) */
 :- dynamic(time/3).
+:- dynamic(musim/1).
+:- dynamic(cuaca/1).
