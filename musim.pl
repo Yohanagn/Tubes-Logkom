@@ -2,14 +2,14 @@
 
 
 /* Deklarasi fakta */
-jenis_musim('spring').
-jenis_musim('summer').
-jenis_musim('autumn').
-jenis_musim('winter').
+jenis_musim(spring).
+jenis_musim(summer).
+jenis_musim(autumn).
+jenis_musim(winter).
 
-jenis_cuaca('cerah').
-jenis_cuaca('berawan').
-jenis_cuaca('hujan').
+jenis_cuaca(cerah).
+jenis_cuaca(berawan).
+jenis_cuaca(hujan).
 
 /* Deklarasi rules */
 
