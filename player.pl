@@ -77,7 +77,7 @@ tambahExpperspecialty(Job, ExpNow, LevelUp, Level) :-
     asserta(player_expperspecialty(Job, Exp)),
     NewExp is Exp + ExpNow,
     asserta(player_expperspecialty(Job, NewExp), retract(player_expperspecialty(Job, Exp))),
-    (TotalExp >=  2500 -> LevelUp is 1),
+    (NewExp >=  2500 -> LevelUp is 1),
     writeln('Level Up!'), writeln('Now, You are in Level '), write(Level), write('as a'), write(player_job(farmer)), writeln('Congratulations! You have reached the Maximum Level at This Game'); LevelUp is 0,!.
 
 perubahanUang(Money) :-
