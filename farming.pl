@@ -1,6 +1,6 @@
-:- include('pemain.pl')
-:- include('inventory.pl')
-:- include('map.pl')
+:- include('player.pl').
+:- include('inventory.pl').
+:- include('map.pl').
 
 /* Deklarasi fakta */
 /* Jenis tanaman : wortel, kentang, gandum,padi, singkong, jagung */

@@ -1,4 +1,5 @@
 /* File map.pl */
+:- include('player.pl').
 
 /* Fact - Dynamic Variable */
 :- dynamic(map_height/1).
@@ -15,7 +16,7 @@ edge_north(_,Y) :- Y is 0, !.
 
 /* Initialize special position */
 init_player_pos :-
-    asserta(point(1,1,player)).
+    asserta(player_position(1,1)).
 
 init_marketplace :-
 	random(6,10,X1), 
@@ -81,7 +82,7 @@ display_point(X,Y) :- edge_east(X,Y), write('#\n'), !.
 display_point(X,Y) :- edge_north(X,Y), write('#'), !.
 display_point(X,Y) :- edge_south(X,Y), write('#'), !.
 display_point(X,Y) :- edge_west(X,Y), write('#'), !.
-display_point(X,Y) :- point(X,Y,player), !, write('P').
+display_point(X,Y) :- player_position(X,Y), !, write('P').
 display_point(X,Y) :- point(X,Y,market), !, write('M').
 display_point(X,Y) :- point(X,Y,house), !, write('H').
 display_point(X,Y) :- point(X,Y,quest), !, write('Q').

@@ -1,6 +1,6 @@
-:- include('pemain.pl')
-:- include('inventory.pl')
-:- include('map.pl')
+:- include('player.pl').
+:- include('inventory.pl').
+:- include('map.pl').
 
 /* Deklarasi Fakta */
 ikan(mas).

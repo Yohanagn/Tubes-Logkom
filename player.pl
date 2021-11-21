@@ -69,7 +69,7 @@ tambahExpperspecialty(Job, ExpNow, LevelUp, Level) :-
     NewExp is Exp + ExpNow,
     asserta(player_expperspecialty(Job, NewExp), retract(player_expperspecialty(Job, Exp))),
     (NewExp >=  Level*50 -> LevelUp is 1),
-    writeln('Level Up!'), writeln('Now, You are in Level '), write(Level), write('as a'), write (player_job(Job)); LevelUp is 0),!.
+    writeln('Level Up!'), writeln('Now, You are in Level '), write(Level), write('as a'), write(player_job(Job)); LevelUp is 0,!.
 
 tambahExpperspecialty(Job, ExpNow, LevelUp, Level) :-
     asserta(player_levelperspecialty(Level)),
@@ -78,7 +78,7 @@ tambahExpperspecialty(Job, ExpNow, LevelUp, Level) :-
     NewExp is Exp + ExpNow,
     asserta(player_expperspecialty(Job, NewExp), retract(player_expperspecialty(Job, Exp))),
     (TotalExp >=  2500 -> LevelUp is 1),
-    writeln('Level Up!'), writeln('Now, You are in Level '), write(Level), write('as a'), write (player_job(farmer)), writeln('Congratulations! You have reached the Maximum Level at This Game'); LevelUp is 0),!.
+    writeln('Level Up!'), writeln('Now, You are in Level '), write(Level), write('as a'), write(player_job(farmer)), writeln('Congratulations! You have reached the Maximum Level at This Game'); LevelUp is 0,!.
 
 perubahanUang(Money) :-
     asserta(player_money(Uang)),
@@ -93,7 +93,7 @@ totalExp(Exp, Level, LevelUp) :-
     ExpNow is Exp + Exp1 + Exp2 + Exp3,
     asserta(total_exp(ExpNow), retract(total_exp(Exp))),
     (ExpNow >=  Level*50 -> LevelUp is 1),
-    writeln('Level Up!'), writeln('Now, You are in Level '), write(Level); LevelUp is 0),!.
+    writeln('Level Up!'), writeln('Now, You are in Level '), write(Level); LevelUp is 0,!.
 
 totalExp(Exp, Level, LevelUp) :-
     asserta(player_level(Level)),
@@ -103,7 +103,7 @@ totalExp(Exp, Level, LevelUp) :-
     ExpNow is Exp + Exp1 + Exp2 + Exp3,
     asserta(total_exp(ExpNow), retract(total_exp(Exp))),
     (ExpNow >= 2500 -> LevelUp is 1),
-    writeln('Level Up!'), writeln('Now, You are in Level '), write(Level), writeln('Congratulations! You have reached the Maximum Level at This Game'); LevelUp is 0),!.
+    writeln('Level Up!'), writeln('Now, You are in Level '), write(Level), writeln('Congratulations! You have reached the Maximum Level at This Game'); LevelUp is 0,!.
 
 displayStatus :-
     player_level(Level), player_totalexp(Exp), player_money(Money), 
