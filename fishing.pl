@@ -13,10 +13,10 @@ list_ikan([mas,lele,gurame,mujair,nila]).
 
 /* Deklarasi Rules */
 is_water_nearby(X1,X2,Y1,Y2) :-
-    peta(X1,Y1,tile_air);
-    peta(X1,Y2,tile_air);
-    peta(X2,Y1,tile_air);
-    peta(X2,Y2,tile_air).
+    point(X1,Y1,water);
+    point(X1,Y2,water);
+    point(X2,Y1,water);
+    point(X2,Y2,water).
 
 can_do_fishing :-
     X1 is X+1,

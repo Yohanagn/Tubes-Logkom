@@ -1,15 +1,9 @@
 /* File map.pl */
 
-/* Dynamic Variable */
+/* Fact - Dynamic Variable */
 :- dynamic(map_height/1).
 :- dynamic(map_width/1). 
-:- dynamic(player_pos/2).
-:- dynamic(market_pos/2).
-:- dynamic(house_pos/2).
-:- dynamic(ranch_pos/2).
-:- dynamic(water_pos/2).
-:- dynamic(digged_pos/2).
-:- dynamic(quest_pos/2).
+:- dynamic(point/3).
 
 
 /* Edge Point */
@@ -21,45 +15,65 @@ edge_north(_,Y) :- Y is 0, !.
 
 /* Initialize special position */
 init_player_pos :-
-    asserta(player_pos(1,1)).
+    asserta(point(1,1,player)).
 
 init_marketplace :-
 	random(6,10,X1), 
 	random(1,5,Y1), 
-	asserta(market_pos(X1,Y1)).
+	asserta(point(X1,Y1,market)).
 
 init_house :-
 	random(4,7,X1), 
 	random(4,7,Y1), 
-	asserta(market_pos(X1,Y1)).
+	asserta(point(X1,Y1,house)).
 
 init_quest_pos :- 
     random(1,10,X1),
     random(1,10,Y1),
-    asserta(quest_pos(X1,Y1)).
+	\+ (point(X1,Y1,water)),
+    asserta(point(X1,Y1,quest)).
 
-init_ranch :- .
+init_ranch :-
     random(1,5,X1), 
 	random(6,10,Y1), 
-	asserta(ranch_pos(X1,Y1)).
+	asserta(point(X1,Y1,ranch)).
 
-init_water_tile :- .
+init_water_tile :- 
+	asserta(point(10,6,water)),
+	forall(between(8,10,X),(
+		asserta(point(X,7,water)))),
+	forall(between(6,10,X),(
+		asserta(point(X,8,water)))),
+	forall(between(7,9,X),(
+		asserta(point(X,9,water)))).
 
-init_digged_tile :- .
-
+/*
+Gambaran Map
+############
+#----------#
+#----------#
+#----------#
+#----------#
+#----------#
+#---------o#
+#-------ooo#
+#-----ooooo#
+#------ooo-#
+#----------#
+############ 
+*/
 
 /* Create Map */
 createMap :- 
     W is 10, H is 10,
-	asserta(map_width(10)), 
-	asserta(map_height(10)), 
+	asserta(map_width(W)), 
+	asserta(map_height(H)), 
 	init_player_pos,
     init_marketplace, 
 	init_house,
-	init_quest_pos, 
-	init_ranch,
 	init_water_tile,
-    init_digged_tile, !.
+	init_ranch,
+	init_quest_pos, !. 
 
 
 /* Display Map Point */
@@ -67,14 +81,32 @@ display_point(X,Y) :- edge_east(X,Y), write('#\n'), !.
 display_point(X,Y) :- edge_north(X,Y), write('#'), !.
 display_point(X,Y) :- edge_south(X,Y), write('#'), !.
 display_point(X,Y) :- edge_west(X,Y), write('#'), !.
-display_point(X,Y) :- player_pos(X,Y), !, write('P').
-display_point(X,Y) :- market_pos(X,Y), !, write('M').
-display_point(X,Y) :- house_pos(X,Y), !, write('M').
-display_point(X,Y) :- quest_pos(X,Y), !, write('Q').
-display_point(X,Y) :- ranch_pos(X,Y), !, write('R').
-display_point(X,Y) :- water_pos(X,Y), !, write('o').
-display_point(X,Y) :- digged_pos(X,Y), !, write('=').
+display_point(X,Y) :- point(X,Y,player), !, write('P').
+display_point(X,Y) :- point(X,Y,market), !, write('M').
+display_point(X,Y) :- point(X,Y,house), !, write('H').
+display_point(X,Y) :- point(X,Y,quest), !, write('Q').
+display_point(X,Y) :- point(X,Y,ranch), !, write('R').
+display_point(X,Y) :- point(X,Y,water), !, write('o').
+display_point(X,Y) :- point(X,Y,digged), !, write('=').
 display_point(_,_) :- write('-'), !.
 
 
 /* Map Command */
+map :- 	
+	map_width(X), 
+	X0 is 0, Xn is X+1,
+	map_height(Y),
+	Y0 is 0, Yn is Y+1, 
+	write(' '),
+	forall(between(Y0,Yn,Yi),(
+		forall(between(X0,Xn,Xi),(
+			display_point(Xi,Yi),
+			write(' '))))), nl,
+	write(' Symbol: P - Player\n'),
+	write('         M - Marketplace\n'),
+	write('         R - Ranch\n'),
+	write('         H - House\n'),
+	write('         Q - Quest\n'),
+	write('         o - Water tile\n'),
+	write('         = - Digged tile\n'),
+	write('         # - Wall\n'), !.

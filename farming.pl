@@ -64,15 +64,15 @@ add_exp_farming :-
 dig :-
     player_position(X,Y),
     X1 is X, Y1 is Y,
-    retractall(peta(X1,Y1,Z)),
-    asserta(peta(X1,Y1,digged_tile)),
+    retractall(point(X1,Y1,Z)),
+    asserta(point(X1,Y1,digged)),
     write('You digged the tile'),
     nl,
     !.
 
 plant :-
     player_position(X,Y),
-    peta(X,Y,digged_tile),
+    point(X,Y,digged_tile),
     \+ tile_farming(X,Y,_,_),
     display_inventory,
     readln(Seed),
@@ -91,7 +91,7 @@ plant :-
 
 harvest :-
     player_position(X,Y),
-    peta(X,Y,digged_tile),
+    point(X,Y,digged),
     tile_farming(X,Y,Jenis,Waktu),
     Waktu >= current_time,
     retractall(tile_farming(X,Y,Jenis,Waktu)),
