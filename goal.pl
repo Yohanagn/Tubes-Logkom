@@ -1,4 +1,5 @@
 :- include('player.pl').
+/* player_money(200000). */
 
 goal :-
     player_money(X),
