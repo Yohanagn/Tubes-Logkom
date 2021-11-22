@@ -1,7 +1,3 @@
-:- include('player.pl').
-:- include('inventory.pl').
-:- include('map.pl').
-
 /* Deklarasi fakta */
 /* Jenis tanaman : wortel, kentang, gandum,padi, singkong, jagung */
 
@@ -29,9 +25,9 @@ add_to_inventory(X) :-
     ).
 
 display_inventory :-
-    inventory(X,Y).
+    inventory(X,Y),
     write(Y),
-    write(' ')
+    write(' '),
     write(X),
     nl.
 
@@ -64,7 +60,7 @@ add_exp_farming :-
 dig :-
     player_position(X,Y),
     X1 is X, Y1 is Y,
-    retractall(point(X1,Y1,Z)),
+    retractall(point(X1,Y1,_)),
     asserta(point(X1,Y1,digged)),
     write('You digged the tile'),
     nl,
@@ -99,7 +95,7 @@ harvest :-
     add_exp_farming,
     write('You harvested a'),
     write(Jenis),
-    nl.
+    nl,
     !.
 
     

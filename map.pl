@@ -1,7 +1,4 @@
 /* File map.pl */
-/*
-:- include('player.pl').
-*/
 
 /* Fact - Dynamic Variable */
 :- dynamic(map_height/1).

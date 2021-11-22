@@ -1,7 +1,3 @@
-:- include('player.pl').
-:- include('inventory.pl').
-:- include('map.pl').
-
 /* Deklarasi Fakta */
 ikan(mas).
 ikan(lele).
@@ -38,7 +34,7 @@ get_list(X) :-
     member(X,L).
 
 get_index_val(0,[H|_],X) :- X is H.
-get_index_val(Idx,[H|T],X):
+get_index_val(Idx,[_|T],X):
     Idx1 is Idx-1,
     get_index_val(Idx1,T,X).
 
@@ -49,7 +45,7 @@ generate_koef(X) :-
     Y is 0.2
     ;
     Y is 0
-    )
+    ),
     X is (Level_overall/50)*0.2+(Level_fisherman/50)*0.3+Y.
 
 /* Command utama */
@@ -59,7 +55,7 @@ fish :-
     get_list(L),
     generate_koef(Koef),
     Max_rand is (Koef*40)//1,
-    random(0,Max_rand,Random_val)
+    random(0,Max_rand,Random_val),
     (Random_val<5 ->
     get_index_val(Random_val,L,X),
     add_to_inventory(X),

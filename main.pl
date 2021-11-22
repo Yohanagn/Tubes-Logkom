@@ -2,7 +2,6 @@
 :- include('map.pl').
 :- include('move.pl').
 :- include('house.pl').
-/*
 :- include('farming.pl').
 :- include('fishing.pl').
 :- include('ranching.pl').
@@ -10,7 +9,7 @@
 :- include('inventory.pl').
 :- include('potion.pl').
 :- include('musim.pl').
-*/
+:- include('marketplace.pl').
 
 /* Fakta */
 /* (hour,day,month) */
@@ -22,11 +21,6 @@
 
 /* Rules */
 mainMenu :-
-    write('  |‾‾|    |‾‾|                                        |‾‾|     '), nl,
-    write('  |  |    |  |/‾‾‾‾`′‾|‾`′‾‾‾‾\‾‾\  /‾‾/‾‾‾‾‾‾\/‾‾‾‾‾‾|   ‾‾|  '), nl, 
-    write('  |   ‾‾‾‾   |  (‾‾|  |  |‾‾‾‾‾\  \/  /   ‾‾  /\ ‾‾‾‾ \  |‾‾   '), nl,
-    write('  |  |‾‾‾‾|  |\  ‾‾`′‾|  |      \    / \‾‾‾‾‾ ||‾‾‾‾  /\  ‾‾|  '), nl,
-    write('  |__|    |__|  ‾‾‾  ‾ ‾‾        ‾‾‾‾   ‾‾‾‾‾‾  ‾‾‾‾‾    ‾‾‾   '), nl, nl,
     write('                         Harvest  Star                         '), nl, nl,
     write('            Let\'s play and pay our debts together!            '), nl, nl,
     write('      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      '), nl,

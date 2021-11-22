@@ -1,4 +1,3 @@
-:- include('player.pl').
 player_money(20).
 
 fail :-

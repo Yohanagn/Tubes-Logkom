@@ -1,7 +1,3 @@
-/*
-:- include('map.pl').
-*/
-
 /* Rules */
 north :-
     player_position(_,Yp),

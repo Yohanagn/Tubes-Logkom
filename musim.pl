@@ -1,6 +1,3 @@
-:- include('player.pl').
-
-
 /* Deklarasi fakta */
 jenis_musim(spring).
 jenis_musim(summer).

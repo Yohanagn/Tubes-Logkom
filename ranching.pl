@@ -1,7 +1,4 @@
-:- include('map.pl').
-:- include('inventory.pl').
-:- include('player.pl').
-
+/* Deklarasi fakta */
 lama_beternak(ayampetelur, 30).
 lama_beternak(ayambroiler, 45).
 lama_beternak(sapiperah, 100).
