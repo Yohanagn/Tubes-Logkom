@@ -10,6 +10,9 @@
 :- include('potion.pl').
 :- include('musim.pl').
 :- include('marketplace.pl').
+:- include('item.pl').
+:- include('fail.pl').
+:- include('goal.pl').
 
 /* Fakta */
 /* (hour,day,month) */
