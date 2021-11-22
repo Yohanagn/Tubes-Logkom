@@ -1,7 +1,6 @@
 :- include('player.pl').
 :- include('map.pl').
 :- include('move.pl').
-:- include('house.pl').
 /*
 :- include('farming.pl').
 :- include('fishing.pl').
@@ -22,11 +21,7 @@
 
 /* Rules */
 mainMenu :-
-    write('  |‾‾|    |‾‾|                                        |‾‾|     '), nl,
-    write('  |  |    |  |/‾‾‾‾`′‾|‾`′‾‾‾‾\‾‾\  /‾‾/‾‾‾‾‾‾\/‾‾‾‾‾‾|   ‾‾|  '), nl,
-    write('  |   ‾‾‾‾   |  (‾‾|  |  |‾‾‾‾‾\  \/  /   ‾‾  /\ ‾‾‾‾ \  |‾‾   '), nl,
-    write('  |  |‾‾‾‾|  |\  ‾‾`′‾|  |      \    / \‾‾‾‾‾ ||‾‾‾‾  /\  ‾‾|  '), nl,
-    write('  |__|    |__|  ‾‾‾  ‾ ‾‾        ‾‾‾‾   ‾‾‾‾‾‾  ‾‾‾‾‾    ‾‾‾   '), nl, nl,
+
     write('                         Harvest  Star                         '), nl, nl,
     write('            Let\'s play and pay our debts together!            '), nl, nl,
     write('      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      '), nl,
