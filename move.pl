@@ -124,7 +124,11 @@ updateTime(x) :-
     retract(game_time(H,D,M)),
     TempH is (H + x),
     H1 is (TempH mod 24),
-    TempD is D + (TempH div 24),
+    TempD is (D + (TempH div 24)),
     D1 is (TempD mod 30),
-    M1 is (M + (TempD mod 30)), 
+    M1 is (M + (TempD div 30)), 
     asserta(game_time(H1,D1,M1)), !.
+
+displayTime :-
+    game_time(H,D,M),
+    write(H), write(':00'), write(' - '), write(D), write('/'), write(M), write('/2021').
