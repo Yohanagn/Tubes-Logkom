@@ -10,57 +10,39 @@
 :- dynamic(player_expperspecialty/2).
 :- dynamic(player_position/2).
 
-player_job(farmer).
-player_job(fisherman).
-player_job(rancher).
+job(farmer).
+job(fisherman).
+job(rancher).
 
 initiate_playerstatus :-
     asserta(player_money(0)),
     asserta(player_level(1)),
     asserta(player_totalexp(0)).
 
-job_farmer :-
-    asserta(player_job(farmer)),
-    asserta(player_specialty(farmer, 1)),
-    asserta(player_expperspecialty(farmer, 0)),
-    asserta(player_tools(A, farmer)).
-
-job_fisherman :-
-    asserta(player_job(fisherman)),
-    asserta(player_specialty(fisherman, 1)),
-    asserta(player_expperspecialty(fisherman, 0)),
-    asserta(player_tools(A, fisherman)).
-
-job_rancher :-
-    asserta(player_job(rancher)),
-    asserta(player_specialty(rancher, 1)),
-    asserta(player_expperspecialty(rancher, 0)),
-    asserta(player_tools(A, rancher)).
-
 initiate_playerpost :- X is 1, Y is 1, asserta(player_position(X,Y)).
 
 initiatePlayerjob(X) :-
     X =:= 1,
     asserta(player_job(farmer)),
-    asserta(player_levelperspecialty(1)),
+    asserta(player_levelperspecialty(farmer, 1)),
     asserta(player_tools(cangkul, farmer)),
-    asserta(player_expperspecialty(0)),!.
+    asserta(player_expperspecialty(farmer, 0)),!.
 
 initiatePlayerjob(X) :-
     X =:= 2,
     asserta(player_job(fisherman)),
-    asserta(player_levelperspecialty(1)),
+    asserta(player_levelperspecialty(fisherman, 1)),
     asserta(player_tools(pancingan, fisherman)),
     asserta(player_tools(jala, fisherman)),
-    asserta(player_expperspecialty(0)),!.
+    asserta(player_expperspecialty(fisherman, 0)),!.
 
 initiatePlayerjob(X) :-
     X =:= 3,
     asserta(player_job(rancher)),
-    asserta(player_levelperspecialty(1)),
+    asserta(player_levelperspecialty(rancher, 1)),
     asserta(player_tools(ember, rancher)),
     asserta(player_tools(pisau, rancher)),
-    asserta(player_expperspecialty(0)),!.
+    asserta(player_expperspecialty(rancher, 0)),!.
 
 tambahExpperspecialty(Job, ExpNow, LevelUp, Level) :-
     asserta(player_levelperspecialty(Level)),
@@ -106,49 +88,73 @@ totalExp(Exp, Level, LevelUp) :-
     writeln('Level Up!'), writeln('Now, You are in Level '), write(Level), writeln('Congratulations! You have reached the Maximum Level at This Game'); LevelUp is 0,!.
 
 displayStatus(X) :-
-    player_level(Level), player_totalexp(Exp), player_money(Money), 
-    player_expperspecialty(farmer, Exp1), player_expperspecialty(fisherman, Exp2), player_expperspecialty(rancher, Exp3),
-    player_levelperspecialty(farmer, Level1), player_levelperspecialty(fisherman, Level2), player_levelperspecialty(rancher, Level3),
-    player_job(X),
+    write('Your Status : '),nl,
+    job(X),
     (X == farmer ->
-    writeln('Your Status : '),
-    writeln('Job :'), write(X),
-    writeln('Level :'), write(Level),
-    writeln('Level Farming : '), write(Level1),
-    writeln('Exp Farming : '), write(Exp1),
-    writeln('Level Fishing : '), write(Level2),
-    writeln('Exp Fishing : '), write(Exp2),
-    writeln('Level Ranching : '), write(Level3),
-    writeln('Exp Ranching : '), write(Exp3),
-    writeln('Exp : '), write(Exp),
-    writeln('Money : '), write(Money)
+        write('Job : '),
+        forall(player_job(Job), write(Job)),nl,
+        write('Level : '),
+        forall(player_level(Level), write(Level)), nl,
+        write('Level Farming : '),
+        forall(player_levelperspecialty(farmer, Level1), write(Level1)), nl,
+        write('Exp Farming : '), 
+        forall(player_expperspecialty(farmer, Exp1), write(Exp1)), nl,
+        write('Level Fishing : '), 
+        forall(player_levelperspecialty(fisherman, Level2), write(Level2)), nl,
+        write('Exp Fishing : '),
+        forall(player_expperspecialty(fisherman, Exp2), write(Exp2)), nl,
+        write('Level Ranching : '),
+        forall(player_levelperspecialty(rancher, Level3), write(Level3)), nl,
+        write('Exp Ranching : '),
+        forall(player_expperspecialty(rancher, Exp3), write(Exp3)), nl,
+        write('Exp : '),
+        forall(player_totalexp(Exp), write(Exp)), nl,
+        write('Money : '),
+        forall(player_money(Money), write(Money)),nl
     ;
     X == fisherman ->
-    writeln('Your Status : '),
-    writeln('Job :'), write(X),
-    writeln('Level :'), write(Level),
-    writeln('Level Farming : '), write(Level1),
-    writeln('Exp Farming : '), write(Exp1),
-    writeln('Level Fishing : '), write(Level2),
-    writeln('Exp Fishing : '), write(Exp2),
-    writeln('Level Ranching : '), write(Level3),
-    writeln('Exp Ranching : '), write(Exp3),
-    writeln('Exp : '), write(Exp),
-    writeln('Money : '), write(Money)
+        write('Job : '),
+        forall(player_job(Job), write(Job)),nl,
+        write('Level : '),
+        forall(player_level(Level), write(Level)), nl,
+        write('Level Farming : '),
+        forall(player_levelperspecialty(farmer, Level1), write(Level1)), nl,
+        write('Exp Farming : '), 
+        forall(player_expperspecialty(farmer, Exp1), write(Exp1)), nl,
+        write('Level Fishing : '), 
+        forall(player_levelperspecialty(fisherman, Level2), write(Level2)), nl,
+        write('Exp Fishing : '),
+        forall(player_expperspecialty(fisherman, Exp2), write(Exp2)), nl,
+        write('Level Ranching : '),
+        forall(player_levelperspecialty(rancher, Level3), write(Level3)), nl,
+        write('Exp Ranching : '),
+        forall(player_expperspecialty(rancher, Exp3), write(Exp3)), nl,
+        write('Exp : '),
+        forall(player_totalexp(Exp), write(Exp)), nl,
+        write('Money : '),
+        forall(player_money(Money), write(Money)),nl
     ;
     X == rancher ->
-    writeln('Your Status : '),
-    writeln('Job :'), write(X),
-    writeln('Level :'), write(Level),
-    writeln('Level Farming : '), write(Level1),
-    writeln('Exp Farming : '), write(Exp1),
-    writeln('Level Fishing : '), write(Level2),
-    writeln('Exp Fishing : '), write(Exp2),
-    writeln('Level Ranching : '), write(Level3),
-    writeln('Exp Ranching : '), write(Exp3),
-    writeln('Exp : '), write(Exp),
-    writeln('Money : '), write(Money)), !.
-
+        write('Job : '),
+        forall(player_job(Job), write(Job)),nl,
+        write('Level : '),
+        forall(player_level(Level), write(Level)), nl,
+        write('Level Farming : '),
+        forall(player_levelperspecialty(farmer, Level1), write(Level1)), nl,
+        write('Exp Farming : '), 
+        forall(player_expperspecialty(farmer, Exp1), write(Exp1)), nl,
+        write('Level Fishing : '), 
+        forall(player_levelperspecialty(fisherman, Level2), write(Level2)), nl,
+        write('Exp Fishing : '),
+        forall(player_expperspecialty(fisherman, Exp2), write(Exp2)), nl,
+        write('Level Ranching : '),
+        forall(player_levelperspecialty(rancher, Level3), write(Level3)), nl,
+        write('Exp Ranching : '),
+        forall(player_expperspecialty(rancher, Exp3), write(Exp3)), nl,
+        write('Exp : '),
+        forall(player_totalexp(Exp), write(Exp)), nl,
+        write('Money : '),
+        forall(player_money(Money), write(Money)),nl), !.
 
     
 

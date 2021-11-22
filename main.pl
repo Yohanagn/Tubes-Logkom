@@ -23,7 +23,7 @@
 /* Rules */
 mainMenu :-
     write('  |‾‾|    |‾‾|                                        |‾‾|     '), nl,
-    write('  |  |    |  |/‾‾‾‾`′‾|‾`′‾‾‾‾\‾‾\  /‾‾/‾‾‾‾‾‾\/‾‾‾‾‾‾|   ‾‾|  '), nl,
+    write('  |  |    |  |/‾‾‾‾`′‾|‾`′‾‾‾‾\‾‾\  /‾‾/‾‾‾‾‾‾\/‾‾‾‾‾‾|   ‾‾|  '), nl, 
     write('  |   ‾‾‾‾   |  (‾‾|  |  |‾‾‾‾‾\  \/  /   ‾‾  /\ ‾‾‾‾ \  |‾‾   '), nl,
     write('  |  |‾‾‾‾|  |\  ‾‾`′‾|  |      \    / \‾‾‾‾‾ ||‾‾‾‾  /\  ‾‾|  '), nl,
     write('  |__|    |__|  ‾‾‾  ‾ ‾‾        ‾‾‾‾   ‾‾‾‾‾‾  ‾‾‾‾‾    ‾‾‾   '), nl, nl,
@@ -61,14 +61,14 @@ start :-
     write('2. fisherman'), nl,
     write('3. Rancher'),nl,
     read(Job), nl,
-    (Job == farmer ->
-        initiatePlayerjob(farmer),
-        write('You choose farmer, lets start farming'),nl;
-    Job == fisherman ->
-        initiatePlayerjob(fisherman),
+    (Job =:= 1 ->
+        write('You choose farmer, lets start farming'),nl,
+        initiatePlayerjob(1);
+    Job =:= 2 ->
+        initiatePlayerjob(2),
         write('You choose fisherman, lets start fishing'),nl;
-    Job == rancher ->
-        initiatePlayerjob(rancher),
+    Job =:= 3 ->
+        initiatePlayerjob(3),
         write('You choose rancher, lets start ranching'),!),!.
 
 retractVar :-
@@ -123,14 +123,14 @@ quit :-
     write('Are you sure want to quit the game? (y/n)\n'),
     write('Choice: '),
     read(Ans),
-    Ans is y,
+    Ans == y,
     write('Closing the game...\n'),
     halt.
 
-/*
-inventory :-
-    display_inventory.
 
+/*inventory :-
+    display_inventory.
+*/
 status :-
     displayStatus(X).
-*/
+
