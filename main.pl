@@ -1,6 +1,7 @@
 :- include('player.pl').
 :- include('map.pl').
 :- include('move.pl').
+/*
 :- include('farming.pl').
 :- include('fishing.pl').
 :- include('ranching.pl').
@@ -8,22 +9,19 @@
 :- include('inventory.pl').
 :- include('potion.pl').
 :- include('musim.pl').
+*/
 
 /* Fakta */
 /* (hour,day,month) */
-:- dynamic(game_opened/1)
-:- dynamic(game_started/1)
+:- dynamic(game_opened/1).
+:- dynamic(game_started/1).
 :- dynamic(game_time/3).
 :- dynamic(musim/1).
 :- dynamic(cuaca/1).
 
 /* Rules */
 mainMenu :-
-    write('  |‾‾|    |‾‾|                                        |‾‾|     '), nl,
-    write('  |  |    |  |/‾‾‾‾`′‾|‾`′‾‾‾‾\‾‾\  /‾‾/‾‾‾‾‾‾\/‾‾‾‾‾‾|   ‾‾|  '), nl,
-    write('  |   ‾‾‾‾   |  (‾‾|  |  |‾‾‾‾‾\  \/  /   ‾‾  /\ ‾‾‾‾ \  |‾‾   '), nl,
-    write('  |  |‾‾‾‾|  |\  ‾‾`′‾|  |      \    / \‾‾‾‾‾ ||‾‾‾‾  /\  ‾‾|  '), nl,
-    write('  |__|    |__|  ‾‾‾  ‾ ‾‾        ‾‾‾‾   ‾‾‾‾‾‾  ‾‾‾‾‾    ‾‾‾   '), nl, nl,
+
     write('                         Harvest  Star                         '), nl, nl,
     write('            Let\'s play and pay our debts together!            '), nl, nl,
     write('      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      '), nl,
@@ -43,12 +41,13 @@ openGame :-
     mainMenu,
     asserta(game_opened(true)), !.
 
-startGame :-
+start :-
     game_opened(_),
     game_started(_),
     write('You have started the game, type \'help\' to display command info\n'), !.
-startGame :-
+start :-
     game_opened(_),
+    asserta(game_started(true)),
     asserta(game_time(0,1,1)),
     createMap,
     write('Welcome to Harvest Star!'), nl,
@@ -84,7 +83,7 @@ retractVar :-
     retractall(player_job(_)),
     retractall(player_level(_)),
     retractall(player_levelperspecialty(_,_)),
-    retractall(player_tools(_,_),
+    retractall(player_tools(_,_)),
     retractall(player_money(_)),
     retractall(player_totalexp(_)),
     retractall(player_expperspecialty(_,_)),
@@ -121,9 +120,10 @@ quit :-
     write('Closing the game...\n'),
     halt.
 
+/*
 inventory :-
     display_inventory.
 
 status :-
     displayStatus(X).
-
+*/

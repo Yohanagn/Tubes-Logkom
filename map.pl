@@ -1,5 +1,7 @@
 /* File map.pl */
+/*
 :- include('player.pl').
+*/
 
 /* Fact - Dynamic Variable */
 :- dynamic(map_height/1).
@@ -94,8 +96,8 @@ display_point(_,_) :- write('-'), !.
 
 /* Map Command */
 map :- 	
-	game_opened,
-	game_started,
+	game_opened(_),
+	game_started(_),
 	map_width(X), 
 	X0 is 0, Xn is X+1,
 	map_height(Y),
@@ -104,7 +106,7 @@ map :-
 	forall(between(Y0,Yn,Yi),(
 		forall(between(X0,Xn,Xi),(
 			display_point(Xi,Yi),
-			write(' '))))), nl,
+			write('  '))))), nl,
 	write('  Symbol: P - Player\n'),
 	write('          M - Marketplace\n'),
 	write('          R - Ranch\n'),
@@ -113,4 +115,4 @@ map :-
 	write('          o - Water tile\n'),
 	write('          = - Digged tile\n'),
 	write('          # - Wall\n'), !.
-map :- write('You haven\'t started the game yet!')
+map :- write('You haven\'t started the game yet!'), !.

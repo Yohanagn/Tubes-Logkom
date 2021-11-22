@@ -1,4 +1,6 @@
+/*
 :- include('map.pl').
+*/
 
 /* Rules */
 north :-
@@ -15,9 +17,9 @@ north :-
     write('You moved north!\n'), 
     retract(player_position(Xp,Yp)), 
     Yp1 is Yp-1, 
-    asserta(player_position(Xp,Yp1)), !,
-    updateTime(1).
-    special_loc(Xp,Yp1).
+    asserta(player_position(Xp,Yp1)),
+    updateTime(1),
+    special_loc(Xp,Yp1), !.
 
 south :-    
     player_position(_,Yp),
@@ -33,9 +35,9 @@ south :-
     write('You moved south!\n'), 
     retract(player_position(Xp,Yp)), 
     Yp1 is Yp+1, 
-    asserta(player_position(Xp,Yp1)), !,
-    updateTime(1).
-    special_loc(Xp,Yp1).
+    asserta(player_position(Xp,Yp1)),
+    updateTime(1),
+    special_loc(Xp,Yp1), !.
 
 west :-
     player_position(Xp,_),
@@ -51,9 +53,9 @@ west :-
     write('You moved west!\n'), 
     retract(player_position(Xp,Yp)), 
     Xp1 is Xp-1, 
-    asserta(player_position(Xp1,Yp)), !,
-    updateTime(1).
-    special_loc(Xp1,Yp).
+    asserta(player_position(Xp1,Yp)),
+    updateTime(1),
+    special_loc(Xp1,Yp), !.
 
 east :-
     player_position(Xp,_),
@@ -69,9 +71,9 @@ east :-
     write('You moved east!\n'), 
     retract(player_position(Xp,Yp)), 
     Xp1 is Xp+1, 
-    asserta(player_position(Xp1,Yp)), !,
-    updateTime(1).
-    special_loc(Xp1,Yp).
+    asserta(player_position(Xp1,Yp)),
+    updateTime(1),
+    special_loc(Xp1,Yp), !.
 
 special_loc(X,Y) :-
     point(X,Y,market),
@@ -115,7 +117,8 @@ d :-
     game_opened(_),
     game_started(_),
     east, !.
-d :- write('You haven\'t started the game yet!\n'), !.
+d :-
+    write('You haven\'t started the game yet!\n'), !.
 
 updateTime(x) :- 
     retract(game_time(H,D,M)),
@@ -124,4 +127,4 @@ updateTime(x) :-
     TempD is D + (TempH div 24),
     D1 is (TempD mod 30),
     M1 is (M + (TempD mod 30)), 
-    asserta(game_time(H1,D1,M1)) !.
+    asserta(game_time(H1,D1,M1)), !.
