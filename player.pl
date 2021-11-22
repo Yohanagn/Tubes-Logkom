@@ -105,11 +105,14 @@ totalExp(Exp, Level, LevelUp) :-
     (ExpNow >= 2500 -> LevelUp is 1),
     writeln('Level Up!'), writeln('Now, You are in Level '), write(Level), writeln('Congratulations! You have reached the Maximum Level at This Game'); LevelUp is 0,!.
 
-displayStatus :-
+displayStatus(X) :-
     player_level(Level), player_totalexp(Exp), player_money(Money), 
     player_expperspecialty(farmer, Exp1), player_expperspecialty(fisherman, Exp2), player_expperspecialty(rancher, Exp3),
     player_levelperspecialty(farmer, Level1), player_levelperspecialty(fisherman, Level2), player_levelperspecialty(rancher, Level3),
+    player_job(X),
+    (X == farmer ->
     writeln('Your Status : '),
+    writeln('Job :'), write(X),
     writeln('Level :'), write(Level),
     writeln('Level Farming : '), write(Level1),
     writeln('Exp Farming : '), write(Exp1),
@@ -118,7 +121,33 @@ displayStatus :-
     writeln('Level Ranching : '), write(Level3),
     writeln('Exp Ranching : '), write(Exp3),
     writeln('Exp : '), write(Exp),
-    writeln('Money : '), write(Money), !.
+    writeln('Money : '), write(Money)
+    ;
+    X == fisherman ->
+    writeln('Your Status : '),
+    writeln('Job :'), write(X),
+    writeln('Level :'), write(Level),
+    writeln('Level Farming : '), write(Level1),
+    writeln('Exp Farming : '), write(Exp1),
+    writeln('Level Fishing : '), write(Level2),
+    writeln('Exp Fishing : '), write(Exp2),
+    writeln('Level Ranching : '), write(Level3),
+    writeln('Exp Ranching : '), write(Exp3),
+    writeln('Exp : '), write(Exp),
+    writeln('Money : '), write(Money)
+    ;
+    X == rancher ->
+    writeln('Your Status : '),
+    writeln('Job :'), write(X),
+    writeln('Level :'), write(Level),
+    writeln('Level Farming : '), write(Level1),
+    writeln('Exp Farming : '), write(Exp1),
+    writeln('Level Fishing : '), write(Level2),
+    writeln('Exp Fishing : '), write(Exp2),
+    writeln('Level Ranching : '), write(Level3),
+    writeln('Exp Ranching : '), write(Exp3),
+    writeln('Exp : '), write(Exp),
+    writeln('Money : '), write(Money)), !.
 
 
     
