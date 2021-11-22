@@ -116,13 +116,14 @@ d :-
 d :-
     write('You haven\'t started the game yet!\n'), !.
 
-updateTime(x) :- 
-    retract(game_time(H,D,M)),
-    TempH is (H + x),
+updateTime(X) :- 
+    game_time(H,D,M),
+    TempH is (H + X),
     H1 is (TempH mod 24),
     TempD is (D + (TempH div 24)),
     D1 is (TempD mod 30),
     M1 is (M + (TempD div 30)), 
+    retract(game_time(_,_,_)),
     asserta(game_time(H1,D1,M1)), !.
 
 displayTime :-
