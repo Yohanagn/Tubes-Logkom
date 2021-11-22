@@ -17,9 +17,7 @@
 :- dynamic(musim/1).
 :- dynamic(cuaca/1).
 
-startGame :-
-    startingGame(_), !.
-
+/* Rules */
 mainMenu :-
     write('  |‾‾|    |‾‾|                                        |‾‾|     '), nl,
     write('  |  |    |  |/‾‾‾‾`′‾|‾`′‾‾‾‾\‾‾\  /‾‾/‾‾‾‾‾‾\/‾‾‾‾‾‾|   ‾‾|  '), nl,

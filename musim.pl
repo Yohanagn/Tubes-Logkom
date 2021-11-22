@@ -26,7 +26,7 @@ get_list_musim(X) :-
     member(X,L).
 
 is_ubah_musim :-
-    time(Hour,Day,Month),
+    game_time(Hour,Day,Month),
     Hour is 0,
     Day is 0,
     Month mod 3 is 0.
@@ -42,7 +42,7 @@ get_list_cuaca(X) :-
 ganti_musim :-
     is_ubah_musim,
     get_list_musim(L),
-    time(_,_,Month),
+    game_time(_,_,Month),
     Idx is Month//3,
     get_idx_list_musim(Idx,L,X),
     retractall(musim(_)),

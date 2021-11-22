@@ -16,6 +16,7 @@ north :-
     retract(player_position(Xp,Yp)), 
     Yp1 is Yp-1, 
     asserta(player_position(Xp,Yp1)), !,
+    updateTime(1).
     special_loc(Xp,Yp1).
 
 south :-    
@@ -33,6 +34,7 @@ south :-
     retract(player_position(Xp,Yp)), 
     Yp1 is Yp+1, 
     asserta(player_position(Xp,Yp1)), !,
+    updateTime(1).
     special_loc(Xp,Yp1).
 
 west :-
@@ -50,6 +52,7 @@ west :-
     retract(player_position(Xp,Yp)), 
     Xp1 is Xp-1, 
     asserta(player_position(Xp1,Yp)), !,
+    updateTime(1).
     special_loc(Xp1,Yp).
 
 east :-
@@ -67,6 +70,7 @@ east :-
     retract(player_position(Xp,Yp)), 
     Xp1 is Xp+1, 
     asserta(player_position(Xp1,Yp)), !,
+    updateTime(1).
     special_loc(Xp1,Yp).
 
 special_loc(X,Y) :-
@@ -89,14 +93,35 @@ special_loc(X,Y) :-
     write('You are by the lakeside. Type \'fish\' for to do fishing activity.\n'), !.
 
 /* Move Command */
-w :- north, !.
-/* w :- write('You haven\'t started the game yet.\n'), !. */
+w :-
+    game_opened(_),
+    game_started(_),
+    north, !.
+w :- write('You haven\'t started the game yet!\n'), !.
 
-a :- west, !.
-/* a :- write('You haven\'t started the game yet.\n'), !. */
+a :-
+    game_opened(_),
+    game_started(_),
+    west, !.
+a :- write('You haven\'t started the game yet!\n'), !.
 
-s :- south, !.
-/* s :- write('You haven\'t started the game yet.\n'), !. */
+s :-
+    game_opened(_),
+    game_started(_),
+    south, !.
+s :- write('You haven\'t started the game yet!\n'), !. 
 
-d :- east, !.
-/* d :- write('You haven\'t started the game yet.\n'), !. */
+d :-
+    game_opened(_),
+    game_started(_),
+    east, !.
+d :- write('You haven\'t started the game yet!\n'), !.
+
+updateTime(x) :- 
+    retract(game_time(H,D,M)),
+    TempH is (H + x),
+    H1 is (TempH mod 24),
+    TempD is D + (TempH div 24),
+    D1 is (TempD mod 30),
+    M1 is (M + (TempD mod 30)), 
+    asserta(game_time(H1,D1,M1)) !.

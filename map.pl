@@ -94,20 +94,23 @@ display_point(_,_) :- write('-'), !.
 
 /* Map Command */
 map :- 	
+	game_opened,
+	game_started,
 	map_width(X), 
 	X0 is 0, Xn is X+1,
 	map_height(Y),
 	Y0 is 0, Yn is Y+1, 
-	write(' '),
+	write('  '),
 	forall(between(Y0,Yn,Yi),(
 		forall(between(X0,Xn,Xi),(
 			display_point(Xi,Yi),
 			write(' '))))), nl,
-	write(' Symbol: P - Player\n'),
-	write('         M - Marketplace\n'),
-	write('         R - Ranch\n'),
-	write('         H - House\n'),
-	write('         Q - Quest\n'),
-	write('         o - Water tile\n'),
-	write('         = - Digged tile\n'),
-	write('         # - Wall\n'), !.
+	write('  Symbol: P - Player\n'),
+	write('          M - Marketplace\n'),
+	write('          R - Ranch\n'),
+	write('          H - House\n'),
+	write('          Q - Quest\n'),
+	write('          o - Water tile\n'),
+	write('          = - Digged tile\n'),
+	write('          # - Wall\n'), !.
+map :- write('You haven\'t started the game yet!')
