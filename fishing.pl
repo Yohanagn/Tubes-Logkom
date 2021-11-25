@@ -40,6 +40,17 @@ generate_koef(X) :-
     ),
     X is (Level_overall/50)*0.2+(Level_fisherman/50)*0.3+Y.
 
+add_exp_fishing(N) :-
+    player_totalexp(X),
+    player_expperspecialty(fisherman,Y),
+    X1 is X+N,
+    Y1 is Y+N,
+    retractall(player_totalexp(X)),
+    retractall(player_expperspecialty(fisherman,Y)),
+    asserta(player_totalexp(X1)),
+    asserta(player_expperspecialty(fisherman,Y1)),
+    !.
+
 /* Command utama */
 
 fish :-
@@ -54,11 +65,15 @@ fish :-
     write('You got '),
     write(X),
     nl,
+    Exp is 10,
+    add_exp_fishing(Exp),
     write('You get 10 xp overall and fishing'),
     nl
     ;
     write("You didn't get anything"),
     nl,
+    Exp is 5,
+    add_exp_fishing(Exp),
     write('You get 5 xp overall and fishing'),
     nl
     ).

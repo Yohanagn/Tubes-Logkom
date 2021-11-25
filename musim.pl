@@ -29,7 +29,12 @@ is_ubah_musim :-
     game_time(Hour,Day,Month),
     Hour is 0,
     Day is 0,
-    Month mod 3 is 0.
+    Month mod 3 is 0,
+    \+ Month is 12.
+
+is_ubah_cuaca :-
+    game_time(Hour,_,_),
+    Hour mod 12 is 0.
 
 get_list_cuaca(X) :-
     jenis_cuaca(L),
@@ -46,13 +51,22 @@ ganti_musim :-
     Idx is Month//3,
     get_idx_list_musim(Idx,L,X),
     retractall(musim(_)),
+    !,
     asserta(musim(X)),
+    write('Musim berganti menjadi '),
+    write(X),
+    nl,
     !.
 
 ganti_cuaca :-
+    is_ubah_cuaca,
     get_list_cuaca(L),
-    random(0,2,Idx),
+    random(0,6,Idx),
     get_idx_val(Idx,L,X),
     retractall(cuaca(_)),
+    !,
     asserta(cuaca(X)),
+    write('Cuaca berganti menjadi '),
+    write(X),
+    nl,
     !.
