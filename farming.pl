@@ -2,38 +2,19 @@
 /* Jenis tanaman : wortel, kentang, gandum,padi, singkong, jagung */
 
 /* waktu_panen(nama_tanaman,durasi_panen) */
-waktu_panen(wortel,72).
-waktu_panen(kentang,72).
-waktu_panen(gandum,96).
-waktu_panen(padi,96).
-waktu_panen(singkong,120).
-waktu_panen(jagung,120).
+waktu_panen(carrot,72).
+waktu_panen(potato,72).
+waktu_panen(wheat,96).
+waktu_panen(paddy,96).
+waktu_panen(cassava,120).
+waktu_panen(corn,120).
 
 /* Dynamic variable */
 /* tile_farming(x,y,tanaman,waktu_panen) */
-:-dynamic(tile_farming/4).
+:- dynamic(tile_farming/4).
 
 
 /* Deklarasi Rules */
-
-add_to_inventory(X) :-
-    (inventory(X,Y) ->
-    Y1 is Y+1,
-    retractall(inventory(X,Y)),
-    asserta(inventory(X,Y1));
-    asserta(inventory(X,1))
-    ).
-
-display_inventory :-
-    inventory(X,Y),
-    write(Y),
-    write(' '),
-    write(X),
-    nl.
-
-delete_zero_inventory :-
-    retractall(inventory(_,0)).
-
 add_exp_farming :-
     (player_job(farmer) ->
     player_totalexp(X),

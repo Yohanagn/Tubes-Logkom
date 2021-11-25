@@ -2,22 +2,38 @@
 :- dynamic(inventory/2).
 /* inventory(biji_jagung,10). */
 /*umbi-umbian*/
-inventory(wortel,10).
-inventory(kentang,10).
-inventory(gandum,10).
-inventory(padi,10).
-inventory(singkong,10).
-inventory(jagung,10).
+inventory(carrot,10).
+inventory(potato,10).
+inventory(wheat,10).
+inventory(paddy,10).
+inventory(cassava,10).
+inventory(corn,10).
 /*hewan ternak*/
-inventory(ayampetelur,10).
-inventory(ayambroiler,10).
-inventory(sapi,10).
-inventory(sapiperah,10).
-inventory(domba,10).
+inventory(laying_hen,10).
+inventory(broiler_hen,10).
+inventory(beef_cattle,10).
+inventory(dairy_cow,10).
+inventory(sheep,10).
 /*ikan*/
-inventory(mas,10).
-inventory(lele,10).
+inventory(goldfish,10).
+inventory(catfish,10).
 inventory(gurame,10).
-inventory(mujair,10).
-inventory(nila,10).
-    
+inventory(tilapia,10).
+inventory(parrotfish,10).
+
+add_to_inventory(X) :-
+    (inventory(X,Y) ->
+    Y1 is Y+1,
+    retractall(inventory(X,Y)),
+    asserta(inventory(X,Y1));
+    asserta(inventory(X,1))
+    ).
+
+displayInventory :-
+    inventory(X,Y),
+    write(Y),
+    write(' '),
+    write(X), nl.
+
+delete_zero_inventory :-
+    retractall(inventory(_,0)).

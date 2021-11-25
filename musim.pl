@@ -4,9 +4,12 @@ jenis_musim(summer).
 jenis_musim(autumn).
 jenis_musim(winter).
 
-jenis_cuaca(cerah).
-jenis_cuaca(berawan).
-jenis_cuaca(hujan).
+jenis_cuaca(sunny).
+jenis_cuaca(cloudy).
+jenis_cuaca(heavy_rain).
+jenis_cuaca(light_rain).
+jenis_cuaca(foggy).
+jenis_cuaca(thunder_storm).
 
 /* Deklarasi rules */
 

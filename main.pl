@@ -1,38 +1,41 @@
+/* Included File */
 :- include('player.pl').
 :- include('map.pl').
 :- include('move.pl').
+:- include('inventory.pl').
+:- include('item.pl').
 :- include('house.pl').
+:- include('marketplace.pl').
+:- include('quest.pl').
 :- include('farming.pl').
 :- include('fishing.pl').
 :- include('ranching.pl').
-:- include('quest.pl').
-:- include('inventory.pl').
-:- include('potion.pl').
-:- include('musim.pl').
-:- include('marketplace.pl').
-:- include('item.pl').
 :- include('fail.pl').
 :- include('goal.pl').
+   /* BONUS */
+:- include('potion.pl').
+:- include('musim.pl').
 
-/* Fakta */
-/* (hour,day,month) */
+/* Fact */
+   /* Game Status */
 :- dynamic(game_opened/1).
 :- dynamic(game_started/1).
+   /* game_time = (hour,day,month) */
 :- dynamic(game_time/3).
 :- dynamic(musim/1).
 :- dynamic(cuaca/1).
 
 /* Rules */
 mainMenu :-
-    write('                         Harvest  Star                         '), nl, nl,
-    write('            Let\'s play and pay our debts together!            '), nl, nl,
-    write('      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      '), nl,
-    write('      %                   ~MAIN MENU~                   %      '), nl,
-    write('      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      '), nl,
-    write('      %      1. start   : begin your journey            %      '), nl,
-    write('      %      2. help    : show command info             %      '), nl, 
-    write('      %      3. quit    : quit the game                 %      '), nl,
-    write('      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      '), nl,
+    write('                             Harvest  Star                             '), nl, nl,
+    write('                Let\'s play and pay our debts together!                '), nl, nl,
+    write('        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        '), nl,
+    write('        %                     ~MAIN MENU~                     %        '), nl,
+    write('        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        '), nl,
+    write('        %           1. start   : begin your journey           %        '), nl,
+    write('        %           2. help    : show command info            %        '), nl, 
+    write('        %           3. quit    : quit the game                %        '), nl,
+    write('        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        '), nl,
     nl, !.
 
 openGame :- 
@@ -41,32 +44,38 @@ openGame :-
 openGame :-
     retractVar,
     mainMenu,
-    asserta(game_opened(true)), !.
+    asserta(game_opened(true)),
+    write('Game opened'), nl, !.
 
 start :-
     game_opened(_),
     game_started(_),
-    write('You have started the game, type \'help\' to display command info\n'), !.
+    write('You have started the game, type \'help\' for more information!'), nl, !.
 start :-
     game_opened(_),
-    asserta(game_started(true)),
-    asserta(game_time(0,1,1)),
-    createMap,
     write('Welcome to Harvest Star!'), nl,
     write('Choose Your Job:'), nl,
     write('1. Farmer'), nl,
     write('2. fisherman'), nl,
     write('3. Rancher'),nl,
+    write('Your choice: '),
     read(Job), nl,
     (Job =:= 1 ->
-        write('You choose farmer, lets start farming'),nl,
-        initiatePlayerjob(1);
+        initiatePlayerjob(1),
+        write('You choose farmer, let\'s start farming!'), nl;
     Job =:= 2 ->
         initiatePlayerjob(2),
-        write('You choose fisherman, lets start fishing'),nl;
+        write('You choose fisherman, let\'s start fishing!'), nl;
     Job =:= 3 ->
         initiatePlayerjob(3),
-        write('You choose rancher, lets start ranching'),!),!.
+        write('You choose rancher, let\'s start ranching!'), nl, !),
+    initiate_playerstatus,
+    asserta(game_started(true)),
+    asserta(game_time(0,1,1)),
+    createMap, 
+    write('Game started'), nl, !.
+start :-
+    write('Please open the game first, type \'openGame\' to open the game!'), nl, !.
 
 retractVar :-
     /* main.pl */
@@ -75,12 +84,6 @@ retractVar :-
     retractall(game_time(_,_,_)),
     retractall(musim(_)),
     retractall(cuaca(_)),
-    /* farming.pl */
-    retractall(tile_farming(_,_,_,_)),
-    /* map.pl */
-    retractall(map_height(_)),
-    retractall(map_width(_)), 
-    retractall(point(_,_,_)),
     /* player.pl */
     retractall(player_job(_)),
     retractall(player_level(_)),
@@ -90,8 +93,17 @@ retractVar :-
     retractall(player_totalexp(_)),
     retractall(player_expperspecialty(_,_)),
     retractall(player_position(_,_)),
+    /* map.pl */
+    retractall(map_height(_)),
+    retractall(map_width(_)), 
+    retractall(point(_,_,_)),
+    /* inventory.pl */
+    retractall(inventory(_,_)),
     /* house.pl */
-    retractall(insideHouse(_)), !.
+    retractall(insideHouse(_)), 
+    retractall(diary(_,_,_)),
+    /* farming.pl */
+    retractall(tile_farming(_,_,_,_)), !.
 
 help :-
     write('   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
@@ -117,11 +129,12 @@ help :-
     write('   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'), nl, !.
 
 quit :-
-    write('Are you sure want to quit the game? (y/n)\n'),
+    write('Are you sure want to quit the game? (y/n)'), nl,
     write('Choice: '),
     read(Ans),
     Ans == y,
-    write('Closing the game...\n'),
+    write('Thanks for playing, see you next time!'), nl,
+    write('Closing the game...'), nl,
     halt.
 
 
@@ -129,5 +142,5 @@ quit :-
     display_inventory.
 */
 status :-
-    displayStatus(X).
+    displayStatus(_).
 

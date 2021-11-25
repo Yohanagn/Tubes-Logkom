@@ -1,11 +1,11 @@
 /* Deklarasi Fakta */
-ikan(mas).
-ikan(lele).
+ikan(goldfish).
+ikan(catfish).
 ikan(gurame).
-ikan(mujair).
-ikan(nila).
+ikan(tilapia).
+ikan(parrotfish).
 
-list_ikan([mas,lele,gurame,mujair,nila]).
+list_ikan([goldfish,catfish,gurame,tilapia,parrotfish]).
 
 /* Deklarasi Rules */
 is_water_nearby(X1,X2,Y1,Y2) :-
@@ -21,20 +21,12 @@ can_do_fishing :-
     Y2 is Y-1,
     is_water_nearby(X1,X2,Y1,Y2).
 
-add_to_inventory(X) :-
-    (inventory(X,Y) ->
-    Y1 is Y+1,
-    retractall(inventory(X,Y)),
-    asserta(inventory(X,Y1));
-    asserta(inventory(X,1))
-    ).
-
 get_list(X) :-
     list_ikan(L),
     member(X,L).
 
 get_index_val(0,[H|_],X) :- X is H.
-get_index_val(Idx,[_|T],X):
+get_index_val(Idx,[_|T],X) :-
     Idx1 is Idx-1,
     get_index_val(Idx1,T,X).
 

@@ -1,3 +1,5 @@
+/* File: move.pl */
+
 /* Rules */
 north :-
     player_position(_,Yp),
@@ -129,3 +131,7 @@ updateTime(X) :-
 displayTime :-
     game_time(H,D,M),
     write(H), write(':00'), write(' - '), write(D), write('/'), write(M), write('/2021').
+
+displayDate :-
+    game_time(_,D,M),
+    write(D), write('/'), write(M), write('/2021').
