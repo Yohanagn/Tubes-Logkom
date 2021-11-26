@@ -7,10 +7,10 @@
 
 
 /* Edge Point */
-edge_east(X,_) :- X1 is X - 1, map_width(X1), !.
-edge_south(_,Y) :- Y1 is Y - 1, map_height(Y1), !.
-edge_west(X,_) :- X is 0, !.
-edge_north(_,Y) :- Y is 0, !.
+northWall(_,Y) :- Y is 0, !.
+southWall(_,Y) :- map_height(Y1), Y is Y1 + 1, !.
+westWall(X,_) :- X is 0, !.
+eastWall(X,_) :- map_width(X1), X is X1 + 1, !.
 
 
 /* Initialize special position */
@@ -77,10 +77,10 @@ createMap :-
 
 
 /* Display Map Point */
-display_point(X,Y) :- edge_east(X,Y), write('#\n'), !.
-display_point(X,Y) :- edge_north(X,Y), write('#'), !.
-display_point(X,Y) :- edge_south(X,Y), write('#'), !.
-display_point(X,Y) :- edge_west(X,Y), write('#'), !.
+display_point(X,Y) :- eastWall(X,Y), write('#\n'), !.
+display_point(X,Y) :- northWall(X,Y), write('#'), !.
+display_point(X,Y) :- southWall(X,Y), write('#'), !.
+display_point(X,Y) :- westWall(X,Y), write('#'), !.
 display_point(X,Y) :- player_position(X,Y), !, write('P').
 display_point(X,Y) :- point(X,Y,market), !, write('M').
 display_point(X,Y) :- point(X,Y,house), !, write('H').

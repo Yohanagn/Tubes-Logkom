@@ -3,7 +3,7 @@
 /* Rules */
 north :-
     player_position(_,Yp),
-    edge_north(_,Y),
+    northWall(_,Y),
     Yp is Y+1,
     write('You can\'t go through a wall!\n'), !.
 north :-
@@ -21,7 +21,7 @@ north :-
 
 south :-    
     player_position(_,Yp),
-    edge_south(_,Y),
+    southWall(_,Y),
     Yp is Y-1,
     write('You can\'t go through a wall!\n'), !.
 south :-
@@ -39,7 +39,7 @@ south :-
 
 west :-
     player_position(Xp,_),
-    edge_west(X,_),
+    westWall(X,_),
     Xp is X+1,
     write('You can\'t go through a wall!\n'), !.
 west :-
@@ -57,7 +57,7 @@ west :-
 
 east :-
     player_position(Xp,_),
-    edge_west(X,_),
+    eastWall(X,_),
     Xp is X-1,
     write('You can\'t go through a wall!\n'), !.
 east :-
@@ -94,28 +94,31 @@ special_loc(X,Y) :-
 
 /* Move Command */
 w :-
-    game_opened(_),
-    game_started(_),
+    game_opened(_), game_started(_),
     north, !.
-w :- write('You haven\'t started the game yet!\n'), !.
+w :-
+    \+ game_opened(_), \+ game_started(_), 
+    write('You haven\'t started the game yet!\n'), !.
 
 a :-
-    game_opened(_),
-    game_started(_),
+    game_opened(_), game_started(_),
     west, !.
-a :- write('You haven\'t started the game yet!\n'), !.
+a :-
+    \+ game_opened(_), \+ game_started(_), 
+    write('You haven\'t started the game yet!\n'), !.
 
 s :-
-    game_opened(_),
-    game_started(_),
+    game_opened(_), game_started(_),
     south, !.
-s :- write('You haven\'t started the game yet!\n'), !. 
+s :- 
+    \+ game_opened(_), \+ game_started(_), 
+    write('You haven\'t started the game yet!\n'), !. 
 
 d :-
-    game_opened(_),
-    game_started(_),
+    game_opened(_), game_started(_),
     east, !.
 d :-
+    \+ game_opened(_), \+ game_started(_), 
     write('You haven\'t started the game yet!\n'), !.
 
 updateTime(X) :- 

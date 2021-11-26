@@ -43,6 +43,7 @@ openGame :-
     write('You have opened the game, type \'start\' to begin your journey!\n'), !.
 openGame :-
     retractVar,
+    clearDiary,
     mainMenu,
     asserta(game_opened(true)),
     write('Game opened'), nl, !.
@@ -101,7 +102,9 @@ retractVar :-
     retractall(inventory(_,_)),
     /* house.pl */
     retractall(insideHouse(_)), 
-    retractall(diary(_,_,_)),
+    retractall(diary(_)),
+    retractall(isDiaryHeader(_)),
+    retractall(writingDiary(_)),
     /* farming.pl */
     retractall(tile_farming(_,_,_,_)), !.
 
