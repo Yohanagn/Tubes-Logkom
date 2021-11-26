@@ -12,80 +12,93 @@ isInRanchingTile(X,Y) :-
 ranch :- 
     player_position(X,Y),
     isInRanchingTile(X,Y),
-    writeln('Welcome to the ranch! You have '),
-    displayInventory,
-    writeln('What do you want to do? '),
+    write('Welcome to the ranch! You have '),nl,
+    displayInventory,nl,
+    write('What do you want to do? '),nl,
     readln(Hewan),
     ((Hewan =:= laying_hen ; Hewan =:= sheep ; Hewan =:= beef_cattle) ->
-    retract(inventory(Hewan,Count)),
+    retractall(inventory(Hewan,Count)),
     lama_beternak(Hewan,Time),
     LamaBeternak is Time+current_time,
     asserta(lama_beternak(Hewan, LamaBeternak))
     ;
-    retract(inventory(Hewan,Count)),
+    retractall(inventory(Hewan,Count)),
     NewCount is Count - 1,
     asserta(inventory(Hewan,NewCount)),
     LamaBeternak is Time+current_time,
     asserta(lama_beternak(Hewan, LamaBeternak))),!.
 
+ranch :- 
+    player_position(X,Y),
+    \+ isInRanchingTile(X,Y),
+    write('You are not in the ranching tile. You cannot start ranching!'), nl, !.
+
+addInventory(X, Count) :-
+    (inventory(X,Y) ->
+    Y1 is Y + Count,
+    retractall(inventory(X,Y)),
+    asserta(inventory(X,Y1))
+    ;
+    asserta(inventory(X,Count))), !.
+
 laying_hen :-
+    player_levelperspecialty(rancher, Level),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     lama_beternak(laying_hen, Lama),
-    inventory(laying_hen,Count),
     Lama >= current_time,
-    retract(lama_beternak(laying_hen,Lama)),
-    add_to_inventory(Hasil),
+    retractall(lama_beternak(laying_hen,Lama)),
+    addInventory(eggs, Count),
     tambahExpperspecialty(rancher, 10, LevelUp, Level),
     write('Your chicken lays '), write(Count), write('eggs'), nl,
     write('You got '), write(Count), write('eggs'), nl,
     write('You gained 10 ranching Exp!'),!.
 
 broiler_hen :-
+    player_levelperspecialty(rancher, Level),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     lama_beternak(broiler_hen, Lama),
-    inventory(broiler_hen,Count),
     Lama >= current_time,
-    retract(lama_beternak(broiler_hen,Lama)),
-    add_to_inventory(Hasil),
+    retractall(lama_beternak(broiler_hen,Lama)),
+    add_to_inventory(broiler_hen),
     tambahExpperspecialty(rancher, 10, LevelUp, Level),
     write('Your chicken is ready for sale!'),nl,
     write('You gained 10 ranching Exp!'),!.
 
 dairy_cow :-
+    player_levelperspecialty(rancher, Level),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     lama_beternak(dairy_cow, Lama),
-    inventory(dairy_cow,Count),
     Lama >= current_time,
-    retract(lama_beternak(dairy_cow,Lama)),
-    add_to_inventory(Hasil),
+    retractall(lama_beternak(dairy_cow,Lama)),
+    addInventory(milk, Count),
     tambahExpperspecialty(rancher, 10, LevelUp, Level),
     write('Your cows produce '), write(Count*15), write('liters of milk'), nl,
     write('You got '), write(Count*15), write('liters of milk'), nl,
     write('You gained 10 ranching Exp!'),!.
 
 beef_cattle :-
+    player_levelperspecialty(rancher, Level),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     lama_beternak(beef_cattle, Lama),
-    inventory(beef_cattle,Count),
     Lama >= current_time,
-    retract(lama_beternak(beef_cattle,Lama)),
-    add_to_inventory(Hasil),
+    retractall(lama_beternak(beef_cattle,Lama)),
+    add_to_inventory(beef_cattle),
     tambahExpperspecialty(rancher, 10, LevelUp, Level),
     write('Your cows is ready for sale!'), nl,
     write('You gained 10 ranching Exp!'),!.
 
 sheep :-
+    player_levelperspecialty(rancher, Level),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     lama_beternak(sheep, Lama),
-    inventory(sheep,Count),
     Lama >= current_time,
-    retract(lama_beternak(sheep,Lama)),
-    add_to_inventory(Hasil),
+    retractall(lama_beternak(sheep,Lama)),
+    add_to_inventory(wool, Count),
     tambahExpperspecialty(rancher, 10, LevelUp, Level),
     write('Your sheeps produce '), write(Count*5), write('kg wool'), nl,
     write('You got '), write(Count*5), write('kg wool'), nl,

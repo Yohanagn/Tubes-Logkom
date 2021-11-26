@@ -20,6 +20,10 @@ inventory(catfish,10).
 inventory(gurame,10).
 inventory(tilapia,10).
 inventory(parrotfish,10).
+/*Hasil Ternak*/
+inventory(eggs, 0).
+inventory(milk, 0).
+inventory(wool, 0).
 
 add_to_inventory(X) :-
     (inventory(X,Y) ->
