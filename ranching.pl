@@ -9,14 +9,17 @@ lama_beternak(sheep, 180).
 isInRanchingTile(X,Y) :-
     point(X,Y,ranch).
 
+displayRanchItem :-
+    forall(inventoryRanching(A,B), (write(B), write(' '), write(A), nl)), !.
+
 ranch :- 
     player_position(X,Y),
     isInRanchingTile(X,Y),
     write('Welcome to the ranch! You have '),nl,
-    displayInventory,nl,
-    write('What do you want to do? '),nl,
-    readln(Hewan),
-    ((Hewan =:= laying_hen ; Hewan =:= sheep ; Hewan =:= beef_cattle) ->
+    displayRanchItem,nl,
+    write('What do you want to do? '),nl, !.
+    /*read(Hewan),
+    ((Hewan == laying_hen ; Hewan == sheep ; Hewan == dairy_cow) ->
     retractall(inventory(Hewan,Count)),
     lama_beternak(Hewan,Time),
     LamaBeternak is Time+current_time,
@@ -26,7 +29,7 @@ ranch :-
     NewCount is Count - 1,
     asserta(inventory(Hewan,NewCount)),
     LamaBeternak is Time+current_time,
-    asserta(lama_beternak(Hewan, LamaBeternak))),!.
+    asserta(lama_beternak(Hewan, LamaBeternak))),!.*/
 
 ranch :- 
     player_position(X,Y),

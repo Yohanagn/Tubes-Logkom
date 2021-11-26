@@ -1,12 +1,12 @@
 :- dynamic(takeQuest/3).
-:- dynamic(running/1).
 
 isInQTile(A,B) :-
     point(A,B,quest).
 
 questStart :-
-    running(_),
-    \+(takeQuest(_,_,_)),nl,
+    game_opened(_),
+    game_started(_),
+    \+takeQuest(_,_,_), nl,
     player_position(A,B),
     isInQTile(A,B),
     write('You got a new quest! '), nl,
@@ -15,9 +15,9 @@ questStart :-
     random(1,5,Z),
     asserta(takeQuest(X,Y,Z)),
     write('You need to collect: '), nl,
-    write('- '), write(X), write('Harvest Item'), nl,
-    write('- '), write(Y), write('Fish'),nl,
-    write('- '), write(Z), write('Ranch Item'), nl, !.
+    write('- '), write(X), write(' Harvest Item'), nl,
+    write('- '), write(Y), write(' Fish'),nl,
+    write('- '), write(Z), write(' Ranch Item'), nl, !.
 
 questStart :-
     takeQuest(_,_,_), nl,
