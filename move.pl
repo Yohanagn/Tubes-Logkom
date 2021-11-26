@@ -16,6 +16,12 @@ north :-
     retract(player_position(Xp,Yp)), 
     Yp1 is Yp-1, 
     asserta(player_position(Xp,Yp1)),
+    (is_ubah_cuaca ->
+        ganti_cuaca
+    ),
+    (is_ubah_musim ->
+        ganti_musim
+    ),
     updateTime(1),
     special_loc(Xp,Yp1), !.
 
@@ -34,6 +40,8 @@ south :-
     retract(player_position(Xp,Yp)), 
     Yp1 is Yp+1, 
     asserta(player_position(Xp,Yp1)),
+    ganti_cuaca,
+    ganti_musim,
     updateTime(1),
     special_loc(Xp,Yp1), !.
 
@@ -52,6 +60,8 @@ west :-
     retract(player_position(Xp,Yp)), 
     Xp1 is Xp-1, 
     asserta(player_position(Xp1,Yp)),
+    ganti_cuaca,
+    ganti_musim,
     updateTime(1),
     special_loc(Xp1,Yp), !.
 
@@ -70,6 +80,8 @@ east :-
     retract(player_position(Xp,Yp)), 
     Xp1 is Xp+1, 
     asserta(player_position(Xp1,Yp)),
+    ganti_cuaca,
+    ganti_musim,
     updateTime(1),
     special_loc(Xp1,Yp), !.
 

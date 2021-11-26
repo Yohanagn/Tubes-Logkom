@@ -40,6 +40,7 @@ init_ranch :-
 
 init_water_tile :- 
 	asserta(point(10,6,water)),
+	asserta(point(2,1,water)),
 	forall(between(8,10,X),(
 		asserta(point(X,7,water)))),
 	forall(between(6,10,X),(

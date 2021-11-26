@@ -13,60 +13,66 @@ jenis_cuaca(thunder_storm).
 
 /* Deklarasi rules */
 
-get_idx_val(0,[H|_],X) :-
-    X is H.
-
-get_idx_val(Idx,[_|T],X) :-
-    Idx1 is Idx-1,
-    get_idx_val(Idx1,T,X).
-
-
-get_list_musim(X) :-
-    jenis_musim(L),
-    member(X,L).
-
 is_ubah_musim :-
     game_time(Hour,Day,Month),
     Hour is 0,
-    Day is 0,
-    Month mod 3 is 0,
-    \+ Month is 12.
+    Day is 1,
+    1 is mod(Month,3),
+    !.
 
 is_ubah_cuaca :-
     game_time(Hour,_,_),
-    Hour mod 12 is 0.
-
-get_list_cuaca(X) :-
-    jenis_cuaca(L),
-    member(X,L).
-
+    0 is mod(Hour,12),
+    !.
 
 
 /* Command utama */
 
+ganti_musim :- 
+    \+ is_ubah_musim,!.
+
 ganti_musim :-
-    is_ubah_musim,
-    get_list_musim(L),
     game_time(_,_,Month),
-    Idx is Month//3,
-    get_idx_list_musim(Idx,L,X),
+    Idx is Month div 3,
     retractall(musim(_)),
     !,
+    (Idx == 0 ->
+        X = spring;
+    Idx == 1 ->
+        X = summer;
+    Idx == 2 ->
+        X = autumn;
+    Idx == 3 -> 
+        X = winter
+    ),
     asserta(musim(X)),
-    write('Musim berganti menjadi '),
+    write('Season changed into '),
     write(X),
     nl,
     !.
 
 ganti_cuaca :-
-    is_ubah_cuaca,
-    get_list_cuaca(L),
+    \+ is_ubah_cuaca,!.
+
+ganti_cuaca :-
     random(0,6,Idx),
-    get_idx_val(Idx,L,X),
     retractall(cuaca(_)),
     !,
+    (Idx == 0 ->
+        X = sunny;
+    Idx == 1 ->
+        X = cloudy;
+    Idx == 2 ->
+        X = heavy_rain;
+    Idx == 3 ->
+        X = light_rain;
+    Idx == 4 ->
+        X = foggy;
+    Idx == 5 ->
+        X = thunder_storm
+    ),
     asserta(cuaca(X)),
-    write('Cuaca berganti menjadi '),
+    write('Weather changed into '),
     write(X),
     nl,
     !.

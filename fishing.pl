@@ -29,7 +29,7 @@ generate_koef(X) :-
     ;
     Y is 0
     ),
-    X is (Level_overall/50)*0.2+(Level_fisherman/50)*0.3+Y.
+    X is (Level_overall/50)*0.5+(Level_fisherman/50)*0.2+Y.
 
 add_exp_fishing(N) :-
     player_totalexp(X),
@@ -59,9 +59,16 @@ get_fish(N,X) :-
 /* Command utama */
 
 fish :-
+    game_started(_),
+    \+ can_do_fishing,
+    write('You can not fishing here\n'),
+    !.
+
+fish :-
+    game_started(_),
     can_do_fishing,
     generate_koef(Koef),
-    Max_rand is round(Koef*40),
+    Max_rand is round(6/Koef),
     random(0,Max_rand,Random_val),
     (Random_val<5 ->
     get_fish(Random_val,X),

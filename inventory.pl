@@ -1,5 +1,6 @@
 /* inventory(jenis,jumlah) */
 :- dynamic(inventory/2).
+:- dynamic(inventory_seed/2).
 /* inventory(biji_jagung,10). */
 /*umbi-umbian*/
 inventory(carrot,10).
@@ -25,6 +26,13 @@ inventory(eggs, 0).
 inventory(milk, 0).
 inventory(wool, 0).
 
+inventory_seed(carrot,3).
+inventory_seed(potato,3).
+inventory_seed(wheat,3).
+inventory_seed(paddy,3).
+inventory_seed(cassava,3).
+inventory_seed(corn,3).
+
 add_to_inventory(X) :-
     (inventory(X,Y) ->
     Y1 is Y+1,
@@ -33,11 +41,44 @@ add_to_inventory(X) :-
     asserta(inventory(X,1))
     ).
 
+add_N_to_inventory(N,X) :-
+    (inventory(X,Y) ->
+    Y1 is Y+N,
+    retractall(inventory(X,Y)),
+    asserta(inventory(X,Y1));
+    asserta(inventory(X,N))
+    ).
+
+add_to_inventory_seed(X) :-
+    (inventory_seed(X,Y) ->
+    Y1 is Y+1,
+    retractall(inventory_seed(X,Y)),
+    asserta(inventory_seed(X,Y1));
+    asserta(inventory_seed(X,1))
+    ).
+
+add_N_to_inventory_seed(N,X) :-
+    (inventory_seed(X,Y) ->
+    Y1 is Y+N,
+    retractall(inventory_seed(X,Y)),
+    asserta(inventory_seed(X,Y1));
+    asserta(inventory_seed(X,N))
+    ).
+
 displayInventory :-
-    inventory(X,Y),
+    forall(inventory(X,Y),writeInventory(X,Y)).
+
+displayInventorySeed :-
+    forall(inventory_seed(X,Y),writeInventory(X,Y)).
+
+writeInventory(X,Y) :-
     write(Y),
     write(' '),
-    write(X), nl.
+    write(X),
+    nl,!.
 
 delete_zero_inventory :-
     retractall(inventory(_,0)).
+
+delete_zero_inventory_seed:-
+    retractall(inventory_seed(_,0)).
