@@ -1,3 +1,5 @@
+:- include('player.pl').
+:- include('inventory.pl').
 market :-
     write('What do you want to do?\n1. Buy\n2. Sell\n\n'),
     write('| ?- '),
@@ -34,83 +36,195 @@ buy :-
     (Itemnumber == 1 ->
         write('You have bought '),
         write(Qty),
-        write(' carrot.\n'),
-        write('You are charged 50 golds.\n');
+        (Qty == 1 ->
+            write(' carrot.\n');
+        Qty > 1 ->
+            write(' carrots.\n'),!
+        ),
+        Charged is Qty * 50,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
     Itemnumber == 2 ->
         write('You have bought '),
         write(Qty),
-        write(' potato.\n'),
-        write('You are charged 50 golds.\n');
+        (Qty == 1 ->
+            write(' potato.\n');
+        Qty > 1 ->
+            write(' potatoes.\n'),!
+        ),
+        Charged is Qty * 50,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
     Itemnumber == 3 ->
         write('You have bought '),
         write(Qty),
-        write(' wheat.\n'),
-        write('You are charged 50 golds.\n');
+        (Qty == 1 ->
+            write(' wheat.\n');
+        Qty > 1 ->
+            write(' wheats.\n'),!
+        ),
+        Charged is Qty * 50,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
     Itemnumber == 4 ->
         write('You have bought '),
         write(Qty),
-        write(' paddy.\n'),
-        write('You are charged 50 golds.\n');
+        (Qty == 1 ->
+            write(' paddy.\n');
+        Qty > 1 ->
+            write(' paddies.\n'),!
+        ),
+        Charged is Qty * 50,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
     Itemnumber == 5 ->
         write('You have bought '),
         write(Qty),
-        write(' cassava.\n'),
-        write('You are charged 50 golds.\n');
+        (Qty == 1 ->
+            write(' cassava.\n');
+        Qty > 1 ->
+            write(' cassavas.\n'),!
+        ),
+        Charged is Qty * 50,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
     Itemnumber == 6 ->
         write('You have bought '),
         write(Qty),
-        write(' corn.\n'),
-        write('You are charged 50 golds.\n');
+        (Qty == 1 ->
+            write(' corn.\n');
+        Qty > 1 ->
+            write(' corns.\n'),!
+        ),
+        Charged is Qty * 50,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
     Itemnumber == 7 ->
         write('You have bought '),
         write(Qty),
-        write(' laying_hen.\n'),
-        write('You are charged 100 golds.\n');
+        (Qty == 1 ->
+            write(' laying_hen.\n');
+        Qty > 1 ->
+            write(' laying_hens.\n'),!
+        ),
+        Charged is Qty * 100,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
     Itemnumber == 8 ->
         write('You have bought '),
         write(Qty),
-        write(' broiler_hen.\n'),
-        write('You are charged 100 golds.\n');
+        (Qty == 1 ->
+            write(' broiler_hen.\n');
+        Qty > 1 ->
+            write(' broiler_hens.\n'),!
+        ),
+        Charged is Qty * 100,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
     Itemnumber == 9 ->
         write('You have bought '),
         write(Qty),
-        write(' beef_cattle.\n'),
-        write('You are charged 200 golds.\n');
+        (Qty == 1 ->
+            write(' beef_cattle.\n');
+        Qty > 1 ->
+            write(' beefs_cattle.\n'),!
+        ),
+        Charged is Qty * 200,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
     Itemnumber == 10 ->
         write('You have bought '),
         write(Qty),
-        write(' dairy_cow.\n'),
-        write('You are charged 250 golds.\n');
+        (Qty == 1 ->
+            write(' dairy_cow.\n');
+        Qty > 1 ->
+            write(' dairy_cows.\n'),!
+        ),
+        Charged is Qty * 250,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
     Itemnumber == 11 ->
         write('You have bought '),
         write(Qty),
-        write(' sheep.\n'),
-        write('You are charged 150 golds.\n');
+        (Qty == 1 ->
+            write(' sheep.\n');
+        Qty > 1 ->
+            write(' sheeps.\n'),!
+        ),
+        Charged is Qty * 150,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
     Itemnumber == 12 ->
         write('You have bought '),
         write(Qty),
-        write(' goldfish.\n'),
-        write('You are charged 75 golds.\n');
+        (Qty == 1 ->
+            write(' goldfish.\n');
+        Qty > 1 ->
+            write(' goldfishes.\n'),!
+        ),
+        Charged is Qty * 75,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
     Itemnumber == 13 ->
         write('You have bought '),
         write(Qty),
-        write(' catfish.\n'),
-        write('You are charged 75 golds.\n');
+        (Qty == 1 ->
+            write(' catfish.\n');
+        Qty > 1 ->
+            write(' catfishes.\n'),!
+        ),
+        Charged is Qty * 75,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
     Itemnumber == 14 ->
         write('You have bought '),
         write(Qty),
-        write(' gurame.\n'),
-        write('You are charged 75 golds.\n');
+        (Qty == 1 ->
+            write(' gourami.\n');
+        Qty > 1 ->
+            write(' gouramies.\n'),!
+        ),
+        Charged is Qty * 75,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
     Itemnumber == 15 ->
         write('You have bought '),
         write(Qty),
-        write(' tilapia.\n'),
-        write('You are charged 75 golds.\n');
+        (Qty == 1 ->
+            write(' tilapia.\n');
+        Qty > 1 ->
+            write(' tilapias.\n'),!
+        ),
+        Charged is Qty * 75,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
     Itemnumber == 16 ->
         write('You have bought '),
         write(Qty),
-        write(' parrotfish.\n'),
-        write('You are charged 75 golds.\n')
+        (Qty == 1 ->
+            write(' parrotfish.\n');
+        Qty > 1 ->
+            write(' parrotfishes.\n'),!
+        ),
+        Charged is Qty * 75,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n')
     ,!),
     !.
 
