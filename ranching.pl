@@ -52,7 +52,7 @@ laying_hen :-
     Lama >= current_time,
     retractall(lama_beternak(laying_hen,Lama)),
     addInventory(eggs, Count),
-    tambahExpperspecialty(rancher, 10, LevelUp, Level),
+    tambahExpperspecialty(rancher, 10, _, Level),
     write('Your chicken lays '), write(Count), write('eggs'), nl,
     write('You got '), write(Count), write('eggs'), nl,
     write('You gained 10 ranching Exp!'),!.
@@ -65,7 +65,7 @@ broiler_hen :-
     Lama >= current_time,
     retractall(lama_beternak(broiler_hen,Lama)),
     add_to_inventory(broiler_hen),
-    tambahExpperspecialty(rancher, 10, LevelUp, Level),
+    tambahExpperspecialty(rancher, 10, _, Level),
     write('Your chicken is ready for sale!'),nl,
     write('You gained 10 ranching Exp!'),!.
 
@@ -77,7 +77,7 @@ dairy_cow :-
     Lama >= current_time,
     retractall(lama_beternak(dairy_cow,Lama)),
     addInventory(milk, Count),
-    tambahExpperspecialty(rancher, 10, LevelUp, Level),
+    tambahExpperspecialty(rancher, 10, _, Level),
     write('Your cows produce '), write(Count*15), write('liters of milk'), nl,
     write('You got '), write(Count*15), write('liters of milk'), nl,
     write('You gained 10 ranching Exp!'),!.
@@ -90,7 +90,7 @@ beef_cattle :-
     Lama >= current_time,
     retractall(lama_beternak(beef_cattle,Lama)),
     add_to_inventory(beef_cattle),
-    tambahExpperspecialty(rancher, 10, LevelUp, Level),
+    tambahExpperspecialty(rancher, 10, _, Level),
     write('Your cows is ready for sale!'), nl,
     write('You gained 10 ranching Exp!'),!.
 
@@ -102,7 +102,7 @@ sheep :-
     Lama >= current_time,
     retractall(lama_beternak(sheep,Lama)),
     add_to_inventory(wool, Count),
-    tambahExpperspecialty(rancher, 10, LevelUp, Level),
+    tambahExpperspecialty(rancher, 10, _, Level),
     write('Your sheeps produce '), write(Count*5), write('kg wool'), nl,
     write('You got '), write(Count*5), write('kg wool'), nl,
     write('You gained 10 ranching Exp!'),!.

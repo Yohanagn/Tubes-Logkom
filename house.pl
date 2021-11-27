@@ -50,9 +50,10 @@ sleep :-
     write('         Z...\n'), nl,
     updateTime(24),
     write('You wake up at '), displayTime, nl,
+    write('Today is '), displayDate, nl,
     musim(M), cuaca(C),
-    write('Season: '), write(M), nl, 
-    write('Weather: '), write(C), nl, nl.
+    write(' Season: '), write(M), nl, 
+    write(' Weather: '), write(C), nl, nl.
 
 exit :-
     insideHouse(_), nl,
@@ -65,7 +66,7 @@ writeDiary :-
     TotalDay is ((30 * (M-1))+D),
     write('Write your diary for day '), write(TotalDay), write(' ('), displayDate, write(')'), nl,
     write('!!! Make sure to use quotation mark ('') for each sentence !!!'), nl,
-    write('!!! Type \'done\' if you are finish !!!'), nl,
+    write('!!! Type \'done\' when you are finished !!!'), nl,
     write('Content: '),
     open(diary,append,File),
     write(File,'header.'), nl(File),

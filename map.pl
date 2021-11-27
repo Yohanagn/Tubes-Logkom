@@ -14,39 +14,47 @@ eastWall(X,_) :- map_width(X1), X is X1 + 1, !.
 
 
 /* Initialize special position */
-init_player_pos :-
-    asserta(player_position(1,1)).
-
 init_marketplace :-
+	repeat,
 	random(6,10,X1), 
-	random(1,5,Y1), 
+	random(6,10,Y1), 
+	(\+ (point(X1,Y1,water))), !,
 	asserta(point(X1,Y1,market)).
 
 init_house :-
-	random(4,7,X1), 
-	random(4,7,Y1), 
+	repeat,
+	random(6,10,X1), 
+	random(1,5,Y1), 
+	(\+ (point(X1,Y1,water))), !,
 	asserta(point(X1,Y1,house)).
 
 init_quest_pos :- 
+	repeat,
     random(1,10,X1),
     random(1,10,Y1),
-	\+ (point(X1,Y1,water)),
+	(\+ (point(X1,Y1,water)),
+	\+ (point(X1,Y1,house)),
+	\+ (point(X1,Y1,market)),
+	\+ (point(X1,Y1,ranch)),
+	\+ (point(X1,Y1,digged))), !,
     asserta(point(X1,Y1,quest)).
 
 init_ranch :-
+	repeat,
     random(1,5,X1), 
 	random(6,10,Y1), 
+	(\+ (point(X1,Y1,water))), !,
 	asserta(point(X1,Y1,ranch)).
 
 init_water_tile :- 
-	asserta(point(10,6,water)),
-	asserta(point(2,1,water)),
-	forall(between(8,10,X),(
-		asserta(point(X,7,water)))),
-	forall(between(6,10,X),(
-		asserta(point(X,8,water)))),
-	forall(between(7,9,X),(
-		asserta(point(X,9,water)))).
+	forall(between(5,6,X),(
+		asserta(point(X,4,water)))),
+	forall(between(3,7,X),(
+		asserta(point(X,5,water)))),
+	forall(between(4,8,X),(
+		asserta(point(X,6,water)))),
+	forall(between(5,6,X),(
+		asserta(point(X,7,water)))).
 
 /*
 Gambaran Map
@@ -54,12 +62,12 @@ Gambaran Map
 #----------#
 #----------#
 #----------#
+#----oo----#
+#--ooooo---#
+#---ooooo--#
+#----oo----#
 #----------#
 #----------#
-#---------o#
-#-------ooo#
-#-----ooooo#
-#------ooo-#
 #----------#
 ############ 
 */
@@ -69,10 +77,10 @@ createMap :-
     W is 10, H is 10,
 	asserta(map_width(W)), 
 	asserta(map_height(H)), 
-	init_player_pos,
+	initiate_playerpost,
+	init_water_tile,
     init_marketplace, 
 	init_house,
-	init_water_tile,
 	init_ranch,
 	init_quest_pos, !. 
 
@@ -104,7 +112,8 @@ map :-
 	forall(between(Y0,Yn,Yi),(
 		forall(between(X0,Xn,Xi),(
 			display_point(Xi,Yi),
-			write('  '))))), nl,
+			write(' '))),
+		write(' '))), nl,
 	write('  Symbol: P - Player\n'),
 	write('          M - Marketplace\n'),
 	write('          R - Ranch\n'),

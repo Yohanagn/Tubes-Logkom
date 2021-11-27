@@ -9,7 +9,7 @@ jenis_cuaca(cloudy).
 jenis_cuaca(heavy_rain).
 jenis_cuaca(light_rain).
 jenis_cuaca(foggy).
-jenis_cuaca(thunder_storm).
+jenis_cuaca(thunderstorm).
 
 /* Deklarasi rules */
 
@@ -69,7 +69,7 @@ ganti_cuaca :-
     Idx == 4 ->
         X = foggy;
     Idx == 5 ->
-        X = thunder_storm
+        X = thunderstorm
     ),
     asserta(cuaca(X)),
     write('Weather changed into '),

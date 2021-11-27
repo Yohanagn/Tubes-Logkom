@@ -16,14 +16,11 @@ north :-
     retract(player_position(Xp,Yp)), 
     Yp1 is Yp-1, 
     asserta(player_position(Xp,Yp1)),
-    (is_ubah_cuaca ->
-        ganti_cuaca
-    ),
-    (is_ubah_musim ->
-        ganti_musim
-    ),
-    updateTime(1),
-    special_loc(Xp,Yp1), !.
+    ganti_musim,
+    ganti_cuaca,
+    updateTime(2),
+    special_loc(Xp,Yp1),
+    fail_state, !.
 
 south :-    
     player_position(_,Yp),
@@ -40,10 +37,11 @@ south :-
     retract(player_position(Xp,Yp)), 
     Yp1 is Yp+1, 
     asserta(player_position(Xp,Yp1)),
-    ganti_cuaca,
     ganti_musim,
-    updateTime(1),
-    special_loc(Xp,Yp1), !.
+    ganti_cuaca,
+    updateTime(2),
+    special_loc(Xp,Yp1),
+    fail_state, !.
 
 west :-
     player_position(Xp,_),
@@ -60,10 +58,11 @@ west :-
     retract(player_position(Xp,Yp)), 
     Xp1 is Xp-1, 
     asserta(player_position(Xp1,Yp)),
-    ganti_cuaca,
     ganti_musim,
-    updateTime(1),
-    special_loc(Xp1,Yp), !.
+    ganti_cuaca,
+    updateTime(2),
+    special_loc(Xp1,Yp), 
+    fail_state, !.
 
 east :-
     player_position(Xp,_),
@@ -80,10 +79,11 @@ east :-
     retract(player_position(Xp,Yp)), 
     Xp1 is Xp+1, 
     asserta(player_position(Xp1,Yp)),
-    ganti_cuaca,
     ganti_musim,
-    updateTime(1),
-    special_loc(Xp1,Yp), !.
+    ganti_cuaca,
+    updateTime(2),
+    special_loc(Xp1,Yp), 
+    fail_state, !.
 
 special_loc(X,Y) :-
     point(X,Y,market),
@@ -137,15 +137,18 @@ updateTime(X) :-
     game_time(H,D,M),
     TempH is (H + X),
     H1 is (TempH mod 24),
-    TempD is (D + (TempH div 24)),
-    D1 is (TempD mod 30),
-    M1 is (M + (TempD div 30)), 
+    TempD1 is (D + (TempH div 24)),
+    TempD2 is (TempD1 mod 30),
+    (TempD2 == 0 ->
+        D1 is 30;
+     D1 is TempD2),
+    M1 is (M + (TempD1 div 30)), 
     retract(game_time(_,_,_)),
     asserta(game_time(H1,D1,M1)), !.
 
 displayTime :-
-    game_time(H,D,M),
-    write(H), write(':00'), write(' - '), write(D), write('/'), write(M), write('/2021').
+    game_time(H,_,_),
+    write(H), write(':00').
 
 displayDate :-
     game_time(_,D,M),

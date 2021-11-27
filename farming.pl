@@ -112,7 +112,7 @@ harvest :-
 
 harvest :-
     game_started(_),
-    tile_farming(X,Y,Seed,H,D,M),
+    tile_farming(_,_,_,H,D,M),
     \+ is_ready_harvest(H,D,M),
     write('Plant can not be harvested yet\n'),
     !.
