@@ -85,6 +85,7 @@ buy :-
         ),
         add_N_to_inventory_seed(Qty,carrot),
         Charged is Qty * 50,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -98,6 +99,7 @@ buy :-
         ),
         add_N_to_inventory_seed(Qty,potato),
         Charged is Qty * 50,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -111,6 +113,7 @@ buy :-
         ),
         add_N_to_inventory_seed(Qty,wheat),
         Charged is Qty * 50,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -124,6 +127,7 @@ buy :-
         ),
         add_N_to_inventory_seed(Qty,paddy),
         Charged is Qty * 50,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -137,6 +141,7 @@ buy :-
         ),
         add_N_to_inventory_seed(Qty,cassava),
         Charged is Qty * 50,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -150,6 +155,7 @@ buy :-
         ),
         add_N_to_inventory_seed(Qty,corn),
         Charged is Qty * 50,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -163,6 +169,7 @@ buy :-
         ),
         add_N_to_inventory(Qty,laying_hen),
         Charged is Qty * 100,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -176,6 +183,7 @@ buy :-
         ),
         add_N_to_inventory(Qty,broiler_hen),
         Charged is Qty * 100,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -189,6 +197,7 @@ buy :-
         ),
         add_N_to_inventory(Qty,beef_cattle),
         Charged is Qty * 200,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -202,6 +211,7 @@ buy :-
         ),
         add_N_to_inventory(Qty,dairy_cow),
         Charged is Qty * 250,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -215,6 +225,7 @@ buy :-
         ),
         add_N_to_inventory(Qty,sheep),
         Charged is Qty * 150,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -228,6 +239,7 @@ buy :-
         ),
         add_N_to_inventory(Qty,goldfish),
         Charged is Qty * 75,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -241,6 +253,7 @@ buy :-
         ),
         add_N_to_inventory(Qty,catfish),
         Charged is Qty * 75,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -254,6 +267,7 @@ buy :-
         ),
         add_N_to_inventory(Qty,gurame),
         Charged is Qty * 75,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -267,6 +281,7 @@ buy :-
         ),
         add_N_to_inventory(Qty,tilapia),
         Charged is Qty * 75,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -280,6 +295,7 @@ buy :-
         ),
         add_N_to_inventory(Qty,parrotfish),
         Charged is Qty * 75,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -291,6 +307,7 @@ buy :-
         write(' hoe.\n'),
         increase_level_of_equipment(hoe,farming),
         Charged is 500,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -302,6 +319,7 @@ buy :-
         write(' fishing_rod.\n'),
         increase_level_of_equipment(fishing_rod,fishing),
         Charged is 500,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -313,6 +331,7 @@ buy :-
         write(' fishing_net.\n'),
         increase_level_of_equipment(fishing_net,fishing),
         Charged is 500,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -324,6 +343,7 @@ buy :-
         write(' bucket.\n'),
         increase_level_of_equipment(bucket,ranching),
         Charged is 500,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -335,6 +355,7 @@ buy :-
         write(' knive.\n'),
         increase_level_of_equipment(knive,ranching),
         Charged is 500,
+        money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n')
@@ -360,6 +381,7 @@ sell :-
         ),
         substract_N_to_inventory(Qty,carrot),
         Get is Qty * 50,
+        money_plus(Get),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -373,6 +395,7 @@ sell :-
         ),
         substract_N_to_inventory(Qty,potato),
         Get is Qty * 50,
+        money_plus(Get),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -386,6 +409,7 @@ sell :-
         ),
         substract_N_to_inventory(Qty,wheat),
         Get is Qty * 50,
+        money_plus(Get),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -399,6 +423,7 @@ sell :-
         ),
         substract_N_to_inventory(Qty,paddy),
         Get is Qty * 50,
+        money_plus(Get),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -412,6 +437,7 @@ sell :-
         ),
         substract_N_to_inventory(Qty,cassava),
         Get is Qty * 50,
+        money_plus(Get),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -425,6 +451,7 @@ sell :-
         ),
         substract_N_to_inventory(Qty,corn),
         Get is Qty * 50,
+        money_plus(Get),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -438,6 +465,7 @@ sell :-
         ),
         substract_N_to_inventory(Qty,laying_hen),
         Get is Qty * 100,
+        money_plus(Get),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -451,6 +479,7 @@ sell :-
         ),
         substract_N_to_inventory(Qty,broiler_hen),
         Get is Qty * 100,
+        money_plus(Get),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -464,6 +493,7 @@ sell :-
         ),
         substract_N_to_inventory(Qty,beef_cattle),
         Get is Qty * 200,
+        money_plus(Get),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -477,6 +507,7 @@ sell :-
         ),
         substract_N_to_inventory(Qty,dairy_cow),
         Get is Qty * 250,
+        money_plus(Get),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -490,6 +521,7 @@ sell :-
         ),
         substract_N_to_inventory(Qty,sheep),
         Get is Qty * 150,
+        money_plus(Get),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -503,6 +535,7 @@ sell :-
         ),
         substract_N_to_inventory(Qty,goldfish),
         Get is Qty * 75,
+        money_plus(Get),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -516,6 +549,7 @@ sell :-
         ),
         substract_N_to_inventory(Qty,catfish),
         Get is Qty * 75,
+        money_plus(Get),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -529,6 +563,7 @@ sell :-
         ),
         substract_N_to_inventory(Qty,gurame),
         Get is Qty * 75,
+        money_plus(Get),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -542,6 +577,7 @@ sell :-
         ),
         substract_N_to_inventory(Qty,tilapia),
         Get is Qty * 75,
+        money_plus(Get),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -555,8 +591,30 @@ sell :-
         ),
         substract_N_to_inventory(Qty,parrotfish),
         Get is Qty * 75,
+        money_plus(Get),
         write('You received '),
         write(Get),
         write(' golds.\n')
     ,!),
     !.
+
+money_plus(Y) :-
+    (player_money(X) ->
+        X1 is X+Y,
+        retractall(player_money(X)),
+        asserta(player_money(X1));
+        asserta(player_money(Y))
+    ).
+
+money_minus(Y) :-
+    (player_money(X) ->
+        X1 is X-Y,
+        retractall(player_money(X)),
+        asserta(player_money(X1));
+        asserta(player_money(Y))
+    ).
+
+displayMoney :-
+    (player_money(X) ->
+        write(X)
+    ).
