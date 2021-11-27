@@ -8,7 +8,9 @@ market :-
     (Action == buy ->
         buy;
     Action == sell ->
-        sell, !),
+        sell;
+    Action == exitShop ->
+        write('Thank you for coming ^^\n'),!),
     !.
 
 buy :-
@@ -42,8 +44,9 @@ buy :-
         Qty > 1 ->
             write(' carrots.\n'),!
         ),
-        add_N_to_inventory(Qty,carrot),
+        add_N_to_inventory_seed(Qty,carrot),
         Charged is Qty * 50,
+        perubahanUang(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
@@ -55,7 +58,7 @@ buy :-
         Qty > 1 ->
             write(' potatoes.\n'),!
         ),
-        add_N_to_inventory(Qty,potato),
+        add_N_to_inventory_seed(Qty,potato),
         Charged is Qty * 50,
         write('You are charged '),
         write(Charged),
@@ -68,7 +71,7 @@ buy :-
         Qty > 1 ->
             write(' wheats.\n'),!
         ),
-        add_N_to_inventory(Qty,wheat),
+        add_N_to_inventory_seed(Qty,wheat),
         Charged is Qty * 50,
         write('You are charged '),
         write(Charged),
@@ -81,7 +84,7 @@ buy :-
         Qty > 1 ->
             write(' paddies.\n'),!
         ),
-        add_N_to_inventory(Qty,paddy),
+        add_N_to_inventory_seed(Qty,paddy),
         Charged is Qty * 50,
         write('You are charged '),
         write(Charged),
@@ -94,7 +97,7 @@ buy :-
         Qty > 1 ->
             write(' cassavas.\n'),!
         ),
-        add_N_to_inventory(Qty,cassava),
+        add_N_to_inventory_seed(Qty,cassava),
         Charged is Qty * 50,
         write('You are charged '),
         write(Charged),
@@ -107,7 +110,7 @@ buy :-
         Qty > 1 ->
             write(' corns.\n'),!
         ),
-        add_N_to_inventory(Qty,corn),
+        add_N_to_inventory_seed(Qty,corn),
         Charged is Qty * 50,
         write('You are charged '),
         write(Charged),
@@ -248,7 +251,6 @@ buy :-
 sell :-
     write('Here are the items in your inventory:\n'),
     displayInventory,
-    displayInventorySeed,
     write('What do you want to sell?\n\n'),
     write('| ?- '),
     read(Item),
