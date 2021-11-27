@@ -10,11 +10,11 @@ inventory(paddy,10).
 inventory(cassava,10).
 inventory(corn,10).
 /*hewan ternak*/
-inventory(laying_hen,10).
-inventory(broiler_hen,10).
-inventory(beef_cattle,10).
-inventory(dairy_cow,10).
-inventory(sheep,10).
+inventoryRanching(laying_hen,10).
+inventoryRanching(broiler_hen,10).
+inventoryRanching(beef_cattle,10).
+inventoryRanching(dairy_cow,10).
+inventoryRanching(sheep,10).
 /*ikan*/
 inventory(goldfish,10).
 inventory(catfish,10).

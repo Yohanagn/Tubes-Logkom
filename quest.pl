@@ -122,6 +122,8 @@ finishQuest('Ranch Item') :-
         asserta(takeQuest(X,Y,Z))), !.
 
 questCompleted :-
+    player_position(A,B),
+    isInQTile(A,B),
     takeQuest(0,0,0),nl,
     write('Congratulations! You have completed your task.'), nl,
     player_totalexp(X),
@@ -133,6 +135,13 @@ questCompleted :-
     write('You got 10 Exp and 10 gold'), nl, !.
 
 questCompleted :-
+    player_position(A,B),
+    isInQTile(A,B),
     \+ takeQuest(0,0,0),nl,
     write('You haven\'t completed your quest!'), nl.
+
+questCompleted :-
+    player_position(A,B),
+    \+ isInQTile(A,B),
+    write('You are not in quest Tile! You cannot check whether you have complete your quest or not.'),nl,!.
 
