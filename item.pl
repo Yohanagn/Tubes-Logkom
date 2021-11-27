@@ -28,3 +28,13 @@ increase_level_of_equipment(X,Y) :-
     asserta(inventory(X,Y,Z1));
     asserta(inventory(X,Y,1))
     ).
+
+displayEquipment :-
+    forall(equipment(X,_,Z),writeEquipment(X,_,Z)).
+
+writeEquipment(X,_,Z) :-
+    write('Level '),
+    write(Z),
+    write(' '),
+    write(X),
+    nl,!.
