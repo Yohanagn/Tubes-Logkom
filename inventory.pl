@@ -49,6 +49,14 @@ add_N_to_inventory(N,X) :-
     asserta(inventory(X,N))
     ).
 
+substract_N_to_inventory(N,X) :-
+    (inventory(X,Y) ->
+    Y1 is Y-N,
+    retractall(inventory(X,Y)),
+    asserta(inventory(X,Y1));
+    asserta(inventory(X,N))
+    ).
+
 add_to_inventory_seed(X) :-
     (inventory_seed(X,Y) ->
     Y1 is Y+1,

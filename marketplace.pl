@@ -1,5 +1,6 @@
 :- include('player.pl').
 :- include('inventory.pl').
+:- include('item.pl').
 
 market :-
     write('What do you want to do?\n1. Buy\n2. Sell\n\n'),
@@ -46,7 +47,6 @@ buy :-
         ),
         add_N_to_inventory_seed(Qty,carrot),
         Charged is Qty * 50,
-        perubahanUang(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
