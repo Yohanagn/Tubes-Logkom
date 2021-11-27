@@ -42,6 +42,7 @@ buy :-
         Qty > 1 ->
             write(' carrots.\n'),!
         ),
+        add_N_to_inventory(Qty,carrot),
         Charged is Qty * 50,
         write('You are charged '),
         write(Charged),
@@ -54,6 +55,7 @@ buy :-
         Qty > 1 ->
             write(' potatoes.\n'),!
         ),
+        add_N_to_inventory(Qty,potato),
         Charged is Qty * 50,
         write('You are charged '),
         write(Charged),
@@ -66,6 +68,7 @@ buy :-
         Qty > 1 ->
             write(' wheats.\n'),!
         ),
+        add_N_to_inventory(Qty,wheat),
         Charged is Qty * 50,
         write('You are charged '),
         write(Charged),
@@ -78,6 +81,7 @@ buy :-
         Qty > 1 ->
             write(' paddies.\n'),!
         ),
+        add_N_to_inventory(Qty,paddy),
         Charged is Qty * 50,
         write('You are charged '),
         write(Charged),
@@ -90,6 +94,7 @@ buy :-
         Qty > 1 ->
             write(' cassavas.\n'),!
         ),
+        add_N_to_inventory(Qty,cassava),
         Charged is Qty * 50,
         write('You are charged '),
         write(Charged),
@@ -102,6 +107,7 @@ buy :-
         Qty > 1 ->
             write(' corns.\n'),!
         ),
+        add_N_to_inventory(Qty,corn),
         Charged is Qty * 50,
         write('You are charged '),
         write(Charged),
@@ -114,6 +120,7 @@ buy :-
         Qty > 1 ->
             write(' laying_hens.\n'),!
         ),
+        add_N_to_inventory(Qty,laying_hen),
         Charged is Qty * 100,
         write('You are charged '),
         write(Charged),
@@ -126,6 +133,7 @@ buy :-
         Qty > 1 ->
             write(' broiler_hens.\n'),!
         ),
+        add_N_to_inventory(Qty,broiler_hen),
         Charged is Qty * 100,
         write('You are charged '),
         write(Charged),
@@ -138,6 +146,7 @@ buy :-
         Qty > 1 ->
             write(' beefs_cattle.\n'),!
         ),
+        add_N_to_inventory(Qty,beef_cattle),
         Charged is Qty * 200,
         write('You are charged '),
         write(Charged),
@@ -150,6 +159,7 @@ buy :-
         Qty > 1 ->
             write(' dairy_cows.\n'),!
         ),
+        add_N_to_inventory(Qty,dairy_cow),
         Charged is Qty * 250,
         write('You are charged '),
         write(Charged),
@@ -162,6 +172,7 @@ buy :-
         Qty > 1 ->
             write(' sheeps.\n'),!
         ),
+        add_N_to_inventory(Qty,sheep),
         Charged is Qty * 150,
         write('You are charged '),
         write(Charged),
@@ -174,6 +185,7 @@ buy :-
         Qty > 1 ->
             write(' goldfishes.\n'),!
         ),
+        add_N_to_inventory(Qty,goldfish),
         Charged is Qty * 75,
         write('You are charged '),
         write(Charged),
@@ -186,6 +198,7 @@ buy :-
         Qty > 1 ->
             write(' catfishes.\n'),!
         ),
+        add_N_to_inventory(Qty,catfish),
         Charged is Qty * 75,
         write('You are charged '),
         write(Charged),
@@ -198,6 +211,7 @@ buy :-
         Qty > 1 ->
             write(' gouramies.\n'),!
         ),
+        add_N_to_inventory(Qty,gurame),
         Charged is Qty * 75,
         write('You are charged '),
         write(Charged),
@@ -210,6 +224,7 @@ buy :-
         Qty > 1 ->
             write(' tilapias.\n'),!
         ),
+        add_N_to_inventory(Qty,tilapia),
         Charged is Qty * 75,
         write('You are charged '),
         write(Charged),
@@ -222,14 +237,13 @@ buy :-
         Qty > 1 ->
             write(' parrotfishes.\n'),!
         ),
+        add_N_to_inventory(Qty,parrotfish),
         Charged is Qty * 75,
         write('You are charged '),
         write(Charged),
         write(' golds.\n')
     ,!),
     !.
-
-
 
 sell :-
     write('Here are the items in your inventory:\n'),
@@ -249,6 +263,7 @@ sell :-
         Qty > 1 ->
             write(' carrots.\n'),!
         ),
+        substract_N_to_inventory(Qty,carrot),
         Get is Qty * 50,
         write('You received '),
         write(Get),
@@ -261,6 +276,7 @@ sell :-
         Qty > 1 ->
             write(' potatoes.\n'),!
         ),
+        substract_N_to_inventory(Qty,potato),
         Get is Qty * 50,
         write('You received '),
         write(Get),
@@ -273,6 +289,7 @@ sell :-
         Qty > 1 ->
             write(' wheats.\n'),!
         ),
+        substract_N_to_inventory(Qty,wheat),
         Get is Qty * 50,
         write('You received '),
         write(Get),
@@ -285,6 +302,7 @@ sell :-
         Qty > 1 ->
             write(' paddies.\n'),!
         ),
+        substract_N_to_inventory(Qty,paddy),
         Get is Qty * 50,
         write('You received '),
         write(Get),
@@ -297,6 +315,7 @@ sell :-
         Qty > 1 ->
             write(' cassavas.\n'),!
         ),
+        substract_N_to_inventory(Qty,cassava),
         Get is Qty * 50,
         write('You received '),
         write(Get),
@@ -309,6 +328,7 @@ sell :-
         Qty > 1 ->
             write(' corns.\n'),!
         ),
+        substract_N_to_inventory(Qty,corn),
         Get is Qty * 50,
         write('You received '),
         write(Get),
@@ -321,6 +341,7 @@ sell :-
         Qty > 1 ->
             write(' laying_hens.\n'),!
         ),
+        substract_N_to_inventory(Qty,laying_hen),
         Get is Qty * 100,
         write('You received '),
         write(Get),
@@ -333,6 +354,7 @@ sell :-
         Qty > 1 ->
             write(' broiler_hens.\n'),!
         ),
+        substract_N_to_inventory(Qty,broiler_hen),
         Get is Qty * 100,
         write('You received '),
         write(Get),
@@ -345,6 +367,7 @@ sell :-
         Qty > 1 ->
             write(' beefs_cattle.\n'),!
         ),
+        substract_N_to_inventory(Qty,beef_cattle),
         Get is Qty * 200,
         write('You received '),
         write(Get),
@@ -357,6 +380,7 @@ sell :-
         Qty > 1 ->
             write(' dairy_cows.\n'),!
         ),
+        substract_N_to_inventory(Qty,dairy_cow),
         Get is Qty * 250,
         write('You received '),
         write(Get),
@@ -369,6 +393,7 @@ sell :-
         Qty > 1 ->
             write(' sheeps.\n'),!
         ),
+        substract_N_to_inventory(Qty,sheep),
         Get is Qty * 150,
         write('You received '),
         write(Get),
@@ -381,6 +406,7 @@ sell :-
         Qty > 1 ->
             write(' goldfishes.\n'),!
         ),
+        substract_N_to_inventory(Qty,goldfish),
         Get is Qty * 75,
         write('You received '),
         write(Get),
@@ -393,6 +419,7 @@ sell :-
         Qty > 1 ->
             write(' catfishes.\n'),!
         ),
+        substract_N_to_inventory(Qty,catfish),
         Get is Qty * 75,
         write('You received '),
         write(Get),
@@ -405,6 +432,7 @@ sell :-
         Qty > 1 ->
             write(' gouramies.\n'),!
         ),
+        substract_N_to_inventory(Qty,gurame),
         Get is Qty * 75,
         write('You received '),
         write(Get),
@@ -417,6 +445,7 @@ sell :-
         Qty > 1 ->
             write(' tilapias.\n'),!
         ),
+        substract_N_to_inventory(Qty,tilapia),
         Get is Qty * 75,
         write('You received '),
         write(Get),
@@ -429,6 +458,7 @@ sell :-
         Qty > 1 ->
             write(' parrotfishes.\n'),!
         ),
+        substract_N_to_inventory(Qty,parrotfish),
         Get is Qty * 75,
         write('You received '),
         write(Get),
