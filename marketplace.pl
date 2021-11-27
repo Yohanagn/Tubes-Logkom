@@ -31,12 +31,50 @@ buy :-
     write('13. catfish (75 golds)\n'),
     write('14. gurame (75 golds)\n'),
     write('15. tilapia (75 golds)\n'),
-    write('16. parrotfish (75 golds)\n\n'),
+    write('16. parrotfish (75 golds)\n'),
+    /* 
+    equipment(hoe,farming,1).
+    equipment(fishing_rod,fishing,1).
+    equipment(fishing_net,fishing,1).
+    equipment(bucket,ranching,1).
+    equipment(knive,ranching,1).
+
+    */
+    write('17. Level '),
+    equipment(hoe,farming,A),
+    Lvl is A+1,
+    write(Lvl),
+    write(' hoe (500 golds)\n'),
+    write('18. Level '),
+    equipment(fishing_rod,fishing,A),
+    Lvl is A+1,
+    write(Lvl),
+    write(' fishing_rod (500 golds)\n'),
+    write('19. Level '),
+    equipment(fishing_net,fishing,A),
+    Lvl is A+1,
+    write(Lvl),
+    write(' fishing_net (500 golds)\n'),
+    write('20. Level '),
+    equipment(bucket,ranching,A),
+    Lvl is A+1,
+    write(Lvl),
+    write(' bucket (500 golds)\n'),
+    write('21. Level '),
+    equipment(knive,ranching,A),
+    Lvl is A+1,
+    write(Lvl),
+    write(' knive (500 golds)\n'),
     write('| ?- '),
     read(Itemnumber),
-    write('How many do you want to buy?\n\n'),
-    write('| ?- '), 
-    read(Qty),
+    Cnt is Itemnumber,
+    (Cnt < 17 ->
+        write('How many do you want to buy?\n\n'),
+        write('| ?- '), 
+        read(Qty);
+    Cnt > 16 ->
+        /*NONE*/
+    !),
     (Itemnumber == 1 ->
         write('You have bought '),
         write(Qty),
@@ -242,6 +280,61 @@ buy :-
         ),
         add_N_to_inventory(Qty,parrotfish),
         Charged is Qty * 75,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
+    Itemnumber == 17 ->
+        write('You have bought level '),
+        equipment(hoe,farming,A),
+        Lvl is A+1,
+        write(Lvl),
+        write(' hoe.\n'),
+        increase_level_of_equipment(hoe,farming),
+        Charged is 500,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
+    Itemnumber == 18 ->
+        write('You have bought level '),
+        equipment(fishing_rod,fishing,A),
+        Lvl is A+1,
+        write(Lvl),
+        write(' fishing_rod.\n'),
+        increase_level_of_equipment(fishing_rod,fishing),
+        Charged is 500,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
+    Itemnumber == 19 ->
+        write('You have bought level '),
+        equipment(fishing_net,fishing,A),
+        Lvl is A+1,
+        write(Lvl),
+        write(' fishing_net.\n'),
+        increase_level_of_equipment(fishing_net,fishing),
+        Charged is 500,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
+    Itemnumber == 20 ->
+        write('You have bought level '),
+        equipment(bucket,ranching,A),
+        Lvl is A+1,
+        write(Lvl),
+        write(' bucket.\n'),
+        increase_level_of_equipment(bucket,ranching),
+        Charged is 500,
+        write('You are charged '),
+        write(Charged),
+        write(' golds.\n');
+    Itemnumber == 21 ->
+        write('You have bought level '),
+        equipment(knive,ranching,A),
+        Lvl is A+1,
+        write(Lvl),
+        write(' knive.\n'),
+        increase_level_of_equipment(knive,ranching),
+        Charged is 500,
         write('You are charged '),
         write(Charged),
         write(' golds.\n')
