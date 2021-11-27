@@ -1,6 +1,7 @@
 /* inventory(jenis,jumlah) */
 :- dynamic(inventory/2).
 :- dynamic(inventory_seed/2).
+:- dynamic(capacity_inventory/1).
 /* inventory(biji_jagung,10). */
 /*umbi-umbian*/
 inventory(carrot,10).
@@ -90,3 +91,6 @@ delete_zero_inventory :-
 
 delete_zero_inventory_seed:-
     retractall(inventory_seed(_,0)).
+
+total_inventory(N) :-
+    forall(inventory(X,N1),)

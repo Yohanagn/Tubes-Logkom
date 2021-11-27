@@ -13,7 +13,7 @@
 :- include('fail.pl').
 :- include('goal.pl').
    /* BONUS */
-:- include('potion.pl').
+/*:- include('potion.pl').*/
 :- include('musim.pl').
 
 /* Fact */
@@ -50,7 +50,7 @@ openGame :-
     game_opened(_),
     write('You have opened the game, type \'start\' to begin your journey!\n'), !.
 openGame :-
-    retractVar,
+    /*retractVar,*/
     clearDiary,
     mainMenu,
     asserta(game_opened(true)),

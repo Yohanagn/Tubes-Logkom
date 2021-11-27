@@ -84,6 +84,7 @@ buy :-
     !),
     (Itemnumber == 1 ->
         Charged is Qty * 50,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -105,6 +106,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 2 ->
         Charged is Qty * 50,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -126,6 +128,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 3 ->
         Charged is Qty * 50,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -147,6 +150,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 4 ->
         Charged is Qty * 50,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -168,6 +172,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 5 ->
         Charged is Qty * 50,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -189,6 +194,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 6 ->
         Charged is Qty * 50,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -210,6 +216,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 7 ->
         Charged is Qty * 100,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -231,6 +238,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 8 ->
         Charged is Qty * 100,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -252,6 +260,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 9 ->
         Charged is Qty * 200,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -273,6 +282,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 10 ->
         Charged is Qty * 250,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -294,6 +304,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 11 ->
         Charged is Qty * 150,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -315,6 +326,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 12 ->
         Charged is Qty * 75,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -336,6 +348,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 13 ->
         Charged is Qty * 75,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -357,6 +370,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 14 ->
         Charged is Qty * 75,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -378,6 +392,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 15 ->
         Charged is Qty * 75,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -399,6 +414,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 16 ->
         Charged is Qty * 75,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -420,6 +436,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 17 ->
         Charged is 500,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -439,6 +456,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 18 ->
         Charged is 500,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -458,6 +476,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 19 ->
         Charged is 500,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -477,6 +496,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 20 ->
         Charged is 500,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -496,6 +516,7 @@ buy :-
         write(' golds.\n');
     Itemnumber == 21 ->
         Charged is 500,
+        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -536,6 +557,8 @@ sell :-
         substract_N_to_inventory(Qty,carrot),
         Get is Qty * 50,
         money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -550,6 +573,8 @@ sell :-
         substract_N_to_inventory(Qty,potato),
         Get is Qty * 50,
         money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -564,6 +589,8 @@ sell :-
         substract_N_to_inventory(Qty,wheat),
         Get is Qty * 50,
         money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -578,6 +605,8 @@ sell :-
         substract_N_to_inventory(Qty,paddy),
         Get is Qty * 50,
         money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -592,6 +621,8 @@ sell :-
         substract_N_to_inventory(Qty,cassava),
         Get is Qty * 50,
         money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -606,6 +637,8 @@ sell :-
         substract_N_to_inventory(Qty,corn),
         Get is Qty * 50,
         money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -620,6 +653,8 @@ sell :-
         substract_N_to_inventory(Qty,laying_hen),
         Get is Qty * 100,
         money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -634,6 +669,8 @@ sell :-
         substract_N_to_inventory(Qty,broiler_hen),
         Get is Qty * 100,
         money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -648,6 +685,8 @@ sell :-
         substract_N_to_inventory(Qty,beef_cattle),
         Get is Qty * 200,
         money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -662,6 +701,8 @@ sell :-
         substract_N_to_inventory(Qty,dairy_cow),
         Get is Qty * 250,
         money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -676,6 +717,8 @@ sell :-
         substract_N_to_inventory(Qty,sheep),
         Get is Qty * 150,
         money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -690,6 +733,8 @@ sell :-
         substract_N_to_inventory(Qty,goldfish),
         Get is Qty * 75,
         money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -704,6 +749,8 @@ sell :-
         substract_N_to_inventory(Qty,catfish),
         Get is Qty * 75,
         money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -718,6 +765,8 @@ sell :-
         substract_N_to_inventory(Qty,gurame),
         Get is Qty * 75,
         money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -732,6 +781,8 @@ sell :-
         substract_N_to_inventory(Qty,tilapia),
         Get is Qty * 75,
         money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -746,6 +797,8 @@ sell :-
         substract_N_to_inventory(Qty,parrotfish),
         Get is Qty * 75,
         money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
         write('You received '),
         write(Get),
         write(' golds.\n')

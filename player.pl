@@ -17,7 +17,8 @@ job(rancher).
 initiate_playerstatus :-
     asserta(player_money(0)),
     asserta(player_level(1)),
-    asserta(player_totalexp(0)).
+    asserta(player_totalexp(0)),
+    asserta(capacity_inventory(0)).
 
 initiate_playerpost :- X is 1, Y is 1, asserta(player_position(X,Y)).
 
@@ -63,9 +64,10 @@ tambahExpperspecialty(Job, ExpNow, LevelUp, Level) :-
     writeln('Level Up!'), writeln('Now, You are in Level '), write(Level), write('as a'), write(player_job(farmer)), writeln('Congratulations! You have reached the Maximum Level at This Game'); LevelUp is 0,!.
 
 perubahanUang(Money) :-
-    asserta(player_money(Uang)),
+    player_money(Uang),
     TotalMoney is Money + Uang,
-    asserta(player_money(TotalMoney), retract(player_money(Uang))),!.
+    asserta(player_money(TotalMoney)),
+    retract(player_money(Uang)),!.
 
 totalExp(Exp, Level, LevelUp) :-
     asserta(player_level(Level)),
@@ -120,9 +122,18 @@ displayStatus(X) :-
     write('Exp Ranching     : '),
     forall(player_expperspecialty(rancher, Exp3), write(Exp3)), nl,!.    
 
-
+change_capacity_inventory(N) :-
+    capacity_inventory(X),
+    X+N > 100,
+    write('Inventory is full\n'),
+    fail.
     
-
+change_capacity_inventory(N) :-
+    capacity_inventory(X),
+    X1 is X+N,
+    retractall(capacity_inventory(X)),
+    asserta(capacity_inventory(X1)),
+    !.
 
 
 

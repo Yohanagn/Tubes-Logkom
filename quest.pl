@@ -3,7 +3,34 @@
 isInQTile(A,B) :-
     point(A,B,quest).
 
-questStart :-
+
+quest :-
+    player_position(A,B),
+    \+ isInQTile(A,B),
+    write('You are not in the quest tile! You cannot take quest.'), nl,!.
+
+quest :-
+    takeQuest(X,Y,Z),
+    total_farming_item(X1),
+    total_fishing_item(Y1),
+    total_ranching_item(Z1),
+    X1 >= X,
+    Y1 >= Y,
+    Z1 >= Z,
+    write('You have completed the quest\n'),
+    write('You get '),
+    Money is (X+Y+Z)*50,
+    write(Money),
+    write(' gold\n'),
+    write('You get 20 EXP'),
+    perubahanUang(Money),
+    !.
+
+quest :-
+    takeQuest(_,_,_), nl,
+    write('You have an on-going quest!'), nl,!.
+
+quest :-
     game_opened(_),
     game_started(_),
     \+takeQuest(_,_,_), nl,
@@ -12,22 +39,16 @@ questStart :-
     write('You got a new quest! '), nl,
     random(1,5,X),
     random(1,5,Y),
-    random(1,5,Z),
+    random(0,1,Z),
     asserta(takeQuest(X,Y,Z)),
     write('You need to collect: '), nl,
     write('- '), write(X), write(' Harvest Item'), nl,
     write('- '), write(Y), write(' Fish'),nl,
     write('- '), write(Z), write(' Ranch Item'), nl, !.
 
-questStart :-
-    takeQuest(_,_,_), nl,
-    write('You have an on-going quest!'), nl.
 
-questStart :-
-    player_position(A,B),
-    \+ isInQTile(A,B),
-    write('You are not in the quest tile! You cannot take quest.'), nl.
 
+/*
 finishQuest('Harvest Item') :-
     takeQuest(0,_,_),!.
 
@@ -72,6 +93,8 @@ finishQuest('Ranch Item') :-
         asserta(takeQuest(X, Y, NewZ), retractall(takeQuest(X,Y,Z)))
     ;
         asserta(takeQuest(X,Y,Z))), !.
+
+
 
 finishQuest('Ranch Item') :-
     takeQuest(X,Y,Z),
@@ -145,3 +168,69 @@ questCompleted :-
     \+ isInQTile(A,B),
     write('You are not in quest Tile! You cannot check whether you have complete your quest or not.'),nl,!.
 
+*/
+
+total_farming_item(X) :-
+    (inventory(carrot,N1) ->
+        X1 is N1;
+        X1 is 0
+    ),
+    (inventory(potato,N2) ->
+        X2 is N2;
+        X2 is 0
+    ),
+    (inventory(wheat,N3) ->
+        X3 is N3;
+        X3 is 0
+    ),
+    (inventory(paddy,N4) ->
+        X4 is N4;
+        X4 is 0
+    ),
+    (inventory(cassava,N5) ->
+        X5 is N5;
+        X5 is 0
+    ),
+    (inventory(corn,N6) ->
+        X6 is N6;
+        X6 is 0
+    ),
+    X is X1+X2+X3+X4+X5+X6,!.
+
+total_fishing_item(X) :-
+    (inventory(goldfish,N1) ->
+        X1 is N1;
+        X1 is 0
+    ),
+    (inventory(catfish,N2) ->
+        X2 is N2;
+        X2 is 0
+    ),
+    (inventory(gurame,N3) ->
+        X3 is N3;
+        X3 is 0
+    ),
+    (inventory(tilapia,N4) ->
+        X4 is N4;
+        X4 is 0
+    ),
+    (inventory(parrotfish,N5) ->
+        X5 is N5;
+        X5 is 0
+    ),
+    X is X1+X2+X3+X4+X5,!.
+
+total_ranching_item(X) :-
+    (inventory(eggs,N1) ->
+        X1 is N1;
+        X1 is 0
+    ),
+    (inventory(milk,N2) ->
+        X2 is N2;
+        X2 is 0
+    ),
+    (inventory(wool,N3) ->
+        X3 is N3;
+        X3 is 0
+    ),
+    X is X1+X2+X3,!.

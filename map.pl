@@ -37,7 +37,7 @@ init_quest_pos :-
 	\+ (point(X1,Y1,market)),
 	\+ (point(X1,Y1,ranch)),
 	\+ (point(X1,Y1,digged))), !,
-    asserta(point(X1,Y1,quest)).
+    asserta(point(1,1,quest)).
 
 init_ranch :-
 	repeat,

@@ -1,10 +1,10 @@
 /* waktu_panen(nama_tanaman,durasi_panen) */
-waktu_panen(carrot,24).
-waktu_panen(potato,72).
-waktu_panen(wheat,96).
-waktu_panen(paddy,96).
-waktu_panen(cassava,120).
-waktu_panen(corn,120).
+waktu_panen(carrot,2).
+waktu_panen(potato,1).
+waktu_panen(wheat,2).
+waktu_panen(paddy,1).
+waktu_panen(cassava,1).
+waktu_panen(corn,1).
 
 /* Dynamic variable */
 /* tile_farming(x,y,tanaman,h,d,m) */
@@ -62,12 +62,17 @@ generate_koef_farming(X) :-
 /* Command utama */
 
 dig :-
+    player_position(X,Y),
+    point(X,Y,_),
+    write('You cannot dig here\n'),
+    !.
+
+dig :-
     game_started(_),
     player_position(X,Y),
-    X1 is X, Y1 is Y,
-    retractall(point(X1,Y1,_)),
+    \+ point(X,Y,_),
     !,
-    asserta(point(X1,Y1,digged)),
+    asserta(point(X,Y,digged)),
     write('You digged the tile'),
     nl,
     !.
