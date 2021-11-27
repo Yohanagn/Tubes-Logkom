@@ -130,13 +130,16 @@ retractVar :-
     retractall(point(_,_,_)),
     /* inventory.pl */
     retractall(inventory(_,_)),
+    retractall(inventory_seed(_,_)),
     /* house.pl */
     retractall(insideHouse(_)), 
     retractall(diary(_)),
     retractall(isDiaryHeader(_)),
     retractall(writingDiary(_)),
     /* farming.pl */
-    retractall(tile_farming(_,_,_,_)), !.
+    retractall(tile_farming(_,_,_,_)), 
+    /* quest.pl */
+    retractall(takeQuest(_,_,_)), !.
 
 help :-
     game_opened(_),
