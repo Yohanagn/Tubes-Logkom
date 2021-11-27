@@ -26,42 +26,52 @@ initiatePlayerjob(X) :-
     X =:= 1,
     asserta(player_job(farmer)),
     asserta(player_levelperspecialty(farmer, 1)),
-    asserta(player_tools(cangkul, farmer)),
     asserta(player_expperspecialty(farmer, 0)),!.
 
 initiatePlayerjob(X) :-
     X =:= 2,
     asserta(player_job(fisherman)),
     asserta(player_levelperspecialty(fisherman, 1)),
-    asserta(player_tools(pancingan, fisherman)),
-    asserta(player_tools(jala, fisherman)),
     asserta(player_expperspecialty(fisherman, 0)),!.
 
 initiatePlayerjob(X) :-
     X =:= 3,
     asserta(player_job(rancher)),
     asserta(player_levelperspecialty(rancher, 1)),
-    asserta(player_tools(ember, rancher)),
-    asserta(player_tools(pisau, rancher)),
     asserta(player_expperspecialty(rancher, 0)),!.
 
-tambahExpperspecialty(Job, ExpNow, LevelUp, Level) :-
-    asserta(player_levelperspecialty(Level)),
-    asserta(player_job(Job)),
-    asserta(player_expperspecialty(Job, Exp)),
+tambahExpperspecialty(Job, ExpNow) :-
+    player_levelperspecialty(Level),
+    player_job(Job),
+    player_expperspecialty(Job, Exp),
     NewExp is Exp + ExpNow,
-    asserta(player_expperspecialty(Job, NewExp), retract(player_expperspecialty(Job, Exp))),
-    (NewExp >=  Level*50 -> LevelUp is 1),
-    writeln('Level Up!'), writeln('Now, You are in Level '), write(Level), write('as a'), write(player_job(Job)); LevelUp is 0,!.
+    asserta(player_expperspecialty(Job, NewExp)),
+    retract(player_expperspecialty(Job, Exp)),
+    updateTotalExp,
+    (NewExp >=  Level*50 -> 
+        LevelUp is 1,
+        Levelnow is Level+LevelUp,
+        asserta(player_levelperspecialty(Levelnow)),
+        writeln('Level Up!'), writeln('Now, You are in Level '), write(Levelnow), write('as a'), write(Job);
+        LevelUp is 0
+    ),!.
+tambahExpperspecialty(Job, ExpNow) :-
+    player_levelperspecialty(Level),
+    player_job(Job),
+    player_expperspecialty(Job, Exp),
+    NewExp is Exp + ExpNow,
+    asserta(player_expperspecialty(Job, NewExp)),
+    retract(player_expperspecialty(Job, Exp)),
+    updateTotalExp,
+    (NewExp >=  Level*50 ->
+        Level < 50,
+        LevelUp is 1,
+        Levelnow is Level+LevelUp,
+        asserta(player_levelperspecialty(Levelnow)),
+        writeln('Level Up!'), writeln('Now, You are in Level '), write(Levelnow), write('as a'), write(Job), writeln('Congratulations! You have reached the Maximum Level at This Game');
+        LevelUp is 0
+    ),!.
 
-tambahExpperspecialty(Job, ExpNow, LevelUp, Level) :-
-    asserta(player_levelperspecialty(Level)),
-    asserta(player_job(Job)),
-    asserta(player_expperspecialty(Job, Exp)),
-    NewExp is Exp + ExpNow,
-    asserta(player_expperspecialty(Job, NewExp), retract(player_expperspecialty(Job, Exp))),
-    (NewExp >=  2500 -> LevelUp is 1),
-    writeln('Level Up!'), writeln('Now, You are in Level '), write(Level), write('as a'), write(player_job(farmer)), writeln('Congratulations! You have reached the Maximum Level at This Game'); LevelUp is 0,!.
 
 perubahanUang(Money) :-
     player_money(Uang),
@@ -69,25 +79,39 @@ perubahanUang(Money) :-
     asserta(player_money(TotalMoney)),
     retract(player_money(Uang)),!.
 
-totalExp(Exp, Level, LevelUp) :-
-    asserta(player_level(Level)),
-    asserta(player_expperspecialty(farmer, Exp1)),
-    asserta(player_expperspecialty(fisherman, Exp2)),
-    asserta(player_expperspecialty(rancher, Exp3)),
-    ExpNow is Exp + Exp1 + Exp2 + Exp3,
-    asserta(total_exp(ExpNow), retract(total_exp(Exp))),
-    (ExpNow >=  Level*50 -> LevelUp is 1),
-    writeln('Level Up!'), writeln('Now, You are in Level '), write(Level); LevelUp is 0,!.
+updateTotalExp :-
+    player_level(Level),
+    player_expperspecialty(farmer, Exp1),
+    player_expperspecialty(fisherman, Exp2),
+    player_expperspecialty(rancher, Exp3),
+    ExpNow is Exp1 + Exp2 + Exp3,
+    asserta(total_exp(ExpNow)),
+    retract(total_exp(Exp)),
+    (ExpNow >=  Level*50 ->
+        Level =< 50,
+        LevelUp is 1,
+        Levelnow is Level+LevelUp,
+        asserta(player_level(Levelnow)),
+        writeln('Level Up!'), writeln('Now, You are in Level '), write(Levelnow);
+        LevelUp is 0
+    ),!.
 
-totalExp(Exp, Level, LevelUp) :-
-    asserta(player_level(Level)),
-    asserta(player_expperspecialty(farmer, Exp1)),
-    asserta(player_expperspecialty(fisherman, Exp2)),
-    asserta(player_expperspecialty(rancher, Exp3)),
+updateTotalExp :-
+    player_level(Level),
+    player_expperspecialty(farmer, Exp1),
+    player_expperspecialty(fisherman, Exp2),
+    player_expperspecialty(rancher, Exp3),
     ExpNow is Exp + Exp1 + Exp2 + Exp3,
-    asserta(total_exp(ExpNow), retract(total_exp(Exp))),
-    (ExpNow >= 2500 -> LevelUp is 1),
-    writeln('Level Up!'), writeln('Now, You are in Level '), write(Level), writeln('Congratulations! You have reached the Maximum Level at This Game'); LevelUp is 0,!.
+    asserta(total_exp(ExpNow)),
+    retract(total_exp(Exp)),
+    (ExpNow >= 2500 ->
+        Level < 50,
+        LevelUp is 1,
+        Levelnow is Level+LevelUp,
+        asserta(player_levelperspecialty(Levelnow)),
+        writeln('Level Up!'), writeln('Now, You are in Level '), write(Level), writeln('Congratulations! You have reached the Maximum Level at This Game');
+        LevelUp is 0
+    ),!.
 
 displayStatus(X) :-
     write('Your Status : '),nl,

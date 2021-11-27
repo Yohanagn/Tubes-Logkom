@@ -98,6 +98,3 @@ delete_zero_inventory :-
 
 delete_zero_inventory_seed:-
     retractall(inventory_seed(_,0)).
-
-total_inventory(N) :-
-    forall(inventory(X,N1),)

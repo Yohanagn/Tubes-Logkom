@@ -14,6 +14,14 @@ seed(paddy).
 seed(cassava).
 seed(corn).
 
+
+ikan(goldfish).
+ikan(catfish).
+ikan(gurame).
+ikan(tilapia).
+ikan(parrotfish).
+
+
 :- dynamic(equipment/3).
 
 /* equipment(nama_alat,untuk_apa,level)*/

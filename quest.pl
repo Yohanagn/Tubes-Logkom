@@ -23,7 +23,9 @@ quest :-
     write(Money),
     write(' gold\n'),
     write('You get 20 EXP'),
+    retractall(takeQuest(X,Y,Z)),
     perubahanUang(Money),
+    goal_state,
     !.
 
 quest :-

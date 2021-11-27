@@ -1,10 +1,3 @@
-/* Deklarasi Fakta */
-ikan(goldfish).
-ikan(catfish).
-ikan(gurame).
-ikan(tilapia).
-ikan(parrotfish).
-
 /* Deklarasi Rules */
 is_water_nearby(X,Y) :-
     X1 is X+1,
