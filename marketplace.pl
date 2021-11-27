@@ -71,11 +71,26 @@ buy :-
     (Cnt < 17 ->
         write('How many do you want to buy?\n\n'),
         write('| ?- '), 
-        read(Qty);
+        read(Qty),
+        Jml is Qty,
+        (Jml < 1 ->
+            write('At least one item can be purchased.\n\n'),
+            market;
+        Jml > 0 ->
+            /* NONE */
+        !);
     Cnt > 16 ->
         /*NONE*/
     !),
     (Itemnumber == 1 ->
+        Charged is Qty * 50,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought '),
         write(Qty),
         (Qty == 1 ->
@@ -84,12 +99,19 @@ buy :-
             write(' carrots.\n'),!
         ),
         add_N_to_inventory_seed(Qty,carrot),
-        Charged is Qty * 50,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 2 ->
+        Charged is Qty * 50,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought '),
         write(Qty),
         (Qty == 1 ->
@@ -98,12 +120,19 @@ buy :-
             write(' potatoes.\n'),!
         ),
         add_N_to_inventory_seed(Qty,potato),
-        Charged is Qty * 50,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 3 ->
+        Charged is Qty * 50,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought '),
         write(Qty),
         (Qty == 1 ->
@@ -112,12 +141,19 @@ buy :-
             write(' wheats.\n'),!
         ),
         add_N_to_inventory_seed(Qty,wheat),
-        Charged is Qty * 50,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 4 ->
+        Charged is Qty * 50,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought '),
         write(Qty),
         (Qty == 1 ->
@@ -126,12 +162,19 @@ buy :-
             write(' paddies.\n'),!
         ),
         add_N_to_inventory_seed(Qty,paddy),
-        Charged is Qty * 50,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 5 ->
+        Charged is Qty * 50,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought '),
         write(Qty),
         (Qty == 1 ->
@@ -140,12 +183,19 @@ buy :-
             write(' cassavas.\n'),!
         ),
         add_N_to_inventory_seed(Qty,cassava),
-        Charged is Qty * 50,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 6 ->
+        Charged is Qty * 50,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought '),
         write(Qty),
         (Qty == 1 ->
@@ -154,12 +204,19 @@ buy :-
             write(' corns.\n'),!
         ),
         add_N_to_inventory_seed(Qty,corn),
-        Charged is Qty * 50,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 7 ->
+        Charged is Qty * 100,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought '),
         write(Qty),
         (Qty == 1 ->
@@ -168,12 +225,19 @@ buy :-
             write(' laying_hens.\n'),!
         ),
         add_N_to_inventory(Qty,laying_hen),
-        Charged is Qty * 100,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 8 ->
+        Charged is Qty * 100,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought '),
         write(Qty),
         (Qty == 1 ->
@@ -182,12 +246,19 @@ buy :-
             write(' broiler_hens.\n'),!
         ),
         add_N_to_inventory(Qty,broiler_hen),
-        Charged is Qty * 100,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 9 ->
+        Charged is Qty * 200,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought '),
         write(Qty),
         (Qty == 1 ->
@@ -196,12 +267,19 @@ buy :-
             write(' beefs_cattle.\n'),!
         ),
         add_N_to_inventory(Qty,beef_cattle),
-        Charged is Qty * 200,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 10 ->
+        Charged is Qty * 250,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought '),
         write(Qty),
         (Qty == 1 ->
@@ -210,12 +288,19 @@ buy :-
             write(' dairy_cows.\n'),!
         ),
         add_N_to_inventory(Qty,dairy_cow),
-        Charged is Qty * 250,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 11 ->
+        Charged is Qty * 150,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought '),
         write(Qty),
         (Qty == 1 ->
@@ -224,12 +309,19 @@ buy :-
             write(' sheeps.\n'),!
         ),
         add_N_to_inventory(Qty,sheep),
-        Charged is Qty * 150,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 12 ->
+        Charged is Qty * 75,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought '),
         write(Qty),
         (Qty == 1 ->
@@ -238,12 +330,19 @@ buy :-
             write(' goldfishes.\n'),!
         ),
         add_N_to_inventory(Qty,goldfish),
-        Charged is Qty * 75,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 13 ->
+        Charged is Qty * 75,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought '),
         write(Qty),
         (Qty == 1 ->
@@ -252,12 +351,19 @@ buy :-
             write(' catfishes.\n'),!
         ),
         add_N_to_inventory(Qty,catfish),
-        Charged is Qty * 75,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 14 ->
+        Charged is Qty * 75,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought '),
         write(Qty),
         (Qty == 1 ->
@@ -266,12 +372,19 @@ buy :-
             write(' gouramies.\n'),!
         ),
         add_N_to_inventory(Qty,gurame),
-        Charged is Qty * 75,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 15 ->
+        Charged is Qty * 75,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought '),
         write(Qty),
         (Qty == 1 ->
@@ -280,12 +393,19 @@ buy :-
             write(' tilapias.\n'),!
         ),
         add_N_to_inventory(Qty,tilapia),
-        Charged is Qty * 75,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 16 ->
+        Charged is Qty * 75,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought '),
         write(Qty),
         (Qty == 1 ->
@@ -294,67 +414,101 @@ buy :-
             write(' parrotfishes.\n'),!
         ),
         add_N_to_inventory(Qty,parrotfish),
-        Charged is Qty * 75,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 17 ->
+        Charged is 500,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought level '),
         equipment(hoe,farming,A),
         Lvl is A+1,
         write(Lvl),
         write(' hoe.\n'),
         increase_level_of_equipment(hoe,farming),
-        Charged is 500,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 18 ->
+        Charged is 500,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought level '),
         equipment(fishing_rod,fishing,A),
         Lvl is A+1,
         write(Lvl),
         write(' fishing_rod.\n'),
         increase_level_of_equipment(fishing_rod,fishing),
-        Charged is 500,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 19 ->
+        Charged is 500,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought level '),
         equipment(fishing_net,fishing,A),
         Lvl is A+1,
         write(Lvl),
         write(' fishing_net.\n'),
         increase_level_of_equipment(fishing_net,fishing),
-        Charged is 500,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 20 ->
+        Charged is 500,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought level '),
         equipment(bucket,ranching,A),
         Lvl is A+1,
         write(Lvl),
         write(' bucket.\n'),
         increase_level_of_equipment(bucket,ranching),
-        Charged is 500,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 21 ->
+        Charged is 500,
+        player_money(M),
+        (M < Charged ->
+            write('Your money is not enough.\n\n'),
+            market;
+        M >= Charged ->
+            /*NONE*/
+        !),
         write('You have bought level '),
         equipment(knive,ranching,A),
         Lvl is A+1,
         write(Lvl),
         write(' knive.\n'),
         increase_level_of_equipment(knive,ranching),
-        Charged is 500,
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
