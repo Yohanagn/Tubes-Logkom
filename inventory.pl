@@ -78,6 +78,9 @@ add_N_to_inventory_seed(N,X) :-
     asserta(inventory_seed(X,N))
     ).
 
+delete_zero_inventory_ranching :-
+    retractall(inventoryRanching(_,0)).
+
 displayInventory :-
     forall(inventory(X,Y),writeInventory(X,Y)).
 
