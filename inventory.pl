@@ -2,6 +2,8 @@
 :- dynamic(inventory/2).
 :- dynamic(inventory_seed/2).
 :- dynamic(capacity_inventory/1).
+:- dynamic(inventoryRanching/2).
+:- dynamic(inventoryHasil/2).
 /* inventory(biji_jagung,10). */
 /*umbi-umbian*/
 inventory(carrot,10).
@@ -23,9 +25,11 @@ inventory(gurame,10).
 inventory(tilapia,10).
 inventory(parrotfish,10).
 /*Hasil Ternak*/
-inventory(eggs, 0).
-inventory(milk, 0).
-inventory(wool, 0).
+inventoryHasil(eggs, 0).
+inventoryHasil(milk, 0).
+inventoryHasil(wool, 0).
+inventoryHasil(chicken, 0).
+inventoryHasil(beef, 0).
 
 inventory_seed(carrot,3).
 inventory_seed(potato,3).

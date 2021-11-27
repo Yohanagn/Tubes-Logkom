@@ -17,7 +17,9 @@ ranch :-
     isInRanchingTile(X,Y),
     write('Welcome to the ranch! You have '),nl,
     displayRanchItem,nl,
-    write('What do you want to do? '),nl, !.
+    write('What do you want to do? '),nl, 
+    write('/*To start ranching, you can type lay, broiler, dairy, beef or sheepwool.*/'), nl,
+    write('/*To check whether it has produce something or not, you can type laying_hen, broiler_hen, dairy_cow, beef_cattle or sheep*/'),nl,!.
     /*read(Hewan),
     ((Hewan == laying_hen ; Hewan == sheep ; Hewan == dairy_cow) ->
     retractall(inventory(Hewan,Count)),
@@ -34,79 +36,174 @@ ranch :-
 ranch :- 
     player_position(X,Y),
     \+ isInRanchingTile(X,Y),
-    write('You are not in the ranching tile. You cannot start ranching!'), nl, !.
+    write('You are not in the ranching tile. You cannot start ranching!'), nl,
+     !.
 
 addInventory(X, Count) :-
-    (inventory(X,Y) ->
+    (inventoryHasil(X,Y) ->
     Y1 is Y + Count,
-    retractall(inventory(X,Y)),
-    asserta(inventory(X,Y1))
+    retractall(inventoryHasil(X,Y)),
+    asserta(inventoryHasil(X,Y1))
     ;
-    asserta(inventory(X,Count))), !.
+    asserta(inventoryHasil(X,Count))), !.
+
+lay :-
+    game_started(_),
+    player_position(X,Y),
+    isInRanchingTile(X,Y),
+    \+ ranching_tile(X,Y,laying_hen,_,_,_),
+    add_timeRanching(laying_hen,H,D,M),
+    asserta(ranching_tile(X,Y,laying_hen,H,D,M)),
+    write('You choose laying hen'),nl,
+    !.
 
 laying_hen :-
     player_levelperspecialty(rancher, Level),
     player_position(X,Y),
     isInRanchingTile(X,Y),
-    lama_beternak(laying_hen, Lama),
-    Lama >= current_time,
-    retractall(lama_beternak(laying_hen,Lama)),
+    ranching_tile(_,_,_,H,D,M),
+    \+isProduceSmth(H,D,M),
+    write('Your chicken has not produce anything yet.'), nl, !.
+
+laying_hen :-
+    player_levelperspecialty(rancher, Level),
+    player_position(X,Y),
+    isInRanchingTile(X,Y),
+    ranching_tile(X,Y,laying_hen,_,_,_),
+    retractall(ranching_tile(X,Y,laying_hen,_,_,_)),
     addInventory(eggs, Count),
     tambahExpperspecialty(rancher, 10, _, Level),
     write('Your chicken lays '), write(Count), write('eggs'), nl,
     write('You got '), write(Count), write('eggs'), nl,
     write('You gained 10 ranching Exp!'),!.
 
+broiler :-
+    game_started(_),
+    player_position(X,Y),
+    isInRanchingTile(X,Y),
+    \+ ranching_tile(X,Y,broiler_hen,_,_,_),
+    inventoryRanching(broiler_hen,A),
+    retractall(inventoryRanching(broiler_hen,A)),
+    NewA is A-1,
+    asserta(inventoryRanching(broiler_hen,NewA)),
+    delete_zero_inventory_ranching,
+    add_timeRanching(broiler_hen,H,D,M),
+    asserta(ranching_tile(X,Y,broiler_hen,H,D,M)),
+    write('You choose broiler hen'),nl,
+    !.
+
 broiler_hen :-
     player_levelperspecialty(rancher, Level),
     player_position(X,Y),
     isInRanchingTile(X,Y),
-    lama_beternak(broiler_hen, Lama),
-    Lama >= current_time,
-    retractall(lama_beternak(broiler_hen,Lama)),
-    add_to_inventory(broiler_hen),
+    ranching_tile(_,_,_,H,D,M),
+    \+isProduceSmth(H,D,M),
+    write('Your chicken is not big enough.'), nl, !.
+
+broiler_hen :-
+    player_levelperspecialty(rancher, Level),
+    player_position(X,Y),
+    isInRanchingTile(X,Y),
+    ranching_tile(X,Y,broiler_hen,_,_,_),
+    retractall(ranching_tile(X,Y,broiler_hen,_,_,_)),
+    addInventory(chicken, 1),
     tambahExpperspecialty(rancher, 10, _, Level),
     write('Your chicken is ready for sale!'),nl,
-    write('You gained 10 ranching Exp!'),!.
+    write('You gained 10 ranching Exp!'),!.   
+
+dairy :-
+    game_started(_),
+    player_position(X,Y),
+    isInRanchingTile(X,Y),
+    \+ ranching_tile(X,Y,dairy_cow,_,_,_),
+    add_timeRanching(dairy_cow,H,D,M),
+    asserta(ranching_tile(X,Y,dairy_cow,H,D,M)),
+    write('You choose dairy cows'),nl,
+    !.
 
 dairy_cow :-
     player_levelperspecialty(rancher, Level),
     player_position(X,Y),
     isInRanchingTile(X,Y),
-    lama_beternak(dairy_cow, Lama),
-    Lama >= current_time,
-    retractall(lama_beternak(dairy_cow,Lama)),
+    ranching_tile(_,_,_,H,D,M),
+    \+isProduceSmth(H,D,M),
+    write('Your cow has not produce anything yet.'), nl, !.
+
+dairy_cow :-
+    player_levelperspecialty(rancher, Level),
+    player_position(X,Y),
+    isInRanchingTile(X,Y),
+    ranching_tile(X,Y,dairy_cow,_,_,_),
+    retractall(ranching_tile(X,Y,dairy_cow,_,_,_)),
     addInventory(milk, Count),
     tambahExpperspecialty(rancher, 10, _, Level),
     write('Your cows produce '), write(Count*15), write('liters of milk'), nl,
     write('You got '), write(Count*15), write('liters of milk'), nl,
     write('You gained 10 ranching Exp!'),!.
 
+beef :-
+    game_started(_),
+    player_position(X,Y),
+    isInRanchingTile(X,Y),
+    \+ ranching_tile(X,Y,beef_cattle,_,_,_),
+    inventoryRanching(beef_cattle,A),
+    retractall(inventoryRanching(beef_cattle,A)),
+    NewA is A-1,
+    asserta(inventoryRanching(beef_cattle,NewA)),
+    delete_zero_inventory_ranching,
+    add_timeRanching(beef_cattle,H,D,M),
+    asserta(ranching_tile(X,Y,beef_cattle,H,D,M)),
+    write('You choose beef cattle'),nl,
+    !.
+
 beef_cattle :-
     player_levelperspecialty(rancher, Level),
     player_position(X,Y),
     isInRanchingTile(X,Y),
-    lama_beternak(beef_cattle, Lama),
-    Lama >= current_time,
-    retractall(lama_beternak(beef_cattle,Lama)),
-    add_to_inventory(beef_cattle),
+    ranching_tile(_,_,_,H,D,M),
+    \+isProduceSmth(H,D,M),
+    write('Your beef is not big enough.'), nl, !.
+
+beef_cattle :-
+    player_levelperspecialty(rancher, Level),
+    player_position(X,Y),
+    isInRanchingTile(X,Y),
+    ranching_tile(X,Y,beef_cattle,_,_,_),
+    retractall(ranching_tile(X,Y,beef_cattle,_,_,_)),
+    addInventory(beef, 1),
     tambahExpperspecialty(rancher, 10, _, Level),
-    write('Your cows is ready for sale!'), nl,
+    write('Your beef is ready for sale!'),nl,
     write('You gained 10 ranching Exp!'),!.
+
+sheepwool :-
+    game_started(_),
+    player_position(X,Y),
+    isInRanchingTile(X,Y),
+    \+ ranching_tile(X,Y,sheep,_,_,_),
+    add_timeRanching(sheep,H,D,M),
+    asserta(ranching_tile(X,Y,sheep,H,D,M)),
+    write('You choose sheep'),nl,
+    !.
 
 sheep :-
     player_levelperspecialty(rancher, Level),
     player_position(X,Y),
     isInRanchingTile(X,Y),
-    lama_beternak(sheep, Lama),
-    Lama >= current_time,
-    retractall(lama_beternak(sheep,Lama)),
-    add_to_inventory(wool, Count),
+    ranching_tile(_,_,_,H,D,M),
+    \+isProduceSmth(H,D,M),
+    write('Your sheep has not produce anything yet.'), nl, !.
+
+sheep :-
+    player_levelperspecialty(rancher, Level),
+    player_position(X,Y),
+    isInRanchingTile(X,Y),
+    ranching_tile(X,Y,sheep,_,_,_),
+    retractall(ranching_tile(X,Y,sheep,_,_,_)),
+    addInventory(wool, Count),
     tambahExpperspecialty(rancher, 10, _, Level),
     write('Your sheeps produce '), write(Count*5), write('kg wool'), nl,
     write('You got '), write(Count*5), write('kg wool'), nl,
     write('You gained 10 ranching Exp!'),!.
-
 
 
 
