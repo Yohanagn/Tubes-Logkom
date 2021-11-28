@@ -160,7 +160,7 @@ change_capacity_inventory(N) :-
     capacity_inventory(X),
     X+N > 100,
     write('Inventory is full\n'),
-    fail.
+    !,fail.
     
 change_capacity_inventory(N) :-
     capacity_inventory(X),
