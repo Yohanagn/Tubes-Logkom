@@ -1,3 +1,7 @@
+:- include('player.pl').
+:- include('inventory.pl').
+:- include('item.pl').
+
 market :-
     write('What do you want to do?\n1. Buy\n2. Sell\n\n'),
     write('| ?- '),
@@ -9,6 +13,8 @@ market :-
     Action == exitShop ->
         write('Thank you for coming ^^\n'),!),
     !.
+
+/* BUY */
 
 buy :-
     write('What do you want to buy?\n'),
@@ -23,11 +29,6 @@ buy :-
     write('9. beef_cattle (200 golds)\n'),
     write('10. dairy_cow (250 golds)\n'),
     write('11. sheep (150 golds)\n'),
-    write('12. goldfish (75 golds)\n'),
-    write('13. catfish (75 golds)\n'),
-    write('14. gurame (75 golds)\n'),
-    write('15. tilapia (75 golds)\n'),
-    write('16. parrotfish (75 golds)\n'),
     /* 
     equipment(hoe,farming,1).
     equipment(fishing_rod,fishing,1).
@@ -36,27 +37,27 @@ buy :-
     equipment(knive,ranching,1).
 
     */
-    write('17. Level '),
+    write('12. Level '),
     equipment(hoe,farming,A),
     Lvl is A+1,
     write(Lvl),
     write(' hoe (500 golds)\n'),
-    write('18. Level '),
+    write('13. Level '),
     equipment(fishing_rod,fishing,A),
     Lvl is A+1,
     write(Lvl),
     write(' fishing_rod (500 golds)\n'),
-    write('19. Level '),
+    write('14. Level '),
     equipment(fishing_net,fishing,A),
     Lvl is A+1,
     write(Lvl),
     write(' fishing_net (500 golds)\n'),
-    write('20. Level '),
+    write('15. Level '),
     equipment(bucket,ranching,A),
     Lvl is A+1,
     write(Lvl),
     write(' bucket (500 golds)\n'),
-    write('21. Level '),
+    write('16. Level '),
     equipment(knive,ranching,A),
     Lvl is A+1,
     write(Lvl),
@@ -64,7 +65,7 @@ buy :-
     write('| ?- '),
     read(Itemnumber),
     Cnt is Itemnumber,
-    (Cnt < 17 ->
+    (Cnt < 12 ->
         write('How many do you want to buy?\n\n'),
         write('| ?- '), 
         read(Qty),
@@ -75,7 +76,7 @@ buy :-
         Jml > 0 ->
             /* NONE */
         !);
-    Cnt > 16 ->
+    Cnt > 11 ->
         /*NONE*/
     !),
     (Itemnumber == 1 ->
@@ -227,7 +228,7 @@ buy :-
         Qty > 1 ->
             write(' laying_hens.\n'),!
         ),
-        add_N_to_inventory(Qty,laying_hen),
+        add_N_to_inventory_ranching(Qty,laying_hen),
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
@@ -249,7 +250,7 @@ buy :-
         Qty > 1 ->
             write(' broiler_hens.\n'),!
         ),
-        add_N_to_inventory(Qty,broiler_hen),
+        add_N_to_inventory_ranching(Qty,broiler_hen),
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
@@ -271,7 +272,7 @@ buy :-
         Qty > 1 ->
             write(' beefs_cattle.\n'),!
         ),
-        add_N_to_inventory(Qty,beef_cattle),
+        add_N_to_inventory_ranching(Qty,beef_cattle),
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
@@ -293,7 +294,7 @@ buy :-
         Qty > 1 ->
             write(' dairy_cows.\n'),!
         ),
-        add_N_to_inventory(Qty,dairy_cow),
+        add_N_to_inventory_ranching(Qty,dairy_cow),
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
@@ -315,122 +316,12 @@ buy :-
         Qty > 1 ->
             write(' sheeps.\n'),!
         ),
-        add_N_to_inventory(Qty,sheep),
+        add_N_to_inventory_ranching(Qty,sheep),
         money_minus(Charged),
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
     Itemnumber == 12 ->
-        Charged is Qty * 75,
-        change_capacity_inventory(Qty),
-        player_money(M),
-        (M < Charged ->
-            write('Your money is not enough.\n\n'),
-            market;
-        M >= Charged ->
-            /*NONE*/
-        !),
-        write('You have bought '),
-        write(Qty),
-        (Qty == 1 ->
-            write(' goldfish.\n');
-        Qty > 1 ->
-            write(' goldfishes.\n'),!
-        ),
-        add_N_to_inventory(Qty,goldfish),
-        money_minus(Charged),
-        write('You are charged '),
-        write(Charged),
-        write(' golds.\n');
-    Itemnumber == 13 ->
-        Charged is Qty * 75,
-        change_capacity_inventory(Qty),
-        player_money(M),
-        (M < Charged ->
-            write('Your money is not enough.\n\n'),
-            market;
-        M >= Charged ->
-            /*NONE*/
-        !),
-        write('You have bought '),
-        write(Qty),
-        (Qty == 1 ->
-            write(' catfish.\n');
-        Qty > 1 ->
-            write(' catfishes.\n'),!
-        ),
-        add_N_to_inventory(Qty,catfish),
-        money_minus(Charged),
-        write('You are charged '),
-        write(Charged),
-        write(' golds.\n');
-    Itemnumber == 14 ->
-        Charged is Qty * 75,
-        change_capacity_inventory(Qty),
-        player_money(M),
-        (M < Charged ->
-            write('Your money is not enough.\n\n'),
-            market;
-        M >= Charged ->
-            /*NONE*/
-        !),
-        write('You have bought '),
-        write(Qty),
-        (Qty == 1 ->
-            write(' gourami.\n');
-        Qty > 1 ->
-            write(' gouramies.\n'),!
-        ),
-        add_N_to_inventory(Qty,gurame),
-        money_minus(Charged),
-        write('You are charged '),
-        write(Charged),
-        write(' golds.\n');
-    Itemnumber == 15 ->
-        Charged is Qty * 75,
-        change_capacity_inventory(Qty),
-        player_money(M),
-        (M < Charged ->
-            write('Your money is not enough.\n\n'),
-            market;
-        M >= Charged ->
-            /*NONE*/
-        !),
-        write('You have bought '),
-        write(Qty),
-        (Qty == 1 ->
-            write(' tilapia.\n');
-        Qty > 1 ->
-            write(' tilapias.\n'),!
-        ),
-        add_N_to_inventory(Qty,tilapia),
-        money_minus(Charged),
-        write('You are charged '),
-        write(Charged),
-        write(' golds.\n');
-    Itemnumber == 16 ->
-        Charged is Qty * 75,
-        change_capacity_inventory(Qty),
-        player_money(M),
-        (M < Charged ->
-            write('Your money is not enough.\n\n'),
-            market;
-        M >= Charged ->
-            /*NONE*/
-        !),
-        write('You have bought '),
-        write(Qty),
-        (Qty == 1 ->
-            write(' parrotfish.\n');
-        Qty > 1 ->
-            write(' parrotfishes.\n'),!
-        ),
-        add_N_to_inventory(Qty,parrotfish),
-        money_minus(Charged),
-        write('You are charged '),
-        write(Charged),
-        write(' golds.\n');
-    Itemnumber == 17 ->
         Charged is 500,
         change_capacity_inventory(Qty),
         player_money(M),
@@ -450,7 +341,7 @@ buy :-
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
-    Itemnumber == 18 ->
+    Itemnumber == 13 ->
         Charged is 500,
         change_capacity_inventory(Qty),
         player_money(M),
@@ -470,7 +361,7 @@ buy :-
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
-    Itemnumber == 19 ->
+    Itemnumber == 14 ->
         Charged is 500,
         change_capacity_inventory(Qty),
         player_money(M),
@@ -490,7 +381,7 @@ buy :-
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
-    Itemnumber == 20 ->
+    Itemnumber == 15 ->
         Charged is 500,
         change_capacity_inventory(Qty),
         player_money(M),
@@ -510,7 +401,7 @@ buy :-
         write('You are charged '),
         write(Charged),
         write(' golds.\n');
-    Itemnumber == 21 ->
+    Itemnumber == 16 ->
         Charged is 500,
         change_capacity_inventory(Qty),
         player_money(M),
@@ -533,9 +424,12 @@ buy :-
     ,!),
     !.
 
+/* SELL */
+
 sell :-
     write('Here are the items in your inventory:\n'),
     displayInventory,
+    displayInventoryHasil,
     write('What do you want to sell?\n\n'),
     write('| ?- '),
     read(Item),
@@ -638,86 +532,6 @@ sell :-
         write('You received '),
         write(Get),
         write(' golds.\n');
-    Item == laying_hen ->
-        write('You sold '),
-        write(Qty),
-        (Qty == 1 ->
-            write(' laying_hen.\n');
-        Qty > 1 ->
-            write(' laying_hens.\n'),!
-        ),
-        substract_N_to_inventory(Qty,laying_hen),
-        Get is Qty * 100,
-        money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
-        write('You received '),
-        write(Get),
-        write(' golds.\n');
-    Item == broiler_hen ->
-        write('You sold '),
-        write(Qty),
-        (Qty == 1 ->
-            write(' broiler_hen.\n');
-        Qty > 1 ->
-            write(' broiler_hens.\n'),!
-        ),
-        substract_N_to_inventory(Qty,broiler_hen),
-        Get is Qty * 100,
-        money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
-        write('You received '),
-        write(Get),
-        write(' golds.\n');
-    Item == beef_cattle ->
-        write('You sold '),
-        write(Qty),
-        (Qty == 1 ->
-            write(' beef_cattle.\n');
-        Qty > 1 ->
-            write(' beefs_cattle.\n'),!
-        ),
-        substract_N_to_inventory(Qty,beef_cattle),
-        Get is Qty * 200,
-        money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
-        write('You received '),
-        write(Get),
-        write(' golds.\n');
-    Item == dairy_cow ->
-        write('You sold '),
-        write(Qty),
-        (Qty == 1 ->
-            write(' dairy_cow.\n');
-        Qty > 1 ->
-            write(' dairy_cows.\n'),!
-        ),
-        substract_N_to_inventory(Qty,dairy_cow),
-        Get is Qty * 250,
-        money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
-        write('You received '),
-        write(Get),
-        write(' golds.\n');
-    Item == sheep ->
-        write('You sold '),
-        write(Qty),
-        (Qty == 1 ->
-            write(' sheep.\n');
-        Qty > 1 ->
-            write(' sheeps.\n'),!
-        ),
-        substract_N_to_inventory(Qty,sheep),
-        Get is Qty * 150,
-        money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
-        write('You received '),
-        write(Get),
-        write(' golds.\n');
     Item == goldfish ->
         write('You sold '),
         write(Qty),
@@ -797,7 +611,87 @@ sell :-
         change_capacity_inventory(Q),
         write('You received '),
         write(Get),
-        write(' golds.\n')
+        write(' golds.\n');
+    Item == eggs ->
+        write('You sold '),
+        write(Qty),
+        (Qty == 1 ->
+            write(' egg.\n');
+        Qty > 1 ->
+            write(' eggs.\n'),!
+        ),
+        substract_N_to_inventory_hasil(Qty,eggs),
+        Get is Qty * 60,
+        money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
+        write('You received '),
+        write(Get),
+        write(' golds.\n'); 
+    Item == milk ->
+        write('You sold '),
+        write(Qty),
+        (Qty == 1 ->
+            write(' milk.\n');
+        Qty > 1 ->
+            write(' milks.\n'),!
+        ),
+        substract_N_to_inventory_hasil(Qty,milk),
+        Get is Qty * 60,
+        money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
+        write('You received '),
+        write(Get),
+        write(' golds.\n'); 
+    Item == wool ->
+        write('You sold '),
+        write(Qty),
+        (Qty == 1 ->
+            write(' wool.\n');
+        Qty > 1 ->
+            write(' wools.\n'),!
+        ),
+        substract_N_to_inventory_hasil(Qty,wool),
+        Get is Qty * 80,
+        money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
+        write('You received '),
+        write(Get),
+        write(' golds.\n'); 
+    Item == chicken ->
+        write('You sold '),
+        write(Qty),
+        (Qty == 1 ->
+            write(' chicken.\n');
+        Qty > 1 ->
+            write(' chickens.\n'),!
+        ),
+        substract_N_to_inventory_hasil(Qty,chicken),
+        Get is Qty * 80,
+        money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
+        write('You received '),
+        write(Get),
+        write(' golds.\n');  
+    Item == beef ->
+        write('You sold '),
+        write(Qty),
+        (Qty == 1 ->
+            write(' beef.\n');
+        Qty > 1 ->
+            write(' beefs.\n'),!
+        ),
+        substract_N_to_inventory_hasil(Qty,beef),
+        Get is Qty * 100,
+        money_plus(Get),
+        Q is -Qty,
+        change_capacity_inventory(Q),
+        write('You received '),
+        write(Get),
+        write(' golds.\n')        
     ,!),
     goal_state,
     !.
