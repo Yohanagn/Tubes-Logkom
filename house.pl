@@ -48,12 +48,27 @@ sleep :-
     write(' Z...\n'),
     write('     Z...\n'),
     write('         Z...\n'), nl,
+    random(0,10,Peri),
+    (Peri > 4 ->
+        periTidur; 
+    Peri < 5 ->
+        /*NONE*/    
+    !),
     updateTime(24),
     write('You wake up at '), displayTime, nl,
     write('Today is '), displayDate, nl,
     musim(M), cuaca(C),
     write(' Season: '), write(M), nl, 
     write(' Weather: '), write(C), nl, nl.
+
+periTidur :-
+    write('Hi, I am sleeping fairy.\nI offer you to move anywhere you like.\nWhere do you want to go?\n'),
+    write('< type quest or house or market or ranch >\n'),
+    write('| ?- '),
+    read(Place), point(_,_,Place), 
+    write('You can go to the '),
+    write(Place),
+    write(' area now!\n\n'),!.
 
 exit :-
     insideHouse(_), nl,
