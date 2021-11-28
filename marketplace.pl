@@ -509,7 +509,7 @@ sell :-
         write(Get),
         write(' golds.\n');
     Item == paddy ->
-        inventory(carrot,B),
+        inventory(paddy,B),
         Q is Qty,
         (B < Q ->
             write('You do not have enough paddies. Cancelling...\n\n'),
