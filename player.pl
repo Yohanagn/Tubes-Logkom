@@ -42,35 +42,37 @@ initiatePlayerjob(X) :-
 
 tambahExpperspecialty(Job, ExpNow) :-
     player_levelperspecialty(Job,Level),
-    player_job(Job),
     player_expperspecialty(Job, Exp),
     NewExp is Exp + ExpNow,
     asserta(player_expperspecialty(Job, NewExp)),
     retract(player_expperspecialty(Job, Exp)),
-    updateTotalExp,
     (NewExp >=  Level*50 -> 
         LevelUp is 1,
-        Levelnow is Level+LevelUp,
-        asserta(player_levelperspecialty(Job, Levelnow)),
-        write('Level Up!'),nl, write('Now, You are in Level '), write(Levelnow), write('as a '), write(Job), nl;
-        LevelUp is 0
-    ),!.
-tambahExpperspecialty(Job, ExpNow) :-
-    player_levelperspecialty(Job, Level),
-    player_job(Job),
-    player_expperspecialty(Job, Exp),
-    NewExp is Exp + ExpNow,
-    asserta(player_expperspecialty(Job, NewExp)),
-    retract(player_expperspecialty(Job, Exp)),
-    updateTotalExp,
-    (NewExp >=  Level*50 ->
         Level < 50,
         LevelUp is 1,
         Levelnow is Level+LevelUp,
-        asserta(player_levelperspecialty(Job, Levelnow)),
-        write('Level Up!'), nl, write('Now, You are in Level '), write(Levelnow), write('as a '), write(Job), nl, write('Congratulations! You have reached the Maximum Level at This Game'), nl;
+        retractall(player_levelperspecialty(Job,Level)),
+        asserta(player_levelperspecialty(Job,Levelnow)),
+        write('Level Up!\n'), write('Now, You are in Level '), write(Levelnow), write(' as a '), write(Job),nl;
         LevelUp is 0
-    ),!.
+    ),
+    updateTotalExp,!.
+tambahExpperspecialty(Job, ExpNow) :-
+    player_levelperspecialty(Job,Level),
+    player_expperspecialty(Job, Exp),
+    NewExp is Exp + ExpNow,
+    asserta(player_expperspecialty(Job, NewExp)),
+    retract(player_expperspecialty(Job, Exp)),
+    Level is 49,
+    (NewExp >=  Level*50 ->
+        LevelUp is 1,
+        Levelnow is Level+LevelUp,
+        retractall(player_levelperspecialty(Job,Level)),
+        asserta(player_levelperspecialty(Job,Levelnow)),
+        write('Level Up!\n'), write('Now, You are in Level '), write(Levelnow), write(' as a '), write(Job),nl, write('Congratulations! You have reached the Maximum Level at This Game\n');
+        LevelUp is 0
+    ),
+    updateTotalExp,!.
 
 
 perubahanUang(Money) :-
@@ -87,12 +89,13 @@ updateTotalExp :-
     ExpNow is Exp1 + Exp2 + Exp3,
     asserta(total_exp(ExpNow)),
     retract(total_exp(Exp)),
-    (ExpNow >=  Level*50 ->
-        Level =< 50,
+    Level < 49,
+    (ExpNow >=  Level*100 ->
         LevelUp is 1,
         Levelnow is Level+LevelUp,
+        retractall(player_level(Level)),
         asserta(player_level(Levelnow)),
-        write('Level Up!'), nl, write('Now, You are in Level '), write(Levelnow), nl;
+        write('Level Up!\n'), write('Now, You are in Level '), write(Levelnow),nl;
         LevelUp is 0
     ),!.
 
@@ -104,12 +107,13 @@ updateTotalExp :-
     ExpNow is Exp + Exp1 + Exp2 + Exp3,
     asserta(total_exp(ExpNow)),
     retract(total_exp(Exp)),
-    (ExpNow >= 2500 ->
-        Level < 50,
+    Level is 49,
+    (ExpNow >= 5000 ->
         LevelUp is 1,
         Levelnow is Level+LevelUp,
-        asserta(player_level(Levelnow)),
-        write('Level Up!'), nl, write('Now, You are in Level '), write(Level), nl, writeln('Congratulations! You have reached the Maximum Level at This Game'), nl;
+        asserta(player_levelperspecialty(Levelnow)),
+        retractall(player_level(Level)),
+        write('Level Up!\n'), write('Now, You are in Level '), write(Level), nl, write('Congratulations! You have reached the Maximum Level at This Game\n');
         LevelUp is 0
     ),!.
 

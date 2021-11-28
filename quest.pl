@@ -24,6 +24,7 @@ quest :-
     write('You get 20 EXP'),
     retractall(takeQuest(X,Y,Z)),
     perubahanUang(Money),
+    !,
     goal_state,
     !.
 

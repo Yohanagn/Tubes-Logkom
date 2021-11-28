@@ -1,10 +1,10 @@
 /* waktu_panen(nama_tanaman,durasi_panen) */
-waktu_panen(carrot,2).
-waktu_panen(potato,1).
-waktu_panen(wheat,2).
-waktu_panen(paddy,1).
-waktu_panen(cassava,1).
-waktu_panen(corn,1).
+waktu_panen(carrot,12).
+waktu_panen(potato,10).
+waktu_panen(wheat,24).
+waktu_panen(paddy,18).
+waktu_panen(cassava,30).
+waktu_panen(corn,20).
 
 /* Dynamic variable */
 /* tile_farming(x,y,tanaman,h,d,m) */
@@ -13,22 +13,11 @@ waktu_panen(corn,1).
 
 /* Deklarasi Rules */
 add_exp_farming :-
-    player_totalexp(X),
-    player_expperspecialty(farmer,Y),
     (player_job(farmer) ->
-    X1 is X+10,
-    Y1 is Y+10,
-    retractall(player_totalexp(X)),
-    retractall(player_expperspecialty(farmer,Y)),
-    asserta(player_totalexp(X1)),
-    asserta(player_expperspecialty(farmer,Y1))
-    ;
-    X1 is X+5,
-    Y1 is Y+5,
-    retractall(player_totalexp(X)),
-    retractall(player_expperspecialty(farmer,Y)),
-    asserta(player_totalexp(X1)),
-    asserta(player_expperspecialty(farmer,Y1))
+        write('You get 10 xp farming\n'),
+        tambahExpperspecialty(farmer,10);
+        write('You get 10 xp farming\n'),
+        tambahExpperspecialty(farmer,5)
     ),
     !.
 
@@ -52,9 +41,12 @@ generate_koef_farming(X) :-
     player_level(Level_overall),
     player_levelperspecialty(farmer,Level_farmer),
     (player_job(farmer) ->
-    Y is 0.2
-    ;
-    Y is 0
+        Y is 0.2;
+        Y is 0.1
+    ),
+    (equipment(hoe,farming,Level_item) ->
+        Z is Level_item/20;
+        Z is 0
     ),
     X is (Level_overall/50)*0.5+(Level_farmer/50)*0.5+Y+1.
 
@@ -62,6 +54,7 @@ generate_koef_farming(X) :-
 /* Command utama */
 
 dig :-
+    game_started(_),
     player_position(X,Y),
     point(X,Y,_),
     write('You cannot dig here\n'),
@@ -98,7 +91,7 @@ plant :-
         retractall(inventory_seed(Seed,Tot)),
         NewTot is Tot-1,
         asserta(inventory_seed(Seed,NewTot)),
-        delete_zero_inventory,
+        delete_zero_inventory_seed,
         add_time(Seed,H,D,M),
         asserta(tile_farming(X,Y,Seed,H,D,M)),
         write('You planted a '),
