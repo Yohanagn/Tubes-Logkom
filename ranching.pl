@@ -1,9 +1,9 @@
 /* Deklarasi fakta */
-lama_beternak(laying_hen, 1).
-lama_beternak(broiler_hen, 1).
-lama_beternak(beef_cattle, 1).
-lama_beternak(dairy_cow, 1).
-lama_beternak(sheep, 1).
+lama_beternak(laying_hen, 30).
+lama_beternak(broiler_hen, 45).
+lama_beternak(beef_cattle, 100).
+lama_beternak(dairy_cow, 180).
+lama_beternak(sheep, 180).
 
 :- dynamic(ranching_tile/6).
 
