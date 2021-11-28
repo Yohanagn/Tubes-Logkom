@@ -30,23 +30,18 @@ init_house :-
 
 init_quest_pos :- 
 	repeat,
-    random(1,10,X1),
-    random(1,10,Y1),
-	(\+ (point(X1,Y1,water)),
-	\+ (point(X1,Y1,house)),
-	\+ (point(X1,Y1,market)),
-	\+ (point(X1,Y1,ranch)),
-	\+ (point(X1,Y1,digged))), !,
-    asserta(point(1,1,quest)).
+    random(1,5,X1),
+    random(1,5,Y1),
+	(\+ (point(X1,Y1,water))), !,
+    asserta(point(X1,Y1,quest)).
 
 init_ranch :-
-	/*repeat,
+	repeat,
     random(1,5,X1), 
 	random(6,10,Y1), 
 	(\+ (point(X1,Y1,water))), !,
-	asserta(point(X1,Y1,ranch)).*/
-	asserta(point(1,2,ranch)).
-
+	asserta(point(X1,Y1,ranch)).
+	
 init_water_tile :- 
 	forall(between(5,6,X),(
 		asserta(point(X,4,water)))),

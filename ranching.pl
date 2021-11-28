@@ -1,7 +1,7 @@
 /* Deklarasi fakta */
 lama_beternak(laying_hen, 30).
-lama_beternak(broiler_hen, 2).
-lama_beternak(beef_cattle, 2).
+lama_beternak(broiler_hen, 45).
+lama_beternak(beef_cattle, 100).
 lama_beternak(dairy_cow, 180).
 lama_beternak(sheep, 180).
 
