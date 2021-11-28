@@ -66,6 +66,7 @@ writeDiary :-
     TotalDay is ((30 * (M-1))+D),
     write('Write your diary for day '), write(TotalDay), write(' ('), displayDate, write(')'), nl,
     write('!!! Make sure to use quotation mark ('') for each sentence !!!'), nl,
+    write('!!! Example: \'This is a sample diary\'. !!!'), nl,
     write('!!! Type \'done\' when you are finished !!!'), nl,
     write('Content: '),
     open(diary,append,File),

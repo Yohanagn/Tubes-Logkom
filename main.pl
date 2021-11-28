@@ -13,7 +13,6 @@
 :- include('fail.pl').
 :- include('goal.pl').
    /* BONUS */
-/*:- include('potion.pl').*/
 :- include('musim.pl').
 
 /* Fact */
@@ -66,7 +65,7 @@ start :-
     write('Welcome to Harvest Star!'), nl,
     write('Choose Your Job:'), nl,
     write('1. Farmer'), nl,
-    write('2. fisherman'), nl,
+    write('2. Fisherman'), nl,
     write('3. Rancher'),nl,
     write('Your choice: '),
     read(Job), nl,
@@ -121,6 +120,11 @@ retractVar :-
     /* inventory.pl */
     retractall(inventory(_,_)),
     retractall(inventory_seed(_,_)),
+    retractall(capacity_inventory(_)),
+    retractall(inventoryRanching(_,_)),
+    retractall(inventoryHasil(_,_)),
+    /* item.pl */
+    retractall(equipment(_,_,_)),
     /* house.pl */
     retractall(insideHouse(_)), 
     retractall(diary(_)),
@@ -128,15 +132,17 @@ retractVar :-
     retractall(writingDiary(_)),
     /* farming.pl */
     retractall(tile_farming(_,_,_,_)), 
+    /* ranching.pl */
+    retractall(ranching_tile(_,_,_,_,_,_)),
+    retractall(total_broiler(_)),
+    retractall(total_beef(_)),
     /* quest.pl */
-    retractall(takeQuest(_,_,_)),
-    /* item.pl */
-    retractall(equipment(_,_,_)).
+    retractall(takeQuest(_,_,_)).
 
 modalItem :-
     /* Modal untuk Ranching - Hewan Ternak */
     asserta(inventoryRanching(laying_hen,3)),
-    asserta(inventoryRanching(broiler_hen,3))
+    asserta(inventoryRanching(broiler_hen,3)),
     asserta(inventoryRanching(beef_cattle,3)),
     asserta(inventoryRanching(dairy_cow,3)),
     asserta(inventoryRanching(sheep,3)),
@@ -156,50 +162,50 @@ modalItem :-
 help :-
     game_opened(_),
     game_started(_),
-    write('   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
-    write('   %                       ~HELP~                       %\n'),
-    write('   %                      COMMANDS                      %\n'),
-    write('   %%% MAIN-MENU %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
-    write('   %     start       : start the game                   %\n'),
-    write('   %     help        : show command info                %\n'),
-    write('   %     quit        : quit the game                    %\n'),
-    write('   %%% PLAYER-INFO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
-    write('   %     status      : show your current status         %\n'),
-    write('   %     quest       : get new quest                    %\n'),
-    write('   %%% INVENTORY-MANAGEMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
-    write('   %     inventory   : show your current inventory      %\n'),
-    write('   %     throwItem   : remove item or equipment         %\n'),
-    write('   %%% MOVEMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
-    write('   %     map         : show the map                     %\n'),
-    write('   %     w           : move to the north                %\n'),
-    write('   %     s           : move to the south                %\n'),
-    write('   %     d           : move to the east                 %\n'),
-    write('   %     a           : move to the west                 %\n'),
-    write('   %%% FARMING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
-    write('   %     dig         : dig a tile                       %\n'),
-    write('   %     plant       : plant a seed                     %\n'),
-    write('   %     harvest     : harvest plant                    %\n'),
-    write('   %%% FISHING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
-    write('   %     fish        : fishing                          %\n'),
-    write('   %%% RANCHING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
-    write('   %     ranch       : enter ranch                      %\n'),
-    write('   %     laying_hen  : collect eggs                     %\n'),
-    write('   %     broiler_hen : collect chicken meat             %\n'),
-    write('   %     dairy_cow   : collect milk                     %\n'),
-    write('   %     beef_cattle : collect beef                     %\n'),
-    write('   %     sheep       : collect wool                     %\n'),
-    write('   %%% MARKETPLACE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
-    write('   %     market      : enter marketplace                %\n'),
-    write('   %     buy         : buy item or equipment            %\n'),
-    write('   %     sell        : sell item or equipment           %\n'),
-    write('   %     exitShop    : exit marketplace                 %\n'),
-    write('   %%% HOUSE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
-    write('   %     house       : enter house                      %\n'),
-    write('   %     sleep       : sleeping (skip 24 hours)         %\n'),
-    write('   %     writeDiary  : write diary                      %\n'),
-    write('   %     readDiary   : read diary                       %\n'),
-    write('   %     exit        : exit house                       %\n'),
-    write('   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'), nl, !.
+    write('   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
+    write('   %                         ~HELP~                         %\n'),
+    write('   %                        COMMANDS                        %\n'),
+    write('   %%% MAIN-MENU %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
+    write('   %     start           : start the game                   %\n'),
+    write('   %     help            : show command info                %\n'),
+    write('   %     quit            : quit the game                    %\n'),
+    write('   %%% PLAYER-INFO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
+    write('   %     status          : show your current status         %\n'),
+    write('   %     quest           : get new quest                    %\n'),
+    write('   %%% INVENTORY-MANAGEMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
+    write('   %     showInventory   : show your current inventory      %\n'),
+    write('   %     throwItem       : remove item or equipment         %\n'),
+    write('   %%% MOVEMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
+    write('   %     map             : show the map                     %\n'),
+    write('   %     w               : move to the north                %\n'),
+    write('   %     s               : move to the south                %\n'),
+    write('   %     d               : move to the east                 %\n'),
+    write('   %     a               : move to the west                 %\n'),
+    write('   %%% FARMING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
+    write('   %     dig             : dig a tile                       %\n'),
+    write('   %     plant           : plant a seed                     %\n'),
+    write('   %     harvest         : harvest plant                    %\n'),
+    write('   %%% FISHING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
+    write('   %     fish            : fishing                          %\n'),
+    write('   %%% RANCHING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
+    write('   %     ranch           : enter ranch                      %\n'),
+    write('   %     laying_hen      : collect eggs                     %\n'),
+    write('   %     broiler_hen     : collect chicken meat             %\n'),
+    write('   %     dairy_cow       : collect milk                     %\n'),
+    write('   %     beef_cattle     : collect beef                     %\n'),
+    write('   %     sheep           : collect wool                     %\n'),
+    write('   %%% MARKETPLACE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
+    write('   %     market          : enter marketplace                %\n'),
+    write('   %     buy             : buy item or equipment            %\n'),
+    write('   %     sell            : sell item or equipment           %\n'),
+    write('   %     exitShop        : exit marketplace                 %\n'),
+    write('   %%% HOUSE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
+    write('   %     house           : enter house                      %\n'),
+    write('   %     sleep           : sleeping (skip 24 hours)         %\n'),
+    write('   %     writeDiary      : write diary                      %\n'),
+    write('   %     readDiary       : read diary                       %\n'),
+    write('   %     exit            : exit house                       %\n'),
+    write('   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'), nl, !.
 
 quit :-
     game_opened(_),

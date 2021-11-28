@@ -4,7 +4,6 @@
 :- dynamic(player_job/1).
 :- dynamic(player_level/1).
 :- dynamic(player_levelperspecialty/2).
-:- dynamic(player_tools/2).
 :- dynamic(player_money/1).
 :- dynamic(player_totalexp/1).
 :- dynamic(player_expperspecialty/2).

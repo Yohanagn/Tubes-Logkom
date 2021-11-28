@@ -140,9 +140,10 @@ writeInventory(X,Y) :-
     write(' '),
     write(X).
 
-displayAllInventory :-
+showInventory :-
+    game_opened(_), game_started(_),
     nl,
-    write('Your inventory '),
+    write('Your inventory ('),
     capacity_inventory(X),
     write(X),
     write('/100)\n'),
@@ -155,9 +156,9 @@ displayAllInventory :-
     write('\n'),!.
 
 throwItem :-
-    nl,
-    displayAllInventory,
-    write('What do you want to throw?\n'),
+    game_opened(_), game_started(_),
+    showInventory,
+    write('What do you want to throw?\n> '),
     read(Item),
     (equipment(Item,_,_) ->
         retractall(equipment(Item,_,_)),
@@ -170,10 +171,10 @@ throwItem :-
         write(X),
         write(' '),
         write(Item),
-        write(' How many do you want to throw?\n'),
+        write('How many do you want to throw?\n> '),
         read(Y),
         (Y > X ->
-            write('You don\'t have enough '), write(Item), write('. Cancelling'), nl, !;
+            write('You don\'t have enough '), write(Item), write('. Cancelling...'), nl, !;
             substract_N_to_inventory(Y,Item),
             Q is -Y,
             change_capacity_inventory(Q),
@@ -190,10 +191,10 @@ throwItem :-
         write(X),
         write(' '),
         write(Item),
-        write(' How many do you want to throw?\n'),
+        write(' How many do you want to throw?\n> '),
         read(Y),
         (Y > X ->
-            write('You don\'t have enough '), write(Item), write('. Cancelling'), nl, !;
+            write('You don\'t have enough '), write(Item), write('. Cancelling...'), nl, !;
             substract_N_to_inventory_hasil(Y,Item),
             Q is -Y,
             change_capacity_inventory(Q),
@@ -206,18 +207,19 @@ throwItem :-
         )
     ;
     Item == seed ->
+        write('You have\n'),
         displayInventorySeed,
-        write('What seed do you want to throw?\n'),
+        write('What seed do you want to throw?\n> '),
         read(Seed),
         inventory_seed(Seed,X),
         write('You have '),
         write(X),
         write(' '),
         write(Seed),
-        write(' How many do you want to throw?\n'),
+        write(' How many do you want to throw?\n> '),
         read(Y),
         (Y > X ->
-            write('You don\'t have enough '), write(Seed), write('. Cancelling'), nl, !;
+            write('You don\'t have enough '), write(Seed), write('. Cancelling...'), nl, !;
             substract_N_to_inventory_seed(Y,Seed),
             Q is -Y,
             change_capacity_inventory(Q),

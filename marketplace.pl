@@ -811,6 +811,13 @@ sell :-
     ),
     !.
 
+exitShop :-
+    game_opened(_),
+    game_started(_),
+    player_position(X,Y),
+    point(X,Y,market),
+    write('Thanks for coming.\n').
+
 money_plus(Y) :-
     (player_money(X) ->
         X1 is X+Y,
