@@ -1,11 +1,13 @@
 /* Deklarasi fakta */
 lama_beternak(laying_hen, 30).
-lama_beternak(broiler_hen, 45).
+lama_beternak(broiler_hen, 2).
 lama_beternak(beef_cattle, 100).
 lama_beternak(dairy_cow, 180).
 lama_beternak(sheep, 180).
 
 :- dynamic(ranching_tile/6).
+:- dynamic(total_broiler/1).
+:- dynamic(total_beef/1).
 
 /* Rules */
 isInRanchingTile(X,Y) :-
@@ -103,7 +105,6 @@ laying_hen :-
     write('You are not in ranching tile! You cannot check whether your chicken has produce something or not.'), nl,!.
 
 laying_hen :-
-    player_levelperspecialty(rancher, _),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     ranching_tile(_,_,_,H,D,M),
@@ -111,7 +112,6 @@ laying_hen :-
     write('Your chicken has not produce anything yet.'), nl, !.
 
 laying_hen :-
-    player_levelperspecialty(rancher, _),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     ranching_tile(X,Y,laying_hen,_,_,_),
@@ -126,7 +126,6 @@ broiler :-
     game_started(_),
     player_position(X,Y),
     isInRanchingTile(X,Y),
-    \+ ranching_tile(X,Y,broiler_hen,_,_,_),
     inventoryRanching(broiler_hen,A),
     retractall(inventoryRanching(broiler_hen,A)),
     NewA is A-1,
@@ -137,26 +136,33 @@ broiler :-
     write('You choose broiler hen'),nl,
     !.
 
+get_ready_broiler(Ntot) :-
+    forall((ranching_tile(_,_,broiler_hen,H,D,M),isProduceSmth(H,D,M)),(total_broiler(N),retractall(total_broiler(N)),NewN is N+1,asserta(total_broiler(NewN)),retract(ranching_tile(_,_,broiler_hen,H,D,M)))),
+    total_broiler(Ntot),
+    retractall(total_broiler(Ntot)),
+    asserta(total_broiler(0)),
+    !.
+
 broiler_hen :-
     player_position(X,Y),
     \+ isInRanchingTile(X,Y), nl,
     write('You are not in ranching tile! You cannot check whether your chicken is ready to sell or not.'), nl,!.
 
 broiler_hen :-
-    player_levelperspecialty(rancher, _),
-    player_position(X,Y),
-    isInRanchingTile(X,Y),
-    ranching_tile(_,_,_,H,D,M),
-    \+isProduceSmth(H,D,M),
-    write('Your chicken is not big enough.'), nl, !.
-
-broiler_hen :-
-    player_levelperspecialty(rancher, _),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     ranching_tile(X,Y,broiler_hen,_,_,_),
-    retractall(ranching_tile(X,Y,broiler_hen,_,_,_)),
-    addInventory(chicken, 1),
+    write('1\n'),
+    get_ready_broiler(Ntot),
+    write('1\n'),
+    (Ntot == 0 ->
+        write('Your chicken is not big enough.'), nl, !
+    ),
+    write('1\n'),
+    addInventory(chicken, Ntot),
+    write('You get '),
+    write(Ntot),
+    write(' chicken\n'),
     write('Your chicken is ready for sale!'),nl,
     add_exp_ranching,!.   
 

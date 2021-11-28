@@ -22,8 +22,8 @@ inventory(gurame,10).
 inventory(tilapia,10).
 inventory(parrotfish,10).
 /* Hasil Ranching */
-inventoryHasil(eggs, 0).
-inventoryHasil(milk, 0).
+inventoryHasil(eggs, 1).
+inventoryHasil(milk, 2).
 inventoryHasil(wool, 0).
 inventoryHasil(chicken, 0).
 inventoryHasil(beef, 0).
@@ -132,7 +132,7 @@ displayInventory :-
     forall(inventory(X,Y),writeInventory(X,Y)).
 
 displayInventorySeed :-
-    forall(inventory_seed(X,Y),writeInventory(X,Y), write(' (seed)')).
+    forall(inventory_seed(X,Y),(writeInventory(X,Y), write(' (seed)'))).
 
 displayInventoryRanching :-
     forall(inventoryRanching(X,Y),writeInventory(X,Y)).
@@ -141,13 +141,10 @@ displayInventoryHasil :-
     forall(inventoryHasil(X,Y),writeInventory(X,Y)).
 
 writeInventory(X,Y) :-
-    Y \== 0,
     write(Y),
     write(' '),
     write(X),
-    (Y > 1 ->
-        write('s')),
-    nl,!.
+    nl.
 
 inventory :-
     nl,

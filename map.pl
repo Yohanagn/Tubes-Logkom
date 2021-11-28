@@ -40,11 +40,12 @@ init_quest_pos :-
     asserta(point(1,1,quest)).
 
 init_ranch :-
-	repeat,
+	/*repeat,
     random(1,5,X1), 
 	random(6,10,Y1), 
 	(\+ (point(X1,Y1,water))), !,
-	asserta(point(X1,Y1,ranch)).
+	asserta(point(X1,Y1,ranch)).*/
+	asserta(point(1,2,ranch)).
 
 init_water_tile :- 
 	forall(between(5,6,X),(

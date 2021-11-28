@@ -20,6 +20,10 @@ initiate_playerstatus :-
     asserta(player_totalexp(0)),
     asserta(capacity_inventory(0)).
 
+initiate_ranching_status :-
+    asserta(total_broiler(0)),
+    asserta(total_beef(0)).
+
 initiate_playerpost :- X is 1, Y is 1, asserta(player_position(X,Y)).
 
 initiatePlayerjob(X) :-

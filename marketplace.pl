@@ -2,7 +2,17 @@
 :- include('inventory.pl').
 :- include('item.pl').
 */
+
 market :-
+    \+ point(_,_,market),
+    write('You are not in the marketplace\n'),
+    !.
+
+market :-
+    game_opened(_),
+    game_started(_),
+    player_position(X,Y),
+    point(X,Y,market),
     write('What do you want to do?\n1. Buy\n2. Sell\n\n'),
     write('| ?- '),
     read(Action),
@@ -455,8 +465,8 @@ sell :-
         substract_N_to_inventory(Qty,carrot),
         Get is Qty * 50,
         money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
+        Qsubs is -Qty,
+        change_capacity_inventory(Qsubs),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -479,8 +489,8 @@ sell :-
         substract_N_to_inventory(Qty,potato),
         Get is Qty * 50,
         money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
+        Qsubs is -Qty,
+        change_capacity_inventory(Qsubs),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -503,8 +513,8 @@ sell :-
         substract_N_to_inventory(Qty,wheat),
         Get is Qty * 50,
         money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
+        Qsubs is -Qty,
+        change_capacity_inventory(Qsubs),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -527,8 +537,8 @@ sell :-
         substract_N_to_inventory(Qty,paddy),
         Get is Qty * 50,
         money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
+        Qsubs is -Qty,
+        change_capacity_inventory(Qsubs),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -551,8 +561,8 @@ sell :-
         substract_N_to_inventory(Qty,cassava),
         Get is Qty * 50,
         money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
+        Qsubs is -Qty,
+        change_capacity_inventory(Qsubs),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -575,8 +585,8 @@ sell :-
         substract_N_to_inventory(Qty,corn),
         Get is Qty * 50,
         money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
+        Qsubs is -Qty,
+        change_capacity_inventory(Qsubs),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -599,8 +609,8 @@ sell :-
         substract_N_to_inventory(Qty,goldfish),
         Get is Qty * 75,
         money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
+        Qsubs is -Qty,
+        change_capacity_inventory(Qsubs),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -623,8 +633,8 @@ sell :-
         substract_N_to_inventory(Qty,catfish),
         Get is Qty * 75,
         money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
+        Qsubs is -Qty,
+        change_capacity_inventory(Qsubs),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -647,8 +657,8 @@ sell :-
         substract_N_to_inventory(Qty,gurame),
         Get is Qty * 75,
         money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
+        Qsubs is -Qty,
+        change_capacity_inventory(Qsubs),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -671,8 +681,8 @@ sell :-
         substract_N_to_inventory(Qty,tilapia),
         Get is Qty * 75,
         money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
+        Qsubs is -Qty,
+        change_capacity_inventory(Qsubs),
         write('You received '),
         write(Get),
         write(' golds.\n');
@@ -695,13 +705,13 @@ sell :-
         substract_N_to_inventory(Qty,parrotfish),
         Get is Qty * 75,
         money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
+        Qsubs is -Qty,
+        change_capacity_inventory(Qsubs),
         write('You received '),
         write(Get),
         write(' golds.\n');
     Item == eggs ->
-        inventory(eggs,B),
+        inventoryHasil(eggs,B),
         Q is Qty,
         (B < Q ->
             write('You do not have enough eggs. Cancelling...\n\n'),
@@ -719,13 +729,13 @@ sell :-
         substract_N_to_inventory_hasil(Qty,eggs),
         Get is Qty * 60,
         money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
+        Qsubs is -Qty,
+        change_capacity_inventory(Qsubs),
         write('You received '),
         write(Get),
         write(' golds.\n'); 
     Item == milk ->
-        inventory(milk,B),
+        inventoryHasil(milk,B),
         Q is Qty,
         (B < Q ->
             write('You do not have enough milks. Cancelling...\n\n'),
@@ -743,13 +753,13 @@ sell :-
         substract_N_to_inventory_hasil(Qty,milk),
         Get is Qty * 60,
         money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
+        Qsubs is -Qty,
+        change_capacity_inventory(Qsubs),
         write('You received '),
         write(Get),
         write(' golds.\n'); 
     Item == wool ->
-        inventory(wool,B),
+        inventoryHasil(wool,B),
         Q is Qty,
         (B < Q ->
             write('You do not have enough wools. Cancelling...\n\n'),
@@ -767,13 +777,13 @@ sell :-
         substract_N_to_inventory_hasil(Qty,wool),
         Get is Qty * 80,
         money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
+        Qsubs is -Qty,
+        change_capacity_inventory(Qsubs),
         write('You received '),
         write(Get),
         write(' golds.\n'); 
     Item == chicken ->
-        inventory(chicken,B),
+        inventoryHasil(chicken,B),
         Q is Qty,
         (B < Q ->
             write('You do not have enough chickens. Cancelling...\n\n'),
@@ -791,13 +801,13 @@ sell :-
         substract_N_to_inventory_hasil(Qty,chicken),
         Get is Qty * 80,
         money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
+        Qsubs is -Qty,
+        change_capacity_inventory(Qsubs),
         write('You received '),
         write(Get),
         write(' golds.\n');  
     Item == beef ->
-        inventory(beef,B),
+        inventoryHasil(beef,B),
         Q is Qty,
         (B < Q ->
             write('You do not have enough beefs. Cancelling...\n\n'),
@@ -815,12 +825,18 @@ sell :-
         substract_N_to_inventory_hasil(Qty,beef),
         Get is Qty * 100,
         money_plus(Get),
-        Q is -Qty,
-        change_capacity_inventory(Q),
+        Qsubs is -Qty,
+        change_capacity_inventory(Qsubs),
         write('You received '),
         write(Get),
         write(' golds.\n')        
     ,!),
+    (inventoryHasil(_,0) ->
+        delete_zero_inventory_hasil
+    ),
+    (inventory(_,0) ->
+        delete_zero_inventory
+    ),
     goal_state,
     !.
 
