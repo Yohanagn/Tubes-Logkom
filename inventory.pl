@@ -164,13 +164,36 @@ throwItem :-
     write('What do you want to throw?\n'),
     read(Item),
     (equipment(Item,_,_) ->
-        retractall(equipment(Item,_,_));
+        retractall(equipment(Item,_,_))
+        write('You have '),
+        write(X),
+        write(' '),
+        write(Item),
+        write(' How many do you want to throw?'),
+        read(Y),
+        (Y > X ->
+            write('You don’t have enough '), write(Item), write('. Cancelling…'), nl, !;
+        substract_N_to_inventory(Y,Item),
+        Q is -Y,
+        change_capacity_inventory(Q)
+        )
+    ;
+    inventory(Item,_) ->
+        retractall(inventory(Item,_,_));
+    inventoryHasil(Item,_) ->
+        retractall(inventoryHasil(Item,_,_));
+    inventorySeed(Item,_) ->
+        retractall(inventory_seed(Item,_,_));
+    )
     inventory(Item,X) ->
         write('You have '),
         write(X),
         write(' '),
         write(Item),
         write(' How many do you want to throw?'),
-        
+        read(Y),
+        (Y > X ->
+            write('You don’t have enough '), write(Item), write('. Cancelling…'), !;
+        )
     )
     inventory(Item,X).
