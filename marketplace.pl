@@ -223,7 +223,6 @@ buy :-
         write(' golds.\n');
     Itemnumber == 7 ->
         Charged is Qty * 100,
-        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -245,7 +244,6 @@ buy :-
         write(' golds.\n');
     Itemnumber == 8 ->
         Charged is Qty * 100,
-        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -267,7 +265,6 @@ buy :-
         write(' golds.\n');
     Itemnumber == 9 ->
         Charged is Qty * 200,
-        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -289,7 +286,6 @@ buy :-
         write(' golds.\n');
     Itemnumber == 10 ->
         Charged is Qty * 250,
-        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),
@@ -311,7 +307,6 @@ buy :-
         write(' golds.\n');
     Itemnumber == 11 ->
         Charged is Qty * 150,
-        change_capacity_inventory(Qty),
         player_money(M),
         (M < Charged ->
             write('Your money is not enough.\n\n'),

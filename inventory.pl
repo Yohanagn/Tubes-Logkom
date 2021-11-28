@@ -146,27 +146,31 @@ writeInventory(X,Y) :-
     write(X),
     nl.
 
-inventory :-
+displayAllInventory :-
     nl,
     write('Your inventory '),
-    /*capacity_inventory(X),
-    write(X),*/
+    capacity_inventory(X),
+    write(X),
     write('/100)\n'),
     displayEquipment,
     displayInventory,
     displayInventoryHasil,
     displayInventorySeed,
-    displayInventoryRanching,
     write('\n').
 
 throwItem :-
     nl,
-    inventory,
+    displayAllInventory,
     write('What do you want to throw?\n'),
     read(Item),
-    inventory(Item,X),
-    write('You have '),
-    write(X),
-    write(' '),
-    write(Item),
-    write(' How many do you want to throw?').
+    (equipment(Item,_,_) ->
+        retractall(equipment(Item,_,_));
+    inventory(Item,X) ->
+        write('You have '),
+        write(X),
+        write(' '),
+        write(Item),
+        write(' How many do you want to throw?'),
+        
+    )
+    inventory(Item,X).
