@@ -14,6 +14,14 @@ isInRanchingTile(X,Y) :-
 displayRanchItem :-
     forall(inventoryRanching(A,B), (write(B), write(' '), write(A), nl)), !.
 
+add_exp_ranching :-
+    (player_job(rancher) ->
+        write('You get 10 exp ranching!'), nl,
+        tambahExpperspecialty(rancher, 10);
+        write('You get 5 exp ranching!'), nl,
+        tambahExpperspecialty(rancher, 5)
+    ), !.
+
 add_timeRanching(X,H,D,M) :-
     game_time(Ht,Dt,Mt),
     lama_beternak(X,Nt),
@@ -34,11 +42,15 @@ generate_koef_ranching(X) :-
     player_level(Level_overall),
     player_levelperspecialty(rancher,Level_rancher),
     (player_job(rancher) ->
-    Y is 0.2
+        Y is 0.2
     ;
-    Y is 0
+        Y is 0
     ),
-    X is (Level_overall/50)*0.5+(Level_rancher/50)*0.5+Y+1.
+    (equipment(ranching_machine,ranching,Level_item) ->
+        Z is Level_item/10;
+        Z is 0
+    ),
+    X is (Level_overall/50)*0.5+(Level_rancher/50)*0.5+Y+1+Z.
 
 ranch :- 
     player_position(X,Y),
@@ -106,10 +118,9 @@ laying_hen :-
     retractall(ranching_tile(X,Y,laying_hen,_,_,_)),
     inventoryRanching(laying_hen, Count),
     addInventory(eggs, Count),
-    tambahExpperspecialty(rancher, 10),
     write('Your chicken lays '), write(Count), write(' eggs'), nl,
     write('You got '), write(Count), write(' eggs'), nl,
-    write('You gained 10 ranching Exp!'),!.
+    add_exp_ranching, !.
 
 broiler :-
     game_started(_),
@@ -146,9 +157,8 @@ broiler_hen :-
     ranching_tile(X,Y,broiler_hen,_,_,_),
     retractall(ranching_tile(X,Y,broiler_hen,_,_,_)),
     addInventory(chicken, 1),
-    tambahExpperspecialty(rancher, 10),
     write('Your chicken is ready for sale!'),nl,
-    write('You gained 10 ranching Exp!'),!.   
+    add_exp_ranching,!.   
 
 dairy :-
     game_started(_),
@@ -182,10 +192,9 @@ dairy_cow :-
     inventoryRanching(dairy_cow, Count),
     NewCount is Count*15,
     addInventory(milk, NewCount),
-    tambahExpperspecialty(rancher, 10),
     write('Your cows produce '), write(NewCount), write(' liters of milk'), nl,
     write('You got '), write(NewCount), write(' liters of milk'), nl,
-    write('You gained 10 ranching Exp!'),!.
+    add_exp_ranching,!.
 
 beef :-
     game_started(_),
@@ -222,9 +231,8 @@ beef_cattle :-
     ranching_tile(X,Y,beef_cattle,_,_,_),
     retractall(ranching_tile(X,Y,beef_cattle,_,_,_)),
     addInventory(beef, 1),
-    tambahExpperspecialty(rancher, 10),
     write('Your cow is ready to sell!'),nl,
-    write('You gained 10 ranching Exp!'),!.
+    add_exp_ranching,!.
 
 sheepwool :-
     game_started(_),
@@ -258,10 +266,9 @@ sheep :-
     inventoryRanching(sheep, Count),
     NewCount is Count*5,
     addInventory(wool, NewCount),
-    tambahExpperspecialty(rancher, 10),
     write('Your sheeps produce '), write(NewCount), write(' kg wool'), nl,
     write('You got '), write(NewCount), write(' kg wool'), nl,
-    write('You gained 10 ranching Exp!'),!.
+    add_exp_ranching,!.
 
 
 
