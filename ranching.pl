@@ -91,7 +91,7 @@ laying_hen :-
     write('You are not in ranching tile! You cannot check whether your chicken has produce something or not.'), nl,!.
 
 laying_hen :-
-    player_levelperspecialty(rancher, Level),
+    player_levelperspecialty(rancher, _),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     ranching_tile(_,_,_,H,D,M),
@@ -99,7 +99,7 @@ laying_hen :-
     write('Your chicken has not produce anything yet.'), nl, !.
 
 laying_hen :-
-    player_levelperspecialty(rancher, Level),
+    player_levelperspecialty(rancher, _),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     ranching_tile(X,Y,laying_hen,_,_,_),
@@ -132,7 +132,7 @@ broiler_hen :-
     write('You are not in ranching tile! You cannot check whether your chicken is ready to sell or not.'), nl,!.
 
 broiler_hen :-
-    player_levelperspecialty(rancher, Level),
+    player_levelperspecialty(rancher, _),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     ranching_tile(_,_,_,H,D,M),
@@ -140,7 +140,7 @@ broiler_hen :-
     write('Your chicken is not big enough.'), nl, !.
 
 broiler_hen :-
-    player_levelperspecialty(rancher, Level),
+    player_levelperspecialty(rancher, _),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     ranching_tile(X,Y,broiler_hen,_,_,_),
@@ -166,7 +166,7 @@ dairy_cow :-
     write('You are not in ranching tile! You cannot check whether your cow has produce something or not.'), nl,!.
 
 dairy_cow :-
-    player_levelperspecialty(rancher, Level),
+    player_levelperspecialty(rancher, _),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     ranching_tile(_,_,_,H,D,M),
@@ -174,7 +174,7 @@ dairy_cow :-
     write('Your cow has not produce anything yet.'), nl, !.
 
 dairy_cow :-
-    player_levelperspecialty(rancher, Level),
+    player_levelperspecialty(rancher, _),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     ranching_tile(X,Y,dairy_cow,_,_,_),
@@ -208,7 +208,7 @@ beef_cattle :-
     write('You are not in ranching tile! You cannot check whether your cow is ready to sell or not.'), nl,!.
 
 beef_cattle :-
-    player_levelperspecialty(rancher, Level),
+    player_levelperspecialty(rancher, _),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     ranching_tile(_,_,_,H,D,M),
@@ -216,7 +216,7 @@ beef_cattle :-
     write('Your cow is not big enough.'), nl, !.
 
 beef_cattle :-
-    player_levelperspecialty(rancher, Level),
+    player_levelperspecialty(rancher, _),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     ranching_tile(X,Y,beef_cattle,_,_,_),
@@ -242,7 +242,7 @@ sheep :-
     write('You are not in ranching tile! You cannot check whether your sheep has produce something or not.'), nl,!.
 
 sheep :-
-    player_levelperspecialty(rancher, Level),
+    player_levelperspecialty(rancher, _),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     ranching_tile(_,_,_,H,D,M),
@@ -250,7 +250,7 @@ sheep :-
     write('Your sheep has not produce anything yet.'), nl, !.
 
 sheep :-
-    player_levelperspecialty(rancher, Level),
+    player_levelperspecialty(rancher, _),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     ranching_tile(X,Y,sheep,_,_,_),

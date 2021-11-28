@@ -37,9 +37,6 @@ add_exp_fishing(N) :-
     ),
     !.
 
-equipment(fishing_rod,fishing,1).
-equipment(fishing_net,fishing,1).
-
 display_fishing_equipment :-
     forall(equipment(X,fishing,Y),(write('Level '),write(Y),write(' '),write(X),nl)),
     !.

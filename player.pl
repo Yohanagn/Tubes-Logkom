@@ -87,8 +87,8 @@ updateTotalExp :-
     player_expperspecialty(fisherman, Exp2),
     player_expperspecialty(rancher, Exp3),
     ExpNow is Exp1 + Exp2 + Exp3,
+    retractall(total_exp(_)),
     asserta(total_exp(ExpNow)),
-    retract(total_exp(Exp)),
     Level < 49,
     (ExpNow >=  Level*100 ->
         LevelUp is 1,
@@ -104,9 +104,9 @@ updateTotalExp :-
     player_expperspecialty(farmer, Exp1),
     player_expperspecialty(fisherman, Exp2),
     player_expperspecialty(rancher, Exp3),
-    ExpNow is Exp + Exp1 + Exp2 + Exp3,
+    ExpNow is Exp1 + Exp2 + Exp3,
+    retractall(total_exp(_)),
     asserta(total_exp(ExpNow)),
-    retract(total_exp(Exp)),
     Level is 49,
     (ExpNow >= 5000 ->
         LevelUp is 1,
