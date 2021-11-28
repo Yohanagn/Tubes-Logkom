@@ -24,11 +24,6 @@ ikan(parrotfish).
 
 :- dynamic(equipment/3).
 
-/* equipment(nama_alat,untuk_apa,level)*/
-equipment(hoe,farming,1).
-equipment(fishing_rod,fishing,1).
-equipment(fishing_net,fishing,1).
-equipment(ranching_machine,ranching,1).
 /*equipment(knive,ranching,1).*/
 
 increase_level_of_equipment(X,Y) :-

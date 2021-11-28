@@ -11,7 +11,7 @@ house :-
     point(X,Y,house),
     Xp is X, Yp is Y,
     asserta(insideHouse(true)),
-    write('Wellcome home!!\n'),
+    write('Welcome home!!\n'),
     houseMenu(1), !.
 house :- 
     player_position(Xp,Yp),
@@ -38,7 +38,7 @@ houseMenu(X) :-
         readDiary,
         X1 is 1;
     Ans == exit ->
-        exitHouse, 
+        exit, 
         X1 is 0), nl, 
     houseMenu(X1), !.
 

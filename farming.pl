@@ -113,6 +113,8 @@ harvest :-
     tile_farming(_,_,_,H,D,M),
     \+ is_ready_harvest(H,D,M),
     write('Plant can not be harvested yet\n'),
+    write('Plant can be harvested on '),
+    write(H), write(':00 '),write(D), write('/'), write(M), write('/2021'),
     !.
 
 harvest :-

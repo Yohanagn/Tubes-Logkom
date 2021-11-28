@@ -802,12 +802,13 @@ sell :-
         write(' golds.\n')        
     ,!),
     (inventoryHasil(_,0) ->
-        delete_zero_inventory_hasil
+        delete_zero_inventory_hasil,
+        goal_state;
+    inventory(_,0) ->
+        delete_zero_inventory,
+        goal_state;
+    goal_state
     ),
-    (inventory(_,0) ->
-        delete_zero_inventory
-    ),
-    goal_state,
     !.
 
 money_plus(Y) :-

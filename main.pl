@@ -50,7 +50,8 @@ openGame :-
     game_opened(_),
     write('You have opened the game, type \'start\' to begin your journey!\n'), !.
 openGame :-
-    /*retractVar,*/
+    retractVar,
+    modalItem,
     clearDiary,
     mainMenu,
     asserta(game_opened(true)),
@@ -128,7 +129,29 @@ retractVar :-
     /* farming.pl */
     retractall(tile_farming(_,_,_,_)), 
     /* quest.pl */
-    retractall(takeQuest(_,_,_)), !.
+    retractall(takeQuest(_,_,_)),
+    /* item.pl */
+    retractall(equipment(_,_,_)).
+
+modalItem :-
+    /* Modal untuk Ranching - Hewan Ternak */
+    asserta(inventoryRanching(laying_hen,3)),
+    asserta(inventoryRanching(broiler_hen,3))
+    asserta(inventoryRanching(beef_cattle,3)),
+    asserta(inventoryRanching(dairy_cow,3)),
+    asserta(inventoryRanching(sheep,3)),
+    /* Modal untuk Farming - Seed */
+    asserta(inventory_seed(carrot,3)),
+    asserta(inventory_seed(potato,3)),
+    asserta(inventory_seed(wheat,3)),
+    asserta(inventory_seed(paddy,3)),
+    asserta(inventory_seed(cassava,3)),
+    asserta(inventory_seed(corn,3)),
+    /* equipment(nama_alat,untuk_apa,level)*/
+    asserta(equipment(hoe,farming,1)),
+    asserta(equipment(fishing_rod,fishing,1)),
+    asserta(equipment(fishing_net,fishing,1)),
+    asserta(equipment(ranching_machine,ranching,1)).
 
 help :-
     game_opened(_),

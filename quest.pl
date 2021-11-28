@@ -244,3 +244,30 @@ total_ranching_item(X) :-
         X5 is N5;
         X5 is 0),
     X is X1+X2+X3+X4+X5,!.
+
+total_seed_item(X) :-
+    (inventory_seed(carrot,N1) ->
+        X1 is N1;
+        X1 is 0
+    ),
+    (inventory_seed(potato,N2) ->
+        X2 is N2;
+        X2 is 0
+    ),
+    (inventory_seed(wheat,N3) ->
+        X3 is N3;
+        X3 is 0
+    ),
+    (inventory_seed(paddy,N4) ->
+        X4 is N4;
+        X4 is 0
+    ),
+    (inventory_seed(cassava,N5) ->
+        X5 is N5;
+        X5 is 0
+    ),
+    (inventory_seed(corn,N6) ->
+        X6 is N6;
+        X6 is 0
+    ),
+    X is X1+X2+X3+X4+X5+X6,!.

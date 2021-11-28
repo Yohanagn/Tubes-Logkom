@@ -7,41 +7,28 @@
 :- dynamic(inventoryRanching/2).
 :- dynamic(inventoryHasil/2).
 
-
-/* Hasil Farming */
+/*
+Hasil Farming
 inventory(carrot,10).
 inventory(potato,10).
 inventory(wheat,10).
 inventory(paddy,10).
 inventory(cassava,10).
 inventory(corn,10).
-/* Hasil Fishing */
+Hasil Fishing 
 inventory(goldfish,10).
 inventory(catfish,10).
 inventory(gurame,10).
 inventory(tilapia,10).
 inventory(parrotfish,10).
-/* Hasil Ranching */
+Hasil Ranching 
 inventoryHasil(eggs, 1).
 inventoryHasil(milk, 2).
 inventoryHasil(wool, 0).
 inventoryHasil(chicken, 0).
 inventoryHasil(beef, 0).
+*/
 
-
-/* Modal untuk Ranching - Hewan Ternak */
-inventoryRanching(laying_hen,10).
-inventoryRanching(broiler_hen,10).
-inventoryRanching(beef_cattle,10).
-inventoryRanching(dairy_cow,10).
-inventoryRanching(sheep,10).
-/* Modal untuk Farming - Seed */
-inventory_seed(carrot,3).
-inventory_seed(potato,3).
-inventory_seed(wheat,3).
-inventory_seed(paddy,3).
-inventory_seed(cassava,3).
-inventory_seed(corn,3).
 
 
 /* Inventory operators */
@@ -83,6 +70,14 @@ add_N_to_inventory_seed(N,X) :-
 
 delete_zero_inventory_seed:-
     retractall(inventory_seed(_,0)).
+
+substract_N_to_inventory_seed(N,X) :-
+    (inventory_seed(X,Y) ->
+    Y1 is Y-N,
+    retractall(inventory_seed(X,Y)),
+    asserta(inventory_seed(X,Y1));
+    asserta(inventory_seed(X,N))
+    ).
 
 /* Inventory ranching operators */
 
@@ -129,22 +124,21 @@ delete_zero_inventory_hasil :-
 /* display */
 
 displayInventory :-
-    forall(inventory(X,Y),writeInventory(X,Y)).
+    forall(inventory(X,Y),(writeInventory(X,Y),nl)).
 
 displayInventorySeed :-
-    forall(inventory_seed(X,Y),(writeInventory(X,Y), write(' (seed)'))).
+    forall(inventory_seed(X,Y),(writeInventory(X,Y), write(' seed'),nl)).
 
 displayInventoryRanching :-
-    forall(inventoryRanching(X,Y),writeInventory(X,Y)).
+    forall(inventoryRanching(X,Y),(writeInventory(X,Y),nl)).
 
 displayInventoryHasil :-
-    forall(inventoryHasil(X,Y),writeInventory(X,Y)).
+    forall(inventoryHasil(X,Y),(writeInventory(X,Y),nl)).
 
 writeInventory(X,Y) :-
     write(Y),
     write(' '),
-    write(X),
-    nl.
+    write(X).
 
 displayAllInventory :-
     nl,
@@ -155,8 +149,10 @@ displayAllInventory :-
     displayEquipment,
     displayInventory,
     displayInventoryHasil,
-    displayInventorySeed,
-    write('\n').
+    total_seed_item(NSeed),
+    write(NSeed),
+    write(' Seed'),
+    write('\n'),!.
 
 throwItem :-
     nl,
@@ -164,36 +160,73 @@ throwItem :-
     write('What do you want to throw?\n'),
     read(Item),
     (equipment(Item,_,_) ->
-        retractall(equipment(Item,_,_))
-        write('You have '),
-        write(X),
-        write(' '),
+        retractall(equipment(Item,_,_)),
+        write('You threw away 1 '),
         write(Item),
-        write(' How many do you want to throw?'),
-        read(Y),
-        (Y > X ->
-            write('You don’t have enough '), write(Item), write('. Cancelling…'), nl, !;
-        substract_N_to_inventory(Y,Item),
-        Q is -Y,
-        change_capacity_inventory(Q)
-        )
+        nl
     ;
-    inventory(Item,_) ->
-        retractall(inventory(Item,_,_));
-    inventoryHasil(Item,_) ->
-        retractall(inventoryHasil(Item,_,_));
-    inventorySeed(Item,_) ->
-        retractall(inventory_seed(Item,_,_));
-    )
     inventory(Item,X) ->
         write('You have '),
         write(X),
         write(' '),
         write(Item),
-        write(' How many do you want to throw?'),
+        write(' How many do you want to throw?\n'),
         read(Y),
         (Y > X ->
-            write('You don’t have enough '), write(Item), write('. Cancelling…'), !;
+            write('You don\'t have enough '), write(Item), write('. Cancelling'), nl, !;
+            substract_N_to_inventory(Y,Item),
+            Q is -Y,
+            change_capacity_inventory(Q),
+            write('You threw away '),
+            write(Y),
+            write(' '),
+            write(Item),
+            nl,
+            delete_zero_inventory
         )
-    )
-    inventory(Item,X).
+    ;
+    inventoryHasil(Item,X) ->
+        write('You have '),
+        write(X),
+        write(' '),
+        write(Item),
+        write(' How many do you want to throw?\n'),
+        read(Y),
+        (Y > X ->
+            write('You don\'t have enough '), write(Item), write('. Cancelling'), nl, !;
+            substract_N_to_inventory_hasil(Y,Item),
+            Q is -Y,
+            change_capacity_inventory(Q),
+            write('You threw away '),
+            write(Y),
+            write(' '),
+            write(Item),
+            nl,
+            delete_zero_inventory_hasil
+        )
+    ;
+    Item == seed ->
+        displayInventorySeed,
+        write('What seed do you want to throw?\n'),
+        read(Seed),
+        inventory_seed(Seed,X),
+        write('You have '),
+        write(X),
+        write(' '),
+        write(Seed),
+        write(' How many do you want to throw?\n'),
+        read(Y),
+        (Y > X ->
+            write('You don\'t have enough '), write(Seed), write('. Cancelling'), nl, !;
+            substract_N_to_inventory_seed(Y,Seed),
+            Q is -Y,
+            change_capacity_inventory(Q),
+            write('You threw away '),
+            write(Y),
+            write(' '),
+            write(Seed),
+            nl,
+            delete_zero_inventory_seed
+        )
+    ),
+    !.

@@ -278,13 +278,3 @@ sheep :-
     write('Your sheeps produce '), write(NewCount), write(' kg wool'), nl,
     write('You got '), write(NewCount), write(' kg wool'), nl,
     add_exp_ranching,!.
-
-
-
-
-
-
-
-
-
-

@@ -18,7 +18,7 @@ initiate_playerstatus :-
     asserta(player_money(0)),
     asserta(player_level(1)),
     asserta(player_totalexp(0)),
-    asserta(capacity_inventory(0)),
+    asserta(capacity_inventory(22)),
     initiate_ranching_status.
 
 initiate_ranching_status :-
@@ -142,6 +142,8 @@ displayStatus(X) :-
     forall(player_totalexp(Exp), write(Exp)), nl,
     write('Money    : '),
     forall(player_money(Money), write(Money)), nl,
+    write('Time     : '),
+    displayTime, write(' '),displayDate,nl,
     write('Level Farming    : '),
     forall(player_levelperspecialty(farmer, Level1), write(Level1)), nl,
     write('Exp Farming      : '), 
