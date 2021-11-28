@@ -1,7 +1,7 @@
-:- include('player.pl').
+/*:- include('player.pl').
 :- include('inventory.pl').
 :- include('item.pl').
-
+*/
 market :-
     write('What do you want to do?\n1. Buy\n2. Sell\n\n'),
     write('| ?- '),
