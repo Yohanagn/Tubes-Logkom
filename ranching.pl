@@ -58,6 +58,11 @@ lay :-
     !.
 
 laying_hen :-
+    player_position(X,Y),
+    \+ isInRanchingTile(X,Y), nl,
+    write('You are not in ranching tile! You cannot check whether your chicken has produce something or not.'), nl,!.
+
+laying_hen :-
     player_levelperspecialty(rancher, Level),
     player_position(X,Y),
     isInRanchingTile(X,Y),
@@ -93,6 +98,11 @@ broiler :-
     !.
 
 broiler_hen :-
+    player_position(X,Y),
+    \+ isInRanchingTile(X,Y), nl,
+    write('You are not in ranching tile! You cannot check whether your chicken is ready to sell or not.'), nl,!.
+
+broiler_hen :-
     player_levelperspecialty(rancher, Level),
     player_position(X,Y),
     isInRanchingTile(X,Y),
@@ -120,6 +130,11 @@ dairy :-
     asserta(ranching_tile(X,Y,dairy_cow,H,D,M)),
     write('You choose dairy cows'),nl,
     !.
+
+dairy_cow :-
+    player_position(X,Y),
+    \+ isInRanchingTile(X,Y), nl,
+    write('You are not in ranching tile! You cannot check whether your cow has produce something or not.'), nl,!.
 
 dairy_cow :-
     player_levelperspecialty(rancher, Level),
@@ -157,12 +172,17 @@ beef :-
     !.
 
 beef_cattle :-
+    player_position(X,Y),
+    \+ isInRanchingTile(X,Y), nl,
+    write('You are not in ranching tile! You cannot check whether your cow is ready to sell or not.'), nl,!.
+
+beef_cattle :-
     player_levelperspecialty(rancher, Level),
     player_position(X,Y),
     isInRanchingTile(X,Y),
     ranching_tile(_,_,_,H,D,M),
     \+isProduceSmth(H,D,M),
-    write('Your beef is not big enough.'), nl, !.
+    write('Your cow is not big enough.'), nl, !.
 
 beef_cattle :-
     player_levelperspecialty(rancher, Level),
@@ -172,7 +192,7 @@ beef_cattle :-
     retractall(ranching_tile(X,Y,beef_cattle,_,_,_)),
     addInventory(beef, 1),
     tambahExpperspecialty(rancher, 10, _, Level),
-    write('Your beef is ready for sale!'),nl,
+    write('Your cow is ready to sell!'),nl,
     write('You gained 10 ranching Exp!'),!.
 
 sheepwool :-
@@ -184,6 +204,11 @@ sheepwool :-
     asserta(ranching_tile(X,Y,sheep,H,D,M)),
     write('You choose sheep'),nl,
     !.
+
+sheep :-
+    player_position(X,Y),
+    \+ isInRanchingTile(X,Y), nl,
+    write('You are not in ranching tile! You cannot check whether your sheep has produce something or not.'), nl,!.
 
 sheep :-
     player_levelperspecialty(rancher, Level),

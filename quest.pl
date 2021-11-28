@@ -3,7 +3,6 @@
 isInQTile(A,B) :-
     point(A,B,quest).
 
-
 quest :-
     player_position(A,B),
     \+ isInQTile(A,B),
@@ -29,6 +28,8 @@ quest :-
     !.
 
 quest :-
+    player_position(A,B),
+    isInQTile(A,B),
     takeQuest(_,_,_), nl,
     write('You have an on-going quest!'), nl,!.
 
@@ -223,16 +224,22 @@ total_fishing_item(X) :-
     X is X1+X2+X3+X4+X5,!.
 
 total_ranching_item(X) :-
-    (inventory(eggs,N1) ->
+    (inventoryHasil(eggs,N1) ->
         X1 is N1;
         X1 is 0
     ),
-    (inventory(milk,N2) ->
+    (inventoryHasil(milk,N2) ->
         X2 is N2;
         X2 is 0
     ),
-    (inventory(wool,N3) ->
+    (inventoryHasil(wool,N3) ->
         X3 is N3;
         X3 is 0
     ),
-    X is X1+X2+X3,!.
+    (inventoryHasil(chicken,N4) ->
+        X4 is N4;
+        X4 is 0),
+    (inventoryHasil(beef,N5) ->
+        X5 is N5;
+        X5 is 0),
+    X is X1+X2+X3+X4+X5,!.
