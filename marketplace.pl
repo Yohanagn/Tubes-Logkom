@@ -1,3 +1,7 @@
+:- include('player.pl').
+:- include('inventory.pl').
+:- include('item.pl').
+
 market :-
     write('What do you want to do?\n1. Buy\n2. Sell\n\n'),
     write('| ?- '),
@@ -433,6 +437,14 @@ sell :-
     write('| ?- '), 
     read(Qty),
     (Item == carrot ->
+        inventory(carrot,B),
+        Q is Qty,
+        (B < Q ->
+            write('You do not have enough carrots. Cancelling...\n\n'),
+            market;
+        B >= Q ->
+            /*NONE*/
+        !),
         write('You sold '),
         write(Qty),
         (Qty == 1 ->
@@ -449,6 +461,14 @@ sell :-
         write(Get),
         write(' golds.\n');
     Item == potato ->
+        inventory(potato,B),
+        Q is Qty,
+        (B < Q ->
+            write('You do not have enough potatoes. Cancelling...\n\n'),
+            market;
+        B >= Q ->
+            /*NONE*/
+        !),
         write('You sold '),
         write(Qty),
         (Qty == 1 ->
@@ -465,6 +485,14 @@ sell :-
         write(Get),
         write(' golds.\n');
     Item == wheat ->
+        inventory(wheat,B),
+        Q is Qty,
+        (B < Q ->
+            write('You do not have enough wheats. Cancelling...\n\n'),
+            market;
+        B >= Q ->
+            /*NONE*/
+        !),
         write('You sold '),
         write(Qty),
         (Qty == 1 ->
@@ -481,6 +509,14 @@ sell :-
         write(Get),
         write(' golds.\n');
     Item == paddy ->
+        inventory(carrot,B),
+        Q is Qty,
+        (B < Q ->
+            write('You do not have enough paddies. Cancelling...\n\n'),
+            market;
+        B >= Q ->
+            /*NONE*/
+        !),
         write('You sold '),
         write(Qty),
         (Qty == 1 ->
@@ -497,6 +533,14 @@ sell :-
         write(Get),
         write(' golds.\n');
     Item == cassava ->
+        inventory(cassava,B),
+        Q is Qty,
+        (B < Q ->
+            write('You do not have enough cassavas. Cancelling...\n\n'),
+            market;
+        B >= Q ->
+            /*NONE*/
+        !),
         write('You sold '),
         write(Qty),
         (Qty == 1 ->
@@ -513,6 +557,14 @@ sell :-
         write(Get),
         write(' golds.\n');
     Item == corn ->
+        inventory(corn,B),
+        Q is Qty,
+        (B < Q ->
+            write('You do not have enough corns. Cancelling...\n\n'),
+            market;
+        B >= Q ->
+            /*NONE*/
+        !),
         write('You sold '),
         write(Qty),
         (Qty == 1 ->
@@ -529,6 +581,14 @@ sell :-
         write(Get),
         write(' golds.\n');
     Item == goldfish ->
+        inventory(goldfish,B),
+        Q is Qty,
+        (B < Q ->
+            write('You do not have enough goldfishes. Cancelling...\n\n'),
+            market;
+        B >= Q ->
+            /*NONE*/
+        !),
         write('You sold '),
         write(Qty),
         (Qty == 1 ->
@@ -545,6 +605,14 @@ sell :-
         write(Get),
         write(' golds.\n');
     Item == catfish ->
+        inventory(catfish,B),
+        Q is Qty,
+        (B < Q ->
+            write('You do not have enough catfishes. Cancelling...\n\n'),
+            market;
+        B >= Q ->
+            /*NONE*/
+        !),
         write('You sold '),
         write(Qty),
         (Qty == 1 ->
@@ -561,6 +629,14 @@ sell :-
         write(Get),
         write(' golds.\n');
     Item == gurame ->
+        inventory(gurame,B),
+        Q is Qty,
+        (B < Q ->
+            write('You do not have enough gouramies. Cancelling...\n\n'),
+            market;
+        B >= Q ->
+            /*NONE*/
+        !),
         write('You sold '),
         write(Qty),
         (Qty == 1 ->
@@ -577,6 +653,14 @@ sell :-
         write(Get),
         write(' golds.\n');
     Item == tilapia ->
+        inventory(tilapia,B),
+        Q is Qty,
+        (B < Q ->
+            write('You do not have enough tilapias. Cancelling...\n\n'),
+            market;
+        B >= Q ->
+            /*NONE*/
+        !),
         write('You sold '),
         write(Qty),
         (Qty == 1 ->
@@ -593,6 +677,14 @@ sell :-
         write(Get),
         write(' golds.\n');
     Item == parrotfish ->
+        inventory(parrotfish,B),
+        Q is Qty,
+        (B < Q ->
+            write('You do not have enough parrotfishes. Cancelling...\n\n'),
+            market;
+        B >= Q ->
+            /*NONE*/
+        !),
         write('You sold '),
         write(Qty),
         (Qty == 1 ->
@@ -609,6 +701,14 @@ sell :-
         write(Get),
         write(' golds.\n');
     Item == eggs ->
+        inventory(eggs,B),
+        Q is Qty,
+        (B < Q ->
+            write('You do not have enough eggs. Cancelling...\n\n'),
+            market;
+        B >= Q ->
+            /*NONE*/
+        !),
         write('You sold '),
         write(Qty),
         (Qty == 1 ->
@@ -625,6 +725,14 @@ sell :-
         write(Get),
         write(' golds.\n'); 
     Item == milk ->
+        inventory(milk,B),
+        Q is Qty,
+        (B < Q ->
+            write('You do not have enough milks. Cancelling...\n\n'),
+            market;
+        B >= Q ->
+            /*NONE*/
+        !),
         write('You sold '),
         write(Qty),
         (Qty == 1 ->
@@ -641,6 +749,14 @@ sell :-
         write(Get),
         write(' golds.\n'); 
     Item == wool ->
+        inventory(wool,B),
+        Q is Qty,
+        (B < Q ->
+            write('You do not have enough wools. Cancelling...\n\n'),
+            market;
+        B >= Q ->
+            /*NONE*/
+        !),
         write('You sold '),
         write(Qty),
         (Qty == 1 ->
@@ -657,6 +773,14 @@ sell :-
         write(Get),
         write(' golds.\n'); 
     Item == chicken ->
+        inventory(chicken,B),
+        Q is Qty,
+        (B < Q ->
+            write('You do not have enough chickens. Cancelling...\n\n'),
+            market;
+        B >= Q ->
+            /*NONE*/
+        !),
         write('You sold '),
         write(Qty),
         (Qty == 1 ->
@@ -673,6 +797,14 @@ sell :-
         write(Get),
         write(' golds.\n');  
     Item == beef ->
+        inventory(beef,B),
+        Q is Qty,
+        (B < Q ->
+            write('You do not have enough beefs. Cancelling...\n\n'),
+            market;
+        B >= Q ->
+            /*NONE*/
+        !),
         write('You sold '),
         write(Qty),
         (Qty == 1 ->

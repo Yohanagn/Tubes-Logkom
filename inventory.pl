@@ -157,8 +157,9 @@ writeInventory(X,Y) :-
 inventory :-
     write('Your inventory '),
     /*capacity_inventory(X),
-    write(X),*/
+    write(X)*/
     write('/100)\n'),
+    displayEquipment,
     displayInventory,
     write('\n'),
     write('| ?- '),
@@ -173,4 +174,6 @@ throwItem :-
     inventory(Item,X),
     write('You have '),
     write(X),
-    write(Item).
+    write(' '),
+    write(Item),
+    write(' How many do you want to throw?').
