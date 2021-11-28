@@ -18,7 +18,8 @@ initiate_playerstatus :-
     asserta(player_money(0)),
     asserta(player_level(1)),
     asserta(player_totalexp(0)),
-    asserta(capacity_inventory(0)).
+    asserta(capacity_inventory(0)),
+    initiate_ranching_status.
 
 initiate_ranching_status :-
     asserta(total_broiler(0)),

@@ -1,7 +1,7 @@
 /* Deklarasi fakta */
 lama_beternak(laying_hen, 30).
 lama_beternak(broiler_hen, 2).
-lama_beternak(beef_cattle, 100).
+lama_beternak(beef_cattle, 2).
 lama_beternak(dairy_cow, 180).
 lama_beternak(sheep, 180).
 
@@ -152,19 +152,17 @@ broiler_hen :-
     player_position(X,Y),
     isInRanchingTile(X,Y),
     ranching_tile(X,Y,broiler_hen,_,_,_),
-    write('1\n'),
     get_ready_broiler(Ntot),
-    write('1\n'),
     (Ntot == 0 ->
-        write('Your chicken is not big enough.'), nl, !
+        write('Your chicken is not big enough.'), nl;
+        addInventory(chicken, Ntot),
+        write('You get '),
+        write(Ntot),
+        write(' chicken\n'),
+        write('Your chicken is ready for sale!'),nl,
+        add_exp_ranching
     ),
-    write('1\n'),
-    addInventory(chicken, Ntot),
-    write('You get '),
-    write(Ntot),
-    write(' chicken\n'),
-    write('Your chicken is ready for sale!'),nl,
-    add_exp_ranching,!.   
+    !.   
 
 dairy :-
     game_started(_),
@@ -202,11 +200,17 @@ dairy_cow :-
     write('You got '), write(NewCount), write(' liters of milk'), nl,
     add_exp_ranching,!.
 
+get_ready_beef(Ntot) :-
+    forall((ranching_tile(_,_,beef_cattle,H,D,M),isProduceSmth(H,D,M)),(total_beef(N),retractall(total_beef(N)),NewN is N+1,asserta(total_beef(NewN)),retract(ranching_tile(_,_,beef_cattle,H,D,M)))),
+    total_beef(Ntot),
+    retractall(total_beef(Ntot)),
+    asserta(total_beef(0)),
+    !.
+
 beef :-
     game_started(_),
     player_position(X,Y),
     isInRanchingTile(X,Y),
-    \+ ranching_tile(X,Y,beef_cattle,_,_,_),
     inventoryRanching(beef_cattle,A),
     retractall(inventoryRanching(beef_cattle,A)),
     NewA is A-1,
@@ -226,19 +230,18 @@ beef_cattle :-
     player_levelperspecialty(rancher, _),
     player_position(X,Y),
     isInRanchingTile(X,Y),
-    ranching_tile(_,_,_,H,D,M),
-    \+isProduceSmth(H,D,M),
-    write('Your cow is not big enough.'), nl, !.
-
-beef_cattle :-
-    player_levelperspecialty(rancher, _),
-    player_position(X,Y),
-    isInRanchingTile(X,Y),
     ranching_tile(X,Y,beef_cattle,_,_,_),
-    retractall(ranching_tile(X,Y,beef_cattle,_,_,_)),
-    addInventory(beef, 1),
-    write('Your cow is ready to sell!'),nl,
-    add_exp_ranching,!.
+    get_ready_beef(Ntot),
+    (Ntot == 0 ->
+        write('Your cow is not big enough.'), nl;
+        addInventory(beef, Ntot),
+        write('You get '),
+        write(Ntot),
+        write(' beef\n'),
+        write('Your cow is ready to sell!'),nl,
+        add_exp_ranching
+    ),
+    !.
 
 sheepwool :-
     game_started(_),
