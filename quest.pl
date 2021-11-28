@@ -42,7 +42,7 @@ quest :-
     write('You got a new quest! '), nl,
     random(1,5,X),
     random(1,5,Y),
-    random(0,1,Z),
+    random(1,5,Z),
     asserta(takeQuest(X,Y,Z)),
     write('You need to collect: '), nl,
     write('- '), write(X), write(' Harvest Item'), nl,
