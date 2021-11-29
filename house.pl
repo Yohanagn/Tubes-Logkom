@@ -20,6 +20,7 @@ house :-
     write('You are currently not at home!'), nl, !.
     
 houseMenu(X) :-
+    insideHouse(_),
     X is 1,
     write('What do you want to do?\n'),
     write('- sleep\n'),
@@ -59,16 +60,35 @@ sleep :-
     write('Today is '), displayDate, nl,
     musim(M), cuaca(C),
     write(' Season: '), write(M), nl, 
-    write(' Weather: '), write(C), nl, nl.
+    write(' Weather: '), write(C), nl,
+    (Peri > 4 ->
+        exit;
+    Peri < 5 ->
+        /*NONE*/
+    !).
 
 periTidur :-
+    insideHouse(_),
     write('Hi, I am sleeping fairy.\nI offer you to move anywhere you like.\nWhere do you want to go?\n'),
-    write('< type quest or house or market or ranch >\n'),
-    write('| ?- '),
-    read(Place), point(_,_,Place), 
-    write('You can go to the '),
+    write('< type quest or house or market or ranch or digged or waterside >\n'),
+    write('> '),
+    read(Place), 
+    (Place == waterside ->
+        X is 4, Y is 4
+    ;
+    (Place == digged, point(_,_,digged)) ->
+        forall(point(X,Y,digged), (
+            write('- ('), write(X), write(','), write(Y), write(')\n'))),
+        write('Which tile?\n'),
+        write('X = '), read(X),
+        write('Y = '), read(Y)
+    ;
+    point(X,Y,Place)),
+    retractall(player_position(_,_)),
+    asserta(player_position(X,Y)), 
+    write('You will be in the '),
     write(Place),
-    write(' area now!\n\n'),!.
+    write(' area when you wake up!\n\n').
 
 exit :-
     insideHouse(_), nl,

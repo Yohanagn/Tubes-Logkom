@@ -93,7 +93,7 @@ special_loc(X,Y) :-
     write('You are at home. Type \'house\' to enter.\n'), !.
 special_loc(X,Y) :-
     point(X,Y,quest),
-    write('Do you want to take the quest? Type \'questStart\' to take it.\n'), !.
+    write('Do you want to take the quest? Type \'quest\' to take it.\n'), !.
 special_loc(X,Y) :-
     point(X,Y,ranch),
     write('You are in the ranch. Type \'ranch\' to enter.\n'), !.
