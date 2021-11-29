@@ -50,9 +50,9 @@ sleep :-
     write('     Z...\n'),
     write('         Z...\n'), nl,
     random(0,10,Peri),
-    (Peri > 4 ->
+    (Peri > 7 ->
         periTidur; 
-    Peri < 5 ->
+    Peri < 8 ->
         /*NONE*/    
     !),
     updateTime(24),
